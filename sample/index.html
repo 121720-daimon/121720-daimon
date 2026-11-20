@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>TRACK & FIELD PRO | 陸上部アプリ・メニュー＆体調管理</title>
+  <title>TRACK & FIELD PRO | 陸上部アプリ・メニュー＆青春ラボ</title>
   <style>
     * {
       box-sizing: border-box;
@@ -25,7 +25,7 @@
         linear-gradient(180deg, #0f172a 0%, #7f1d1d 60%, #450a0a 100%);
       color: #0f172a;
       margin: 0;
-      padding: 0 0 85px 0;
+      padding: 0 0 85px 0; /* 下部ナビゲーションバーの余白 */
       display: flex;
       justify-content: center;
       min-height: 100vh;
@@ -78,7 +78,7 @@
       box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
     }
 
-    /* ランク＆経験値ステータスバー */
+    /* ランク＆経験値ステータスバー（男子が燃えるゲーム風要素） */
     .rank-bar {
       background: linear-gradient(90deg, #1e293b, #0f172a);
       border: 1px solid #38bdf8;
@@ -193,54 +193,6 @@
       border-color: #f97316;
       background-color: #ffffff;
     }
-
-    /* 性別切り替えボタン */
-    .gender-toggle {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-      max-width: 310px;
-    }
-    .gender-btn {
-      flex: 1;
-      padding: 10px;
-      font-size: 15px;
-      font-weight: 900;
-      border: 2px solid #cbd5e1;
-      border-radius: 10px;
-      background: #f8fafc;
-      color: #475569;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
-    }
-    .gender-btn.active-male {
-      background: #e0f2fe;
-      border-color: #0284c7;
-      color: #0369a1;
-    }
-    .gender-btn.active-female {
-      background: #ffe4e6;
-      border-color: #e11d48;
-      color: #be123c;
-    }
-
-    /* 女子用コンディション枠 */
-    .female-condition-box {
-      background: #fff1f2;
-      border: 2px solid #fda4af;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 13px;
-    }
-    .female-condition-box label {
-      color: #be123c;
-    }
-    .female-condition-box select {
-      border-color: #fb7185;
-      background: #ffffff;
-    }
-
     .btn-main {
       width: 100%;
       background: linear-gradient(90deg, #f97316 0%, #facc15 100%);
@@ -372,7 +324,7 @@
       border-bottom: none;
     }
 
-    /* 休憩バッジ・ボックス */
+    /* 休憩バッジ・ボックス（明確に「休憩」と表示） */
     .rest-banner {
       background: #ecfeff;
       border: 2px solid #06b6d4;
@@ -426,7 +378,7 @@
       line-height: 1.5;
     }
 
-    /* 青春＆恋愛アドバイス・チャレンジカード */
+    /* 青春＆恋愛アドバイス・男子が燃えるミッションカード */
     .youth-card {
       background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
       border: 2px solid #fb7185;
@@ -682,7 +634,7 @@
       <span style="font-size:28px;">🔥</span>
       <div>
         <div class="app-logo-title">TRACK & FIELD PRO</div>
-        <div class="app-logo-sub">高校陸上部・男女別強化＆青春サポート</div>
+        <div class="app-logo-sub">高校陸上部・強化＆青春サポート</div>
       </div>
     </div>
     <button type="button" class="btn-qr-mini" id="open-qr-btn">📱 QR友達追加</button>
@@ -706,33 +658,11 @@
     </div>
 
     <div class="card">
-      <div class="card-title">⚡ あなたのプロフィール・体調を入力</div>
+      <div class="card-title">⚡ 今日のコンディション・目標を入力</div>
       
       <div class="form-row">
         <label for="athlete-name">👤 自分の名前（QR・共有用）</label>
         <input type="text" id="athlete-name" placeholder="例：陸上部 翔太">
-      </div>
-
-      <!-- 男子・女子選択 -->
-      <div class="form-row">
-        <label>🚻 性別（メニュー・体調最適化）</label>
-        <div class="gender-toggle">
-          <button type="button" class="gender-btn active-male" id="btn-male">👦 男子</button>
-          <button type="button" class="gender-btn" id="btn-female">👧 女子</button>
-        </div>
-      </div>
-
-      <!-- 女子選択時のみ表示される周期・生理中コンディション -->
-      <div class="female-condition-box" id="female-condition-box" style="display:none;">
-        <div class="form-row" style="margin-bottom:0;">
-          <label for="female-cycle">🌸 女子コンディショニング（周期）</label>
-          <select id="female-cycle">
-            <option value="通常" selected>✨ 通常・好調期（いつも通り動ける）</option>
-            <option value="生理中（軽め・動ける）">🩸 生理中（体調は安定・無理なく動く）</option>
-            <option value="生理中（腹痛・貧血・だるさあり）">🩹 生理中（腹痛・腰の重さ・だるさあり）</option>
-            <option value="生理前（PMS・身体が重い）">☁️ 生理前（身体が重い・張りやすい）</option>
-          </select>
-        </div>
       </div>
 
       <div class="form-row">
@@ -809,7 +739,7 @@
       <div id="result-status">上の項目を選んでボタンを押してね！</div>
       <div id="result-container"></div>
 
-      <!-- 男子・女子別のミッション＆青春一言 -->
+      <!-- 男子部が燃えるチャレンジ＆青春一言 -->
       <div id="bonus-cards" style="display:none;"></div>
 
       <!-- チーム共有ボタン -->
@@ -835,7 +765,7 @@
       <div class="topic-btns">
         <button type="button" class="topic-btn active" data-topic="love">💘 好きな人がいる時の攻略法</button>
         <button type="button" class="topic-btn" data-topic="mental">🔥 試合の緊張・スランプ突破</button>
-        <button type="button" class="topic-btn" data-topic="boys">💪 チームの絆＆アスリート美学</button>
+        <button type="button" class="topic-btn" data-topic="boys">💪 男子部員の絆＆カッコよさ</button>
         <button type="button" class="topic-btn" data-topic="study">📚 部活と勉強の両立テクニック</button>
       </div>
 
@@ -871,7 +801,7 @@
   </div>
 </div>
 
-<!-- スマホアプリ風・下部固定ナビゲーションバー -->
+<!-- スマホアプリ風・下部ナビゲーションバー -->
 <nav class="bottom-nav">
   <button type="button" class="nav-item active" data-target="tab-menu">
     <span class="nav-icon">🏃‍♂️</span>
@@ -911,27 +841,6 @@
 </div>
 
 <script>
-  // 性別状態管理（デフォルト：男子）
-  let selectedGender = "男子";
-
-  const btnMale = document.getElementById("btn-male");
-  const btnFemale = document.getElementById("btn-female");
-  const femaleBox = document.getElementById("female-condition-box");
-
-  btnMale.addEventListener("click", () => {
-    selectedGender = "男子";
-    btnMale.className = "gender-btn active-male";
-    btnFemale.className = "gender-btn";
-    femaleBox.style.display = "none";
-  });
-
-  btnFemale.addEventListener("click", () => {
-    selectedGender = "女子";
-    btnFemale.className = "gender-btn active-female";
-    btnMale.className = "gender-btn";
-    femaleBox.style.display = "block";
-  });
-
   // タブ切り替えロジック
   document.querySelectorAll(".nav-item").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -1082,20 +991,9 @@
   setRandomQuote();
 
   // ==========================================
-  // 個人別ウォーミングアップ7種目セット（生理中対応）
+  // 個人別ウォーミングアップ7種目セット
   // ==========================================
-  function getWarmUp7Steps(eventType, pain, isPeriodCare) {
-    if (isPeriodCare) {
-      return [
-        "① <strong>温かい飲み物補給 ＆ 深呼吸（3分）</strong>：お腹や腰を冷やさないよう温めてからスタート",
-        "② <strong>キャット＆ドッグ（背骨・骨盤ほぐし 10回）</strong>：四つん這いで腰回りの重だるさを優しく緩める",
-        "③ <strong>寝たまま股関節ワイパー（左右15回）</strong>：骨盤内の血流を良くして下腹部の張りを和らげる",
-        "④ <strong>肩甲骨・胸開きサークル（前後各15回）</strong>：上半身のコリをほぐし呼吸を深くする",
-        "⑤ <strong>スロー・ウォーキング（3分）</strong>：大股でゆっくり歩き、全身の体温をじんわり上げる",
-        "⑥ <strong>やさしいグルートブリッジ（10回×2セット）</strong>：無理のない範囲でお尻の筋肉にスイッチを入れる",
-        "⑦ <strong>リズム・シャドー腕振り（30秒×2本）</strong>：衝撃を与えずにフォームの感覚だけ確認する"
-      ];
-    }
+  function getWarmUp7Steps(eventType, pain) {
     if (pain !== "なし") {
       return [
         "① <strong>足首・手首の回旋運動（左右15回）</strong>：末端からゆっくり血流を上げる",
@@ -1153,20 +1051,9 @@
   }
 
   // ==========================================
-  // 個人別クールダウン7種目セット（生理中対応）
+  // 個人別クールダウン7種目セット
   // ==========================================
-  function getCoolDown7Steps(eventType, fatigue, pain, isPeriodCare) {
-    if (isPeriodCare) {
-      return [
-        "① <strong>保温＆ホットドリンク補給</strong>：汗をかいたウェアを早めに着替え、お腹と腰を冷やさない",
-        "② <strong>合蹠（がっせき）のポーズ・股関節ストレッチ（30秒）</strong>：足裏を合わせて座り、骨盤内の血流を促す",
-        "③ <strong>チャイルドポーズ（腰・背中リラックス 30秒）</strong>：正座から前に両手を伸ばし、腰の重だるさを抜く",
-        "④ <strong>お尻（梨状筋）の優しいストレッチ（左右25秒）</strong>：仰向けで片膝を抱え、腰回りを緩める",
-        "⑤ <strong>ふくらはぎ・足首の温めマッサージ（左右1分）</strong>：むくみやすい末端を下から上へ優しく流す",
-        "⑥ <strong>鉄分・タンパク質補給（プルーン・豆乳・おにぎり等）</strong>：生理中に失われやすい鉄分をしっかりチャージ！",
-        "⑦ <strong>湯船に浸かって早めの就寝</strong>：シャワーだけで済ませず、身体の芯から温めて回復させる"
-      ];
-    }
+  function getCoolDown7Steps(eventType, fatigue, pain) {
     if (pain !== "なし") {
       return [
         `① <strong>患部（${pain}）のアイシング（15分）</strong>：氷嚢や保冷剤で冷やし、炎症を最小限に抑える`,
@@ -1201,25 +1088,18 @@
   }
 
   // ==========================================
-  // 男子・女子別チャレンジ＆青春一言
+  // 男子部が燃えるチャレンジ＆青春一言（毎回ランダム生成）
   // ==========================================
   const boysChallenges = [
     "🔥 【今日の男子部ミッション】練習の最後の1本（または補強ラスト10秒）、声を出してチーム全体の空気を最高に盛り上げろ！一番声を出した奴が今日のMVPだ！",
     "💪 【ライバル勝負ミッション】同じブロックの仲間と『スタート反応勝負』または『体幹プランク耐久勝負』を1回だけやれ！競い合うことで限界の1歩先へ行ける！",
-    "⚡ 【カッコいい背中ミッション】後輩や見てくれている人は『キツい時に手を抜かない姿』を一番見ている。準備と片付けまで誰よりも速く動け！",
+    "⚡ 【カッコいい背中ミッション】後輩やマネージャー、見てくれている人は『キツい時に手を抜かない姿』を一番見ている。準備と片付けまで誰よりも速く動け！",
     "🏆 【自己超えミッション】今日の練習の中で『昨日までの自分より1ミリでも成長した点』を1つ見つけて、帰りに仲間に宣言しろ！"
-  ];
-
-  const girlsChallenges = [
-    "✨ 【今日の女子アスリート・ミッション】体調の波と上手に付き合いながら、今日は『動きの美しさ・フォームの丁寧さ』で一番輝こう！",
-    "🌸 【チームサポート・ミッション】女子部員同士で「ナイスファイト！」「今のフォーム綺麗だったよ！」とポジティブな声を掛け合って最高の雰囲気を作ろう！",
-    "💎 【ボディケア・ミッション】練習後のストレッチと鉄分・タンパク質補給まで完璧にやり切って、明日さらに動ける身体を作ろう！",
-    "🔥 【自己ベスト更新ミッション】男子に負けないくらい熱い気持ちで、自分の目標（PB・大会突破）に向かって一本一本の質にこだわろう！"
   ];
 
   const youthLoveTips = [
     "💘 【青春・恋愛アドバイス】好きな人が同じ学校や部活にいるなら、一番効くのは『自分の競技に本気で打ち込む姿』と『挨拶・笑顔の爽やかさ』！練習終わりに「お疲れ！今日も頑張ってたね」と一言声をかけるだけで距離は一気に縮まるぞ！",
-    "🌸 【青春・恋愛アドバイス】好きな人の前でカッコつけようと力むと、逆にフォームが崩れるもの（笑）。「見てくれてたらラッキー、今は目の前の1本に集中！」と切り替えた時の真剣な表情が一番魅力的に見える！",
+    "🌸 【青春・恋愛アドバイス】好きな人の前でカッコつけようと力むと、逆にフォームが崩れるもの（笑）。「見てくれてたらラッキー、今は目の前の1本に集中！」と切り替えた時の真剣な横顔が一番魅力的に見える！",
     "✨ 【青春・恋愛アドバイス】LINEや会話のきっかけに迷ったら、『今日〇〇の練習めっちゃキツかったわ〜！そっちはどうだった？』と部活や学校の共通の話題を聞くのが一番自然で返信率が高いぞ！",
     "🔥 【青春・人生アドバイス】高校の部活で流した汗と、誰かを応援したり恋に悩んだりした時間は、大人になっても一生の宝物になる。迷ったら『後悔しない方・一歩踏み出す方』を選べ！"
   ];
@@ -1233,7 +1113,7 @@
       blocks: [
         {
           head: "1. グラウンドでの「真剣な姿」が最強のアピールになる",
-          body: "無理に話しかけようと焦らなくても大丈夫。部活で本気で走ったり、仲間を大きな声で応援したり、キツい補強をやり切る姿は、相手から見て想像以上にカッコよく素敵に映ります。まずは自分の練習に100%集中しよう！"
+          body: "無理に話しかけようと焦らなくても大丈夫。男子が部活で本気で走ったり、仲間を大きな声で応援したり、キツい補強をやり切る姿は、女子から見て想像以上にカッコよく映ります。まずは自分の練習に100%集中しよう！"
         },
         {
           head: "2. 距離を縮める魔法の一言は「共感＋ねぎらい」",
@@ -1241,7 +1121,7 @@
         },
         {
           head: "3. 大会前・試合後のタイミングを逃すな！",
-          body: "大会前は「お互い自己ベスト出そうね！」、大会後は「お疲れ様！結果どうだった？」と自然に連絡や会話ができる最高のチャンス。勝っても負けても、相手を気遣える人が一番愛されます！"
+          body: "大会前は「お互い自己ベスト出そうね！」、大会後は「お疲れ様！結果どうだった？」と自然に連絡や会話ができる最高のチャンス。勝っても負けても、相手を気遣える男が一番モテます！"
         }
       ]
     },
@@ -1263,18 +1143,18 @@
       ]
     },
     boys: {
-      title: "💪 チームの絆＆アスリートとしての美学",
+      title: "💪 男子部員の絆＆チームを強くする男の美学",
       blocks: [
         {
           head: "1. 個人競技だからこそ「チームの空気」が記録を作る",
           body: "陸上は個人種目に見えて、実は『練習の雰囲気』で全員のタイムが変わります。キツいインターバルや補強の時に「ラスト1本いこうぜ！」「ナイスラン！」と声を掛け合えるチームは、県大会・インターハイでも圧倒的に強いです。"
         },
         {
-          head: "2. 男女お互いの体調や頑張りをリスペクトしよう",
-          body: "男子は爆発的なパワー、女子は柔軟性やリズム感などお互いから学べることはたくさんあります。また、女子には生理周期による体調の波があることも理解し合えると、チーム全体の信頼関係がぐっと深まります。"
+          head: "2. ライバルは「自分を強くしてくれる最高の相棒」",
+          body: "部内に自分より速い奴、遠くへ跳ぶ奴がいるのは最高の環境です。悔しさをバネにして「あいつに勝つためにウエイトあと1セットやろう」と思えた瞬間から、君の成長スピードは何倍にもなります。"
         },
         {
-          head: "3. 礼儀・挨拶・道具を大切にする選手は応援される",
+          head: "3. 礼儀・挨拶・道具を大切にする男は応援される",
           body: "グラウンドへの挨拶、ハードルやマットの片付け、スパイクの手入れ。こうした基本を徹底できる選手は、顧問の先生からも仲間からも信頼され、大事な場面で運を味方につけます。"
         }
       ]
@@ -1327,11 +1207,11 @@
       <p class="boys-text"><strong>【特徴】質の極限追求＆完全休息</strong><br>「60m〜80mの加速走 × 3〜4本」を<strong>一本ごとに8〜10分の完全休息</strong>を入れて100%のキレで走ります。ダラダラ何十本も走らず、神経系の最高出力とベンチプレス・ハイクリーンの爆発力を重視します。</p>
     </div>
     <div class="boys-challenge" style="margin-top:0; margin-bottom:14px; border-color:#38bdf8;">
-      <div class="boys-title" style="color:#38bdf8;">👟 長距離：大迫傑／田中希実スタイル</div>
-      <p class="boys-text"><strong>【特徴】8割の余裕ジョグ＋2割の高強度</strong><br>練習全体の80%は会話できるペースのジョグで毛細血管とフォームの土台を作り、週2回のポイント練習（1000m×5〜6本インターバル等）で一気に心肺を追い込みます。女子長距離選手は鉄分管理も徹底しています。</p>
+      <div class="boys-title" style="color:#38bdf8;">👟 長距離：大迫傑／キプチョゲスタイル</div>
+      <p class="boys-text"><strong>【特徴】8割の余裕ジョグ＋2割の高強度</strong><br>練習全体の80%は会話できるペースのジョグで毛細血管とフォームの土台を作り、週2回のポイント練習（1000m×5〜6本インターバル等）で一気に心肺を追い込みます。</p>
     </div>
     <div class="boys-challenge" style="margin-top:0; margin-bottom:14px; border-color:#f97316;">
-      <div class="boys-title" style="color:#fb923c;">🦘 跳躍：橋岡優輝／秦澄美鈴スタイル</div>
+      <div class="boys-title" style="color:#fb923c;">🦘 跳躍：橋岡優輝／カール・ルイススタイル</div>
       <p class="boys-text"><strong>【特徴】短助走跳躍＋プライオメトリクス</strong><br>足首や腰への過負荷を防ぐため、普段は「5〜7歩の短助走跳躍」と「バウンディング・スクワット」で助走スピードを真上へ変換するバネを徹底的に鍛えます。</p>
     </div>
     <div class="boys-challenge" style="margin-top:0; border-color:#a855f7;">
@@ -1353,7 +1233,24 @@
       chip.innerHTML = `<b style="cursor:pointer;">🏃 ${name}</b> <span title="削除">×</span>`;
       chip.querySelector("b").onclick = () => {
         document.getElementById("athlete-name").value = name;
-        alert(`👤 名前を「${name}」に切り替えました！`); }; chip.querySelector("span").onclick = () => { members.splice(idx, 1); saveAndRenderMembers(); }; listEl.appendChild(chip); }); }  const urlParams = new URLSearchParams(window.location.search); const friendName = urlParams.get("addFriend"); const friendEvent = urlParams.get("event"); if (friendName) { const label = friendEvent ? `${friendName}(${friendEvent})` : friendName; if (!members.includes(label)) { members.push(label); alert(`🎉 QRコードから「${label}」さんをメンバーに追加しました！`);
+        alert(`👤 名前を「${name}」に切り替えました！`);
+      };
+      chip.querySelector("span").onclick = () => {
+        members.splice(idx, 1);
+        saveAndRenderMembers();
+      };
+      listEl.appendChild(chip);
+    });
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const friendName = urlParams.get("addFriend");
+  const friendEvent = urlParams.get("event");
+  if (friendName) {
+    const label = friendEvent ? `${friendName}(${friendEvent})` : friendName;
+    if (!members.includes(label)) {
+      members.push(label);
+      alert(`🎉 QRコードから「${label}」さんをメンバーに追加しました！`);
     }
     window.history.replaceState({}, document.title, window.location.pathname);
   }
@@ -1375,11 +1272,12 @@
     const myEvent = document.getElementById("event-type").value;
     const myAim = document.getElementById("target-aim").value;
 
-    document.getElementById("qr-display-name").textContent = `${myName}（${selectedGender}）`;
-    document.getElementById("qr-display-info").textContent = `${myEvent} ｜${myAim}`;
+    document.getElementById("qr-display-name").textContent = myName;
+    document.getElementById("qr-display-info").textContent = `${myEvent} ｜ ${myAim}`;
 
     const baseUrl = window.location.origin + window.location.pathname;
-    const shareUrl = `${baseUrl}?addFriend=${encodeURIComponent(myName)}&event=${encodeURIComponent(myEvent)}`; const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(shareUrl)}`;
+    const shareUrl = `${baseUrl}?addFriend=${encodeURIComponent(myName)}&event=${encodeURIComponent(myEvent)}`;
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(shareUrl)}`;
 
     document.getElementById("qr-image").src = qrApiUrl;
     document.getElementById("qr-modal").style.display = "flex";
@@ -1399,10 +1297,11 @@
     const h = Math.floor(mins / 60);
     const m = mins % 60;
     if (h > 0 && m > 0) return `${h}時間${m}分`;
-    if (h > 0) return `${h}時間`; return `${m}分`;
+    if (h > 0) return `${h}時間`;
+    return `${m}分`;
   }
 
-  // メニューカード生成
+  // メニューカード生成（7種目リスト・休憩明記・図解付き）
   function createMenuHTML(summary, menus) {
     let html = `<div class="summary-text">${summary}</div>`;
     menus.forEach(item => {
@@ -1436,7 +1335,8 @@
           </div>
           ${svgContent}
           <p class="menu-desc">${item.howTo}</p>
-          ${stepsHTML}${restHTML}
+          ${stepsHTML}
+          ${restHTML}
           <div class="point-box">💡 コツ・意識：${item.point}</div>
         </div>
       `;
@@ -1449,6 +1349,7 @@
   document.getElementById("generate-btn").addEventListener("click", function() {
     setRandomQuote();
 
+    // 生成回数カウントアップ
     practiceCount += 1;
     localStorage.setItem("tf_practice_count", String(practiceCount));
     updateRankUI();
@@ -1460,10 +1361,6 @@
     const weightEnv = document.getElementById("weight-env").value;
     const fatigue = parseInt(document.getElementById("fatigue").value, 10);
     const pain = document.getElementById("pain").value;
-    const femaleCycle = selectedGender === "女子" ? document.getElementById("female-cycle").value : "なし";
-
-    const isPeriodPain = selectedGender === "女子" && femaleCycle === "生理中（腹痛・貧血・だるさあり）";
-    const isPeriodLight = selectedGender === "女子" && (femaleCycle === "生理中（軽め・動ける）" || femaleCycle === "生理前（PMS・身体が重い）");
 
     const timeLabel = formatMinutes(totalMins);
     const bannerEl = document.getElementById("goal-banner");
@@ -1471,7 +1368,27 @@
     const containerEl = document.getElementById("result-container");
     const bonusEl = document.getElementById("bonus-cards");
 
-    const cycleBannerText = selectedGender === "女子" ? ` ｜ 周期：${femaleCycle}` : ""; bannerEl.style.display = "block"; bannerEl.innerHTML = `👤 ${name}（${selectedGender}）｜【${eventType}】練習時間：${timeLabel}<br>🎯 目標：${targetAim}${cycleBannerText}`;  // 時間配分 const tWup = Math.max(10, Math.round((totalMins * 0.25) / 5) * 5); const tMain = Math.max(10, Math.round((totalMins * 0.40) / 5) * 5); const tWeight = Math.max(5, Math.round((totalMins * 0.20) / 5) * 5); const tCdown = Math.max(5, totalMins - tWup - tMain - tWeight);  const wup7Steps = getWarmUp7Steps(eventType, pain, isPeriodPain \vert{}\vert{} isPeriodLight); const cdown7Steps = getCoolDown7Steps(eventType, fatigue, pain, isPeriodPain \vert{}\vert{} isPeriodLight);  let statusTitle = ""; let summary = ""; let menus = [];  // 1. 痛みがある場合（最優先） if (pain !== "なし") { statusEl.style.backgroundColor = "#fee2e2"; statusEl.style.color = "#b91c1c"; statusTitle = `🚨 【怪我予防優先】${pain}のケア＆別メニュー（計${timeLabel}）`; summary = `<strong>【状態判断】</strong>「${pain}」にサインが出ています。目標（${targetAim}）のために、今日の${timeLabel}は患部を守りながら体幹と上半身を徹底強化しよう！`;
+    bannerEl.style.display = "block";
+    bannerEl.innerHTML = `👤 ${name} ｜【${eventType}】練習時間：${timeLabel}（器具：${weightEnv}）<br>🎯 目標：${targetAim}`;
+
+    // 時間配分（W-Up 25% / メイン 40% / ウエイト・補強 20% / C-Down 15%）
+    const tWup = Math.max(10, Math.round((totalMins * 0.25) / 5) * 5);
+    const tMain = Math.max(10, Math.round((totalMins * 0.40) / 5) * 5);
+    const tWeight = Math.max(5, Math.round((totalMins * 0.20) / 5) * 5);
+    const tCdown = Math.max(5, totalMins - tWup - tMain - tWeight);
+
+    const wup7Steps = getWarmUp7Steps(eventType, pain);
+    const cdown7Steps = getCoolDown7Steps(eventType, fatigue, pain);
+
+    let statusTitle = "";
+    let summary = "";
+    let menus = [];
+
+    if (pain !== "なし") {
+      statusEl.style.backgroundColor = "#fee2e2";
+      statusEl.style.color = "#b91c1c";
+      statusTitle = `🚨 【怪我予防優先】${pain}のケア＆別メニュー（計${timeLabel}）`;
+      summary = `<strong>【状態判断】</strong>「${pain}」にサインが出ています。目標（${targetAim}）のために、今日の${timeLabel}は患部を守りながら体幹と上半身を徹底強化しよう！`;
 
       menus = [
         {
@@ -1513,7 +1430,9 @@
         {
           phase: "4. クールダウン（個人別ケア7種目）",
           phaseClass: "phase-cdown",
-          name: `患部（${pain}）アイシング ＆ 回復ストレッチ7選`, duration: tCdown, target: `${pain}・全身の疲労抜き`,
+          name: `患部（${pain}）アイシング ＆ 回復ストレッチ7選`,
+          duration: tCdown,
+          target: `${pain}・全身の疲労抜き`,
           svgKey: "coolDownStretch",
           howTo: "以下の7ステップで炎症を抑え、回復を最大化します。",
           steps: cdown7Steps,
@@ -1521,76 +1440,7 @@
           point: "今日しっかりケアすれば復帰が劇的に早くなる！"
         }
       ];
-    } else if (isPeriodPain) {
-      // 2. 女子・生理中（腹痛・貧血・だるさあり）専用リカバリーメニュー
-      statusEl.style.backgroundColor = "#ffe4e6";
-      statusEl.style.color = "#be123c";
-      statusTitle = `🌸 【女子ケア最優先】生理痛・貧血配慮の低負荷メニュー（計${timeLabel}）`; summary = `<strong>【状態判断】</strong>生理中の腹痛・だるさ・貧血リスクがある時は、無理なダッシュや激しいジャンプ・重いウエイトは逆効果です。今日の${timeLabel}は<strong>「骨盤周りの血流改善・上半身技術・リラックス調整」</strong>に切り替えて、体調が戻った時に一気に記録を伸ばそう！`;
-
-      menus = [
-        {
-          phase: "1. ウォーミングアップ（保温＆骨盤ほぐし7種目）",
-          phaseClass: "phase-wup",
-          name: "生理中ケア・骨盤血流アップW-Up（7種目）",
-          duration: tWup,
-          target: "骨盤周辺・股関節・背骨",
-          svgKey: "dynamicStretch",
-          howTo: "お腹や腰を冷やさないようにしながら、以下の7種目でゆっくり血流を促します。",
-          steps: wup7Steps,
-          restInfo: "体調に合わせて1種目ごとに【45秒〜1分の休憩】＆温かい水分補給",
-          point: "少しでも立ちくらみや腹痛が強くなったら、すぐ座って休む勇気を持とう！"
-        },
-        {
-          phase: "2. メインメニュー（低衝撃・フォーム確認）",
-          phaseClass: "phase-main",
-          name: `${eventType}・リズムウォーキング ＆ 60\%フォーム流し`, duration: tMain, target: "神経系・美しいフォーム軌道の定着", svgKey: eventType === "投擲" ? "throwForm" : "sprintDrill", howTo: "息が上がるダッシュや跳躍は控え、歩きながらのドリル（腕振り・接地位置確認）と、体調が許す範囲で60\%の軽い流し（50m×2〜3本）を行います。", restInfo: "1本ごとに必ず【2〜3分の休憩】を入れて呼吸を整える", point: "生理中は関節が緩みやすく怪我をしやすい時期。スピードよりも『綺麗な形』だけ意識しよう！" }, { phase: "3. ウエイト・補強（お腹に圧をかけない軽補強）", phaseClass: "phase-weight", name: "上半身チューブ・腕振り補強 ＆ 股関節モビリティ", duration: tWeight, target: "肩甲骨まわり・広背筋・股関節インナー", svgKey: "coolDownStretch", howTo: "腹圧が強くかかる重いスクワットや激しい腹筋はお休みし、軽いチューブ引き（15回×2セット）や椅子に座っての腕振り、股関節の開閉ストレッチを行います。", restInfo: "セット間に【1分30秒の休憩】を入れる", point: "上半身の連動性を高めておけば、生理が終わった好調期に一気にタイムが跳ね上がるよ！" }, { phase: "4. クールダウン（保温＆鉄分チャージ7種目）", phaseClass: "phase-cdown", name: "生理中専用・骨盤リラックス＆鉄分補給7選", duration: tCdown, target: "骨盤・腰まわり・全身の保温", svgKey: "coolDownStretch", howTo: "以下の7ステップで身体を冷やさず回復させます。", steps: cdown7Steps, restInfo: "練習後は【15分の保温＆リラックス休憩】をとろう", point: "レバー・赤身肉・ほうれん草・豆乳など、鉄分とタンパク質を意識して食べよう！" } ]; } else if (isPeriodLight) { // 3. 女子・生理中（軽め・動ける）または生理前（PMS）メニュー statusEl.style.backgroundColor = "#fce7f3"; statusEl.style.color = "#9d174d"; statusTitle = `🌷 【女子コンディショニング】${femaleCycle} 最適メニュー（計${timeLabel}）`; summary = `<strong>【状態判断】</strong>「${femaleCycle}」に合わせて、身体の重さやむくみを解消しながら、無理なく質の高い動きを作るメニューです。全力の100%ではなく<strong>「80〜85%のキレとフォーム重視」</strong>で取り組もう！`;
-
-      menus = [
-        {
-          phase: "1. ウォーミングアップ（むくみ解消＆可動域7種目）",
-          phaseClass: "phase-wup",
-          name: `${eventType}・リズム＆血流アップW-Up（7種目）`, duration: tWup, target: "骨盤まわり・股関節・足首のバネ", svgKey: "dynamicStretch", howTo: "身体の重さを吹き飛ばすため、以下の7ステップで丁寧に関節を動かします。", steps: wup7Steps, restInfo: "ドリル1本ごとに【45秒の休憩】を入れて呼吸を整える", point: "いつもより少し長めにアップして、身体が温まってからメインに入ろう！" }, { phase: "2. メインメニュー（80〜85\%の質重視トレーニング）", phaseClass: "phase-main", name: `${eventType}・85%フォーム＆リズム強化メニュー`,
-          duration: tMain,
-          target: "神経系・スピード持久力・技術精度",
-          svgKey: eventType === "投擲" ? "throwForm" : (eventType === "跳躍" ? "boundingJump" : "startDash"),
-          howTo: eventType === "短距離"
-            ? "スタートダッシュ（30m×2本）＋ 85%の快調走（80m〜100m×3本）で力みのないフォームを作ります。"
-            : (eventType === "長距離"
-              ? "ペース走（2000m〜3000m 余裕を持った設定）＋ 100m流し3本でリズムを刻みます。"
-              : (eventType === "跳躍"
-                ? "短助走跳躍（5歩助走×5本）で踏切のタイミングと空中姿勢を確認します。"
-                : "立ち投げ・ターン投げ（計12本）でリリース角度と左半身の壁を確認します。")),
-          restInfo: "1本ごとに【3分の休憩（給水）】を入れて集中力を保つ",
-          point: "身体が重く感じても焦らなくて大丈夫！今日できるベストの動きを積み重ねよう。"
-        },
-        {
-          phase: "3. ウエイト・補強（自重・体幹＆お尻強化）",
-          phaseClass: "phase-weight",
-          name: weightEnv === "あり" ? "軽〜中負荷スクワット ＆ 体幹プランク" : "グルートブリッジ ＆ サイドプランク補強",
-          duration: tWeight,
-          target: "大殿筋・中殿筋・腹横筋",
-          svgKey: "plankCore",
-          howTo: weightEnv === "あり"
-            ? "軽めの重量でのスクワット（10回×2セット）とフロント＆サイドプランク（各30秒×2セット）を行います。"
-            : "グルートブリッジ（15回×3セット）とサイドプランク（左右30秒×2セット）で骨盤の安定性を高めます。",
-          restInfo: "セット間に【1分30秒の休憩】を入れる",
-          point: "骨盤のブレを防ぐお尻の横（中殿筋）を鍛えると、走りと跳躍がグッと安定するよ！"
-        },
-        {
-          phase: "4. クールダウン（女子ケア7種目）",
-          phaseClass: "phase-cdown",
-          name: "骨盤・股関節ケア ＆ 鉄分リカバリー7選",
-          duration: tCdown,
-          target: "股関節・腰・ふくらはぎ",
-          svgKey: "coolDownStretch",
-          howTo: "以下の7ステップで冷えと疲労を防ぎます。",
-          steps: cdown7Steps,
-          restInfo: "終了後は【10分の給水＆リラックス休憩】",
-          point: "練習後の保温と栄養補給で、次の好調期に向けて最高の準備をしよう！"
-        }
-      ];
     } else if (fatigue >= 4 || targetAim === "怪我ゼロで毎日楽しく継続！") {
-      // 4. 疲労が高い場合 or 怪我ゼロ継続目標
       statusEl.style.backgroundColor = "#e0f2fe";
       statusEl.style.color = "#0369a1";
       statusTitle = `💧 【調整・フォーム重視】${eventType} コンディショニング（計${timeLabel}）`;
@@ -1600,7 +1450,19 @@
         {
           phase: "1. ウォーミングアップ（7種目フル構成）",
           phaseClass: "phase-wup",
-          name: `${eventType}専用・疲労抜き＆可動域アップW-Up（7種目）`, duration: tWup, target: "全身の血流・股関節・肩甲骨", svgKey: "dynamicStretch", howTo: "筋肉のポンプ作用で疲労を抜きながら、7つの動きで関節をほぐします。", steps: wup7Steps, restInfo: "ドリル1本ごとに【45秒の休憩（歩きつなぎ）】を入れる", point: "力みを抜いて気持ちよく動こう！" }, { phase: "2. メインメニュー（技術・フォーム定着）", phaseClass: "phase-main", name: `${eventType}・70%フォーム確認ドリル`,
+          name: `${eventType}専用・疲労抜き＆可動域アップW-Up（7種目）`,
+          duration: tWup,
+          target: "全身の血流・股関節・肩甲骨",
+          svgKey: "dynamicStretch",
+          howTo: "筋肉のポンプ作用で疲労を抜きながら、7つの動きで関節をほぐします。",
+          steps: wup7Steps,
+          restInfo: "ドリル1本ごとに【45秒の休憩（歩きつなぎ）】を入れる",
+          point: "力みを抜いて気持ちよく動こう！"
+        },
+        {
+          phase: "2. メインメニュー（技術・フォーム定着）",
+          phaseClass: "phase-main",
+          name: `${eventType}・70%フォーム確認ドリル`,
           duration: tMain,
           target: "神経系・理想のフォーム軌道",
           svgKey: eventType === "投擲" ? "throwForm" : (eventType === "跳躍" ? "boundingJump" : "sprintDrill"),
@@ -1628,12 +1490,11 @@
           svgKey: "coolDownStretch",
           howTo: "翌日に疲れを残さないための7ステップのクールダウンです。",
           steps: cdown7Steps,
-          restInfo: "練習終了後は【15分の完全リラックス休憩】をとろう",
+          restInfo: "練習終了後はスマホを置いて【15分の完全リラックス休憩】をとろう",
           point: "睡眠もトレーニングの一部！今夜は早めに寝よう。"
         }
       ];
     } else {
-      // 5. コンディション良好！種目ブロック別フルメニュー
       statusEl.style.backgroundColor = "#dcfce7";
       statusEl.style.color = "#15803d";
       statusTitle = `🔥 【絶好調】${eventType} パワーアップ・フルメニュー（計${timeLabel}）`;
@@ -1657,7 +1518,59 @@
           {
             phase: "2. メインメニュー（スプリント強化）",
             phaseClass: "phase-main",
-            name: `スタートダッシュ ＆ 加速走（${dashSets}）`, duration: tMain, target: "大殿筋・ハムストリングス（爆発的加速）", svgKey: "startDash", howTo: "最初の10mの低い前傾姿勢から、トップスピードへ一気に繋げます。", restInfo: "【重要】1本ごとに必ず【4〜5分の完全休憩（給水）】を入れる！", point: "疲れた状態でダラダラ走らず、100\%のキレで1本ずつ走り切る！" }, { phase: "3. ウエイト・フィジカル補強", phaseClass: "phase-weight", name: weightEnv === "あり" ? "ベンチプレス ＆ スクワット（瞬発系）" : "爆発的プッシュアップ ＆ ジャンプスクワット", duration: tWeight, target: "大胸筋・大腿四頭筋・大殿筋", svgKey: weightEnv === "あり" ? "benchPress" : "squatClean", howTo: weightEnv === "あり" ? "ベンチプレス（8回×3セット）で腕振りのパワーを高め、スクワット（8回×3セット）で地面を強く押す脚力を作ります。" : "高速腕立て伏せ（12回×3セット）と全力ジャンプスクワット（10回×3セット）を行います。", restInfo: "セット間に【2分の休憩】を入れて呼吸を整える", point: "重さよりも『挙げるスピード（爆発力）』を意識しよう！" }, { phase: "4. クールダウン（短距離ケア7種目）", phaseClass: "phase-cdown", name: "短距離専用・疲労リセットストレッチ7選", duration: tCdown, target: "お尻・ハムストリングス・足裏", svgKey: "coolDownStretch", howTo: "スプリントで酷使した筋肉を以下の7ステップで丁寧にケアします。", steps: cdown7Steps, restInfo: "ストレッチ後は【10分の給水＆クールダウン休憩】", point: "ケアまでやり切ってこそインターハイ・自己ベストに近づく！" } ]; } else if (eventType === "長距離") { const repCount = totalMins <= 60 ? "1000m × 2〜3本" : (totalMins >= 180 ? "1000m × 5〜7本 ＋ 距離走" : "1000m × 3〜5本"); menus = [ { phase: "1. ウォーミングアップ（長距離7種目）", phaseClass: "phase-wup", name: "心肺起動＆省エネフォーム作り・W-Up（7種目）", duration: tWup, target: "心肺機能・股関節・肩甲骨", svgKey: "dynamicStretch", howTo: "以下の7種目で呼吸と脚の回転をスムーズにします。", steps: wup7Steps, restInfo: "流し（100m）の合間に【1分の歩き休憩】を入れる", point: "骨盤の真下に接地し、ブレーキをかけない走法を作ろう！" }, { phase: "2. メインメニュー（スピード持久力）", phaseClass: "phase-main", name: `インターバル走（${repCount}）＋ 流し3本`,
+            name: `スタートダッシュ ＆ 加速走（${dashSets}）`,
+            duration: tMain,
+            target: "大殿筋・ハムストリングス（爆発的加速）",
+            svgKey: "startDash",
+            howTo: "最初の10mの低い前傾姿勢から、トップスピードへ一気に繋げます。",
+            restInfo: "【重要】1本ごとに必ず【4〜5分の完全休憩（給水）】を入れる！",
+            point: "疲れた状態でダラダラ走らず、100%のキレで1本ずつ走り切る！"
+          },
+          {
+            phase: "3. ウエイト・フィジカル補強",
+            phaseClass: "phase-weight",
+            name: weightEnv === "あり" ? "ベンチプレス ＆ スクワット（瞬発系）" : "爆発的プッシュアップ ＆ ジャンプスクワット",
+            duration: tWeight,
+            target: "大胸筋・大腿四頭筋・大殿筋",
+            svgKey: weightEnv === "あり" ? "benchPress" : "squatClean",
+            howTo: weightEnv === "あり"
+              ? "ベンチプレス（8回×3セット）で腕振りのパワーを高め、スクワット（8回×3セット）で地面を強く押す脚力を作ります。"
+              : "高速腕立て伏せ（12回×3セット）と全力ジャンプスクワット（10回×3セット）を行います。",
+            restInfo: "セット間に【2分の休憩】を入れて呼吸を整える",
+            point: "重さよりも『挙げるスピード（爆発力）』を意識しよう！"
+          },
+          {
+            phase: "4. クールダウン（短距離ケア7種目）",
+            phaseClass: "phase-cdown",
+            name: "短距離専用・疲労リセットストレッチ7選",
+            duration: tCdown,
+            target: "お尻・ハムストリングス・足裏",
+            svgKey: "coolDownStretch",
+            howTo: "スプリントで酷使した筋肉を以下の7ステップで丁寧にケアします。",
+            steps: cdown7Steps,
+            restInfo: "ストレッチ後は【10分の給水＆クールダウン休憩】",
+            point: "ケアまでやり切ってこそインターハイ・自己ベストに近づく！"
+          }
+        ];
+      } else if (eventType === "長距離") {
+        const repCount = totalMins <= 60 ? "1000m × 2〜3本" : (totalMins >= 180 ? "1000m × 5〜7本 ＋ 距離走" : "1000m × 3〜5本");
+        menus = [
+          {
+            phase: "1. ウォーミングアップ（長距離7種目）",
+            phaseClass: "phase-wup",
+            name: "心肺起動＆省エネフォーム作り・W-Up（7種目）",
+            duration: tWup,
+            target: "心肺機能・股関節・肩甲骨",
+            svgKey: "dynamicStretch",
+            howTo: "以下の7種目で呼吸と脚の回転をスムーズにします。",
+            steps: wup7Steps,
+            restInfo: "流し（100m）の合間に【1分の歩き休憩】を入れる",
+            point: "骨盤の真下に接地し、ブレーキをかけない走法を作ろう！"
+          },
+          {
+            phase: "2. メインメニュー（スピード持久力）",
+            phaseClass: "phase-main",
+            name: `インターバル走（${repCount}）＋ 流し3本`,
             duration: tMain,
             target: "最大酸素摂取量・心肺持久力",
             svgKey: "sprintDrill",
@@ -1709,7 +1622,60 @@
           {
             phase: "2. メインメニュー（踏切＆空中技術）",
             phaseClass: "phase-main",
-            name: `助走合わせ ＆ 跳躍練習（${jumpReps}）`, duration: tMain, target: "踏切技術・空中姿勢コントロール", svgKey: "boundingJump", howTo: "踏切板（バー）への入り方と、最後の2歩のリズム（タ・タン！）を集中して確認しながら跳躍します。", restInfo: "1本跳ぶごとに【3〜4分の休憩】を入れて助走の精度を高める", point: "助走スピードを殺さず、真上・斜め上へ一気に変換しよう！" }, { phase: "3. ウエイト・瞬発フィジカル補強", phaseClass: "phase-weight", name: weightEnv === "あり" ? "スクワット ＆ ベンチプレス（瞬発系）" : "ジャンプスクワット ＆ 吊り下げレッグレイズ", duration: tWeight, target: "大腿四頭筋・大殿筋・腸腰筋", svgKey: "squatClean", howTo: weightEnv === "あり" ? "スクワット（8回×3セット）で踏切の爆発力を鍛え、ベンチプレス（8回×2セット）で腕の引き上げ力を強化します。" : "全力ジャンプスクワット（10回×3セット）とレッグレイズ（15回×3セット）を行います。", restInfo: "セット間に【2分の休憩】を入れる", point: "踏切の一瞬で地面を突き破る爆発力を養おう！" }, { phase: "4. クールダウン（跳躍ケア7種目）", phaseClass: "phase-cdown", name: "跳躍専用・足首＆股関節ケア7選", duration: tCdown, target: "足首・アキレス腱・腸腰筋・腰", svgKey: "coolDownStretch", howTo: "踏切衝撃を受けた足首と股関節を以下の7ステップでケアします。", steps: cdown7Steps, restInfo: "終了後は【10分のアイシング＆休憩】", point: "足首と股関節の柔軟性が大きな跳躍を生む！" } ]; } else { // 投擲 const throwReps = totalMins <= 60 ? "立ち投げ・ターン投げ 計10本" : (totalMins >= 180 ? "立ち投げ10本 ＋ 全力投擲15〜20本" : "立ち投げ・助走投げ 計15本"); menus = [ { phase: "1. ウォーミングアップ（投擲7種目）", phaseClass: "phase-wup", name: "全身連動＆肩甲骨モビリティ・W-Up（7種目）", duration: tWup, target: "肩甲骨・体幹回旋・股関節", svgKey: "dynamicStretch", howTo: "以下の7種目で下半身から指先まで力を伝える準備をします。", steps: wup7Steps, restInfo: "メディシンボール投げの合間に【1分の休憩】を入れる", point: "腕の力だけで投げず、下半身からのエネルギーを伝えよう！" }, { phase: "2. メインメニュー（投擲技術）", phaseClass: "phase-main", name: `投擲技術練習（${throwReps}）`,
+            name: `助走合わせ ＆ 跳躍練習（${jumpReps}）`,
+            duration: tMain,
+            target: "踏切技術・空中姿勢コントロール",
+            svgKey: "boundingJump",
+            howTo: "踏切板（バー）への入り方と、最後の2歩のリズム（タ・タン！）を集中して確認しながら跳躍します。",
+            restInfo: "1本跳ぶごとに【3〜4分の休憩】を入れて助走の精度を高める",
+            point: "助走スピードを殺さず、真上・斜め上へ一気に変換しよう！"
+          },
+          {
+            phase: "3. ウエイト・瞬発フィジカル補強",
+            phaseClass: "phase-weight",
+            name: weightEnv === "あり" ? "スクワット ＆ ベンチプレス（瞬発系）" : "ジャンプスクワット ＆ 吊り下げレッグレイズ",
+            duration: tWeight,
+            target: "大腿四頭筋・大殿筋・腸腰筋",
+            svgKey: "squatClean",
+            howTo: weightEnv === "あり"
+              ? "スクワット（8回×3セット）で踏切の爆発力を鍛え、ベンチプレス（8回×2セット）で腕の引き上げ力を強化します。"
+              : "全力ジャンプスクワット（10回×3セット）とレッグレイズ（15回×3セット）を行います。",
+            restInfo: "セット間に【2分の休憩】を入れる",
+            point: "踏切の一瞬で地面を突き破る爆発力を養おう！"
+          },
+          {
+            phase: "4. クールダウン（跳躍ケア7種目）",
+            phaseClass: "phase-cdown",
+            name: "跳躍専用・足首＆股関節ケア7選",
+            duration: tCdown,
+            target: "足首・アキレス腱・腸腰筋・腰",
+            svgKey: "coolDownStretch",
+            howTo: "踏切衝撃を受けた足首と股関節を以下の7ステップでケアします。",
+            steps: cdown7Steps,
+            restInfo: "終了後は【10分のアイシング＆休憩】",
+            point: "足首と股関節の柔軟性が大きな跳躍を生む！"
+          }
+        ];
+      } else {
+        // 投擲
+        const throwReps = totalMins <= 60 ? "立ち投げ・ターン投げ 計10本" : (totalMins >= 180 ? "立ち投げ10本 ＋ 全力投擲15〜20本" : "立ち投げ・助走投げ 計15本");
+        menus = [
+          {
+            phase: "1. ウォーミングアップ（投擲7種目）",
+            phaseClass: "phase-wup",
+            name: "全身連動＆肩甲骨モビリティ・W-Up（7種目）",
+            duration: tWup,
+            target: "肩甲骨・体幹回旋・股関節",
+            svgKey: "dynamicStretch",
+            howTo: "以下の7種目で下半身から指先まで力を伝える準備をします。",
+            steps: wup7Steps,
+            restInfo: "メディシンボール投げの合間に【1分の休憩】を入れる",
+            point: "腕の力だけで投げず、下半身からのエネルギーを伝えよう！"
+          },
+          {
+            phase: "2. メインメニュー（投擲技術）",
+            phaseClass: "phase-main",
+            name: `投擲技術練習（${throwReps}）`,
             duration: tMain,
             target: "投擲フォームの軸・リリース角度",
             svgKey: "throwForm",
@@ -1749,17 +1715,52 @@
     statusEl.textContent = statusTitle;
     containerEl.innerHTML = createMenuHTML(summary, menus);
 
-    // 男子・女子に応じたミッション＆青春一言を表示
-    const missionPool = selectedGender === "男子" ? boysChallenges : girlsChallenges;
-    const missionTitle = selectedGender === "男子" ? "🔥 今日の男子部員・熱血ミッション" : "✨ 今日の女子アスリート・輝きミッション";
-    const randomMission = missionPool[Math.floor(Math.random() * missionPool.length)];
+    // 男子部が燃えるチャレンジ＆青春一言を表示
+    const randomBoys = boysChallenges[Math.floor(Math.random() * boysChallenges.length)];
     const randomLove = youthLoveTips[Math.floor(Math.random() * youthLoveTips.length)];
 
     bonusEl.style.display = "block";
     bonusEl.innerHTML = `
       <div class="boys-challenge">
-        <div class="boys-title">${missionTitle}</div>
-        <p class="boys-text">${randomMission}</p>
+        <div class="boys-title">🔥 今日の男子部員・熱血ミッション</div>
+        <p class="boys-text">${randomBoys}</p>
       </div>
       <div class="youth-card">
         <div class="youth-title">💘 今日の青春＆恋愛ワンポイント</div>
+        <p class="youth-text">${randomLove}</p>
+      </div>
+    `;
+
+    // 共有用テキスト作成
+    const menuNames = menus.map(m => `・${m.name}（${m.duration}分）`).join("\n");
+    latestShareText = 
+      `🥇【陸上部メニュー共有】\n` +
+      `名前：${name}（${eventType}）\n` +
+      `目標：${targetAim}\n` +
+      `時間：${timeLabel}（器具：${weightEnv}）\n` +
+      `判定：${statusTitle}\n\n` +
+      `▼今日のメニュー\n${menuNames}\n\n` +
+      `今日も自己ベスト目指して頑張ろう🔥`;
+
+    document.getElementById("share-section").style.display = "block";
+    document.getElementById("result-card").scrollIntoView({ behavior: "smooth" });
+  });
+
+  // LINEで送るボタン
+  document.getElementById("line-share-btn").addEventListener("click", () => {
+    if (!latestShareText) return;
+    const url = "https://line.me/R/msg/text/?" + encodeURIComponent(latestShareText);
+    window.open(url, "_blank");
+  });
+
+  // コピーボタン
+  document.getElementById("copy-share-btn").addEventListener("click", () => {
+    if (!latestShareText) return;
+    navigator.clipboard.writeText(latestShareText).then(() => {
+      alert("今日のメニューをコピーしました！LINEグループやメモに貼り付けて共有できます🔥");
+    });
+  });
+</script>
+
+</body>
+</html>
