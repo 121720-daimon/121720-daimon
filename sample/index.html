@@ -1,178 +1,188 @@
-import tkinter as tk
-from tkinter import messagebox, ttk
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スプリントコンディション分析・練習メニュー自動提案アプリ</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    }
+    body {
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+    }
+    .app-container {
+      width: 100%;
+      max-width: 540px;
+    }
+    h1 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #2c3e50;
+      text-align: center;
+      margin: 12px 0 16px 0;
+    }
+    fieldset {
+      background-color: #ffffff;
+      border: 1px solid #d0d7de;
+      border-radius: 4px;
+      padding: 12px 15px;
+      margin-bottom: 12px;
+    }
+    legend {
+      font-size: 13px;
+      font-weight: bold;
+      color: #2c3e50;
+      padding: 0 6px;
+    }
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      gap: 10px;
+    }
+    label {
+      font-size: 14px;
+      color: #333;
+      flex: 1;
+    }
+    select {
+      width: 220px;
+      padding: 6px 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+    }
+    .btn-wrapper {
+      text-align: center;
+      margin: 16px 0;
+    }
+    button {
+      background-color: #27ae60;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #219150;
+    }
+    button:active {
+      background-color: #1e8449;
+    }
+    #output-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #7f8c8d;
+      margin: 4px 0 8px 0;
+    }
+    #output-detail {
+      width: 100%;
+      min-height: 240px;
+      background-color: #f8f9fa;
+      border: 1px solid #d0d7de;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #222;
+      white-space: pre-wrap;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
 
+<div class="app-container">
+  <h1>🏃‍♂️ コンディション連動型スプリントメニュー提案 🏃‍♀️</h1>
 
-def calculate_menu():
-    fatigue = int(fatigue_var.get()[0])  # 先頭の数字を取得 (1〜5)
-    pain = pain_var.get()
-    goal = goal_var.get()
+  <fieldset>
+    <legend>本日のコンディション入力</legend>
+    
+    <div class="form-row">
+      <label for="fatigue">1. 今日の疲労度:</label>
+      <select id="fatigue">
+        <option value="1">1 (絶好調)</option>
+        <option value="2" selected>2 (良好)</option>
+        <option value="3">3 (普通・やや疲労)</option>
+        <option value="4">4 (疲労あり)</option>
+        <option value="5">5 (非常に重い)</option>
+      </select>
+    </div>
 
-    result_title = ""
-    result_detail = ""
+    <div class="form-row">
+      <label for="pain">2. 身体の違和感・痛み:</label>
+      <select id="pain">
+        <option value="なし" selected>なし</option>
+        <option value="太もも裏（ハムストリングス）">太もも裏（ハムストリングス）</option>
+        <option value="脛（シンスプリント気配）">脛（シンスプリント気配）</option>
+        <option value="膝">膝</option>
+        <option value="足首・ふくらはぎ">足首・ふくらはぎ</option>
+      </select>
+    </div>
 
-    # 1. 痛みの安全判定（怪我予防を最優先）
-    if pain == "太もも裏（ハムストリングス）":
-        result_title = "【警告】スプリント即中止！リカバリー優先"
-        result_detail = (
-            "■ 状態判断: 太もも裏に痛みのサインがあります。肉離れのリスクが極めて高いため、本日のダッシュは全面禁止です。\n\n"
-            "■ 推奨メニュー:\n"
-            " 1. 患部のアイシング ＆ 軽めの静的ストレッチ\n"
-            " 2. 上半身の体幹トレーニング（プランク 30秒×3セット）\n"
-            " 3. 栄養補給 ＆ 早めの就寝\n\n"
-            "※痛みが続く場合は無理をせず専門院を受診してください。"
-        )
-    elif pain == "脛（シンスプリント気配）":
-        result_title = "【注意】走り込み量50%削減 ＆ 補強メイン"
-        result_detail = (
-            "■ 状態判断: 脛周辺に負荷がかかっています。着地衝撃を減らし、土台補強に切り替えます。\n\n"
-            "■ 推奨メニュー:\n"
-            " 1. W-Up: 足首・ふくらはぎの丁寧なほぐし\n"
-            " 2. 補強ドリル:\n"
-            "    - グルートブリッジ（お尻の補強） 15回×3セット\n"
-            "    - シングルレッグ・スクワット 各10回\n"
-            " 3. 走力練習: 80%の流し 3本のみ（着地衝撃を抑える）"
-        )
-    elif pain in ["膝", "足首・ふくらはぎ"]:
-        result_title = "【慎重】低衝撃・フォーム確認ドリル中心"
-        result_detail = (
-            f"■ 状態判断: {pain}に違和感があります。インパクトの大きい全力走は避け、動きの確認に留めます。\n\n"
-            "■ 推奨メニュー:\n"
-            " 1. 動き作り: ミニハードルドリル（膝の畳み込み意識）\n"
-            " 2. 流し走: 70〜80%の力でフォーム確認 4本\n"
-            " 3. 練習後の丁寧なアイシング"
-        )
-    else:
-        # 2. 痛みなしの場合、疲労度（RPE）による条件分岐
-        if fatigue <= 2:
-            result_title = "【絶好調】スピード ＆ 限界突破メニュー"
-            result_detail = (
-                "■ 状態判断: コンディション良好！「量より質」で最高スピードを高める日です。\n\n"
-                "■ 推奨メニュー:\n"
-                " 1. W-Up: 動的ストレッチ ＋ ランジウォーク\n"
-                " 2. 動き作りドリル:\n"
-                "    - ハイニー（股関節・引き付け意識）\n"
-                "    - Aスキップ（シザース動作と連動）\n"
-                " 3. メイン: 全力スプリント（30m〜60m）× 5〜8本（十分なセット間休憩をとる）\n"
-                " 4. 撮影チェック: 最小膝角度（目標30〜35度）の畳み込みを意識！"
-            )
-        elif fatigue == 3:
-            result_title = "【調整日】主観的努力度80%のフォーム定着メニュー"
-            result_detail = (
-                "■ 状態判断: 適度な疲労感があります。力まず80%の力で効率的なフォームを定着させます。\n\n"
-                "■ 推奨メニュー:\n"
-                " 1. リラックスドリル: 肩甲骨スキップ（可動域拡大と力み解消）\n"
-                " 2. メイン: 80%努力度でのスプリント 5本\n"
-                "    ※80%の力でも最大速度の約9割が出せ、フォームの崩れや無駄な力みを防げます。\n"
-                " 3. 意識ポイント: 前方で肘を深く畳む（約75度）イメージ"
-            )
-        else:  # fatigue >= 4
-            result_title = "【疲労困憊】完全リカバリー ＆ 体幹日"
-            result_detail = (
-                "■ 状態判断: 疲労が蓄積しています。無理に走るとフォーム悪化や怪我に繋がります。\n\n"
-                "■ 推奨メニュー:\n"
-                " 1. 20分程度の軽めのジョギング ＆ ストレッチ\n"
-                " 2. 体幹トレーニング（プランク・サイドプランク）\n"
-                " 3. 交代浴（冷水・温水）や丁寧な入浴による疲労回復"
-            )
+    <div class="form-row">
+      <label for="goal">3. 今日の主な目的:</label>
+      <select id="goal">
+        <option value="スピード・技術向上" selected>スピード・技術向上</option>
+        <option value="フォーム意識・リラックス">フォーム意識・リラックス</option>
+        <option value="体幹・補強">体幹・補強</option>
+        <option value="疲労回復">疲労回復</option>
+      </select>
+    </div>
+  </fieldset>
 
-    # 結果描画の更新
-    color = "#d9534f" if "警告" in result_title or "注意" in result_title else "#0275d8"
-    output_label.config(text=result_title, fg=color)
-    output_text.delete("1.0", tk.END)
-    output_text.insert(tk.END, result_detail)
+  <div class="btn-wrapper">
+    <button type="button" onclick="calculateMenu()">🔍 最適な練習メニューを生成する</button>
+  </div>
 
+  <fieldset>
+    <legend>判定結果 ＆ 推奨メニュー</legend>
+    <div id="output-title">コンディションを入力してボタンを押してください</div>
+    <div id="output-detail"></div>
+  </fieldset>
+</div>
 
-# GUI画面の設定
-root = tk.Tk()
-root.title("スプリントコンディション分析・練習メニュー自動提案アプリ")
-root.geometry("540x640")
-root.configure(bg="#f4f6f8")
+<script>
+  function calculateMenu() {
+    const fatigue = parseInt(document.getElementById("fatigue").value, 10);
+    const pain = document.getElementById("pain").value;
+    const goal = document.getElementById("goal").value;
 
-# アプリタイトル
-title_label = tk.Label(
-    root,
-    text="🏃‍♂️ コンディション連動型スプリントメニュー提案 🏃‍♀️",
-    font=("Helvetica", 13, "bold"),
-    bg="#f4f6f8",
-    fg="#2c3e50",
-)
-title_label.pack(pady=12)
+    let resultTitle = "";
+    let resultDetail = "";
 
-# 入力フォームエリア
-input_frame = tk.LabelFrame(
-    root, text="本日のコンディション入力", font=("Helvetica", 10, "bold"), bg="#ffffff", padx=15, pady=10
-)
-input_frame.pack(fill="x", padx=15, pady=5)
-
-# 1. 疲労度入力
-tk.Label(input_frame, text="1. 今日の疲労度:", bg="#ffffff").grid(row=0, column=0, sticky="w", pady=6)
-fatigue_var = tk.StringVar(value="2 (良好)")
-fatigue_combo = ttk.Combobox(
-    input_frame,
-    textvariable=fatigue_var,
-    values=["1 (絶好調)", "2 (良好)", "3 (普通・やや疲労)", "4 (疲労あり)", "5 (非常に重い)"],
-    width=22,
-    state="readonly",
-)
-fatigue_combo.current(1)
-fatigue_combo.grid(row=0, column=1, pady=6)
-
-# 2. 痛みの部位入力
-tk.Label(input_frame, text="2. 身体の違和感・痛み:", bg="#ffffff").grid(row=1, column=0, sticky="w", pady=6)
-pain_var = tk.StringVar(value="なし")
-pain_combo = ttk.Combobox(
-    input_frame,
-    textvariable=pain_var,
-    values=["なし", "太もも裏（ハムストリングス）", "脛（シンスプリント気配）", "膝", "足首・ふくらはぎ"],
-    width=22,
-    state="readonly",
-)
-pain_combo.current(0)
-pain_combo.grid(row=1, column=1, pady=6)
-
-# 3. 目的入力
-tk.Label(input_frame, text="3. 今日の主な目的:", bg="#ffffff").grid(row=2, column=0, sticky="w", pady=6)
-goal_var = tk.StringVar(value="スピード・技術向上")
-goal_combo = ttk.Combobox(
-    input_frame,
-    textvariable=goal_var,
-    values=["スピード・技術向上", "フォーム意識・リラックス", "体幹・補強", "疲労回復"],
-    width=22,
-    state="readonly",
-)
-goal_combo.current(0)
-goal_combo.grid(row=2, column=1, pady=6)
-
-# 判定ボタン
-calc_btn = tk.Button(
-    root,
-    text="🔍 最適な練習メニューを生成する",
-    font=("Helvetica", 11, "bold"),
-    bg="#27ae60",
-    fg="white",
-    activebackground="#219150",
-    command=calculate_menu,
-    pady=6,
-    cursor="hand2",
-)
-calc_btn.pack(pady=12)
-
-# 結果表示エリア
-output_frame = tk.LabelFrame(
-    root, text="判定結果 ＆ 推奨メニュー", font=("Helvetica", 10, "bold"), bg="#ffffff", padx=15, pady=10
-)
-output_frame.pack(fill="both", expand=True, padx=15, pady=5)
-
-output_label = tk.Label(
-    output_frame,
-    text="コンディションを入力してボタンを押してください",
-    font=("Helvetica", 11, "bold"),
-    bg="#ffffff",
-    fg="#7f8c8d",
-)
-output_label.pack(anchor="w", pady=4)
-
-output_text = tk.Text(output_frame, font=("Helvetica", 10), wrap="word", bg="#f8f9fa", height=12)
-output_text.pack(fill="both", expand=True, pady=4)
-
-root.mainloop()
+    // 1. 痛みの安全判定（怪我予防を最優先）
+    if (pain === "太もも裏（ハムストリングス）") {
+      resultTitle = "【警告】スプリント即中止！リカバリー優先";
+      resultDetail = 
+        "■ 状態判断: 太もも裏に痛みのサインがあります。肉離れのリスクが極めて高いため、本日のダッシュは全面禁止です。\n\n" +
+        "■ 推奨メニュー:\n" +
+        " 1. 患部のアイシング ＆ 軽めの静的ストレッチ\n" +
+        " 2. 上半身の体幹トレーニング（プランク 30秒×3セット）\n" +
+        " 3. 栄養補給 ＆ 早めの就寝\n\n" +
+        "※痛みが続く場合は無理をせず専門院を受診してください。";
+    } else if (pain === "脛（シンスプリント気配）") {
+      resultTitle = "【注意】走り込み量50%削減 ＆ 補強メイン";
+      resultDetail = 
+        "■ 状態判断: 脛周辺に負荷がかかっています。着地衝撃を減らし、土台補強に切り替えます。\n\n" +
+        "■ 推奨メニュー:\n" +
+        " 1. W-Up: 足首・ふくらはぎの丁寧なほぐし\n" +
+        " 2. 補強ドリル:\n" +
+        "    - グルートブリッジ（お尻の補強） 15回×3セット\n" +
+        "    - シングルレッグ・スクワット 各10回\n" +
+        " 3. 走力練習: 80%の流し 3本のみ（着地衝撃を抑える）";
+    } else if (pain === "膝" || pain === "足首・ふくらはぎ") {
+      resultTitle = "【慎重】低衝撃・フォーム確認ドリル中心";
+      resultDetail =
