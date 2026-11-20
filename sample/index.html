@@ -3,141 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TRACK & FIELD LAB | 陸上部コンディション＆QR共有</title>
+  <title>TRACK & FIELD PRO LAB | 陸上部メニュー・図解・メンタル管理</title>
   <style>
     * {
       box-sizing: border-box;
       font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     }
-    /* メダル獲得の栄光（ゴールドの輝き×陸上トラック）をイメージした背景 */
+    /* ナイトスタジアムの照明とレッドトラックをイメージした迫力ある背景 */
     body {
-      background-color: #1e1b18;
+      background-color: #090d16;
       background-image: 
-        radial-gradient(circle at 50% 12%, rgba(250, 204, 21, 0.42) 0%, rgba(234, 88, 12, 0.18) 38%, transparent 70%),
+        radial-gradient(circle at 20% 0%, rgba(56, 189, 248, 0.28) 0%, transparent 45%),
+        radial-gradient(circle at 80% 0%, rgba(250, 204, 21, 0.28) 0%, transparent 45%),
         repeating-linear-gradient(
           90deg,
-          rgba(255, 255, 255, 0.12) 0px,
-          rgba(255, 255, 255, 0.12) 2px,
-          transparent 2px,
-          transparent 54px
+          rgba(255, 255, 255, 0.09) 0px,
+          rgba(255, 255, 255, 0.09) 3px,
+          transparent 3px,
+          transparent 64px
         ),
-        linear-gradient(180deg, #291d18 0%, #8c2619 55%, #45140e 100%);
-      color: #1e293b;
+        linear-gradient(180deg, #0f172a 0%, #7f1d1d 60%, #450a0a 100%);
+      color: #0f172a;
       margin: 0;
       padding: 16px;
       display: flex;
       justify-content: center;
       min-height: 100vh;
+      font-size: 16px;
     }
     .app-container {
       width: 100%;
-      max-width: 620px;
+      max-width: 680px;
     }
     header {
       text-align: center;
-      background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(8px);
-      padding: 16px;
-      border-radius: 16px;
-      margin-bottom: 14px;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+      padding: 20px 16px;
+      border-radius: 18px;
+      margin-bottom: 16px;
       border: 2px solid #facc15;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
     }
-    .medal-hero {
-      font-size: 32px;
-      line-height: 1;
-      margin-bottom: 4px;
-      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.8));
+    .hero-icons {
+      font-size: 36px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.7));
     }
     .badge {
       display: inline-block;
-      background: linear-gradient(90deg, #facc15, #f59e0b);
+      background: linear-gradient(90deg, #facc15, #f97316);
       color: #0f172a;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 900;
       letter-spacing: 1px;
-      padding: 3px 12px;
+      padding: 4px 14px;
       border-radius: 20px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     h1 {
-      font-size: 21px;
+      font-size: 24px;
       font-weight: 900;
       color: #ffffff;
       margin: 0;
-      letter-spacing: 0.5px;
+      line-height: 1.3;
     }
     .header-actions {
-      margin-top: 12px;
+      margin-top: 14px;
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
     .btn-qr-open {
       background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6);
       color: #ffffff;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 900;
       border: none;
-      border-radius: 20px;
-      padding: 8px 18px;
+      border-radius: 24px;
+      padding: 10px 20px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
-      transition: transform 0.15s;
-    }
-    .btn-qr-open:hover {
-      transform: scale(1.04);
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.5);
     }
 
     .quote-box {
-      background: rgba(255, 251, 235, 0.96);
-      border-left: 6px solid #f59e0b;
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      background: #fffbeb;
+      border-left: 7px solid #f59e0b;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     }
     .quote-text {
-      font-size: 13px;
-      font-weight: bold;
-      color: #92400e;
-      margin: 0 0 4px 0;
+      font-size: 16px;
+      font-weight: 900;
+      color: #78350f;
+      margin: 0 0 6px 0;
       line-height: 1.5;
     }
     .quote-author {
-      font-size: 11px;
+      font-size: 14px;
       color: #b45309;
       text-align: right;
       margin: 0;
       font-weight: bold;
     }
+
     .card {
       background-color: #ffffff;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
-      border-top: 5px solid #f59e0b;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4);
+      border-top: 6px solid #f59e0b;
     }
     .card-title {
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 900;
       color: #0f172a;
-      border-bottom: 2px solid #f1f5f9;
-      padding-bottom: 8px;
-      margin: 0 0 14px 0;
+      border-bottom: 3px solid #f1f5f9;
+      padding-bottom: 10px;
+      margin: 0 0 16px 0;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
     .form-row {
       display: flex;
       flex-direction: column;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-    @media (min-width: 500px) {
+    @media (min-width: 540px) {
       .form-row {
         flex-direction: row;
         justify-content: space-between;
@@ -145,82 +142,95 @@
       }
     }
     label {
-      font-size: 14px;
-      font-weight: 800;
-      color: #334155;
-      margin-bottom: 4px;
+      font-size: 16px;
+      font-weight: 900;
+      color: #1e293b;
+      margin-bottom: 6px;
     }
     select, input[type="text"] {
       width: 100%;
-      max-width: 280px;
-      padding: 9px 12px;
-      font-size: 14px;
+      max-width: 310px;
+      padding: 11px 14px;
+      font-size: 16px;
       font-weight: bold;
       color: #0f172a;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
+      border: 2px solid #94a3b8;
+      border-radius: 10px;
       background-color: #f8fafc;
     }
     select:focus, input[type="text"]:focus {
       outline: none;
-      border-color: #f59e0b;
-      background-color: #fff;
+      border-color: #f97316;
+      background-color: #ffffff;
     }
     .btn-main {
       width: 100%;
       background: linear-gradient(90deg, #f97316 0%, #facc15 100%);
       color: #0f172a;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 900;
       border: none;
-      border-radius: 10px;
-      padding: 14px 20px;
+      border-radius: 12px;
+      padding: 16px 20px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(249, 115, 22, 0.45);
-      transition: transform 0.15s;
-      margin-top: 6px;
-    }
-    .btn-main:hover {
-      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
+      margin-top: 8px;
     }
 
     /* 目標＆時間バッジ表示 */
     .goal-banner {
       background: linear-gradient(90deg, #0f172a, #1e293b);
       color: #facc15;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 10px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 12px;
       display: none;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     #result-status {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 900;
-      padding: 10px 12px;
-      border-radius: 8px;
-      margin-bottom: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 14px;
       background-color: #f1f5f9;
-      color: #475569;
+      color: #334155;
+      line-height: 1.4;
     }
     .summary-text {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #334155;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1e293b;
       background: #f8fafc;
-      padding: 10px 12px;
-      border-radius: 8px;
-      border-left: 4px solid #f59e0b;
-      margin-bottom: 14px;
-    }
-    .menu-item {
-      border: 2px solid #e2e8f0;
+      padding: 12px 14px;
       border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 12px;
+      border-left: 5px solid #f59e0b;
+      margin-bottom: 16px;
+    }
+
+    /* フェーズ区切り（W-Up / メイン / ウエイト / C-Down） */
+    .phase-label {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+    .phase-wup { background: #0284c7; }
+    .phase-main { background: #dc2626; }
+    .phase-weight { background: #7c3aed; }
+    .phase-cdown { background: #059669; }
+
+    .menu-item {
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
       background: #ffffff;
     }
     .menu-header {
@@ -228,44 +238,102 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       flex-wrap: wrap;
     }
     .menu-name {
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 900;
       color: #0f172a;
+      line-height: 1.4;
+    }
+    .badge-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
     }
     .time-badge {
       background: #0f172a;
       color: #facc15;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 8px;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 4px 10px;
       border-radius: 6px;
     }
     .target-tag {
       background: #fef3c7;
-      color: #b45309;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 8px;
+      color: #92400e;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 4px 10px;
       border-radius: 6px;
     }
-    .menu-desc {
+
+    /* SVGイラスト図解ボックス */
+    .visual-guide {
+      background: #f1f5f9;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 0;
+      text-align: center;
+    }
+    .visual-guide svg {
+      max-width: 100%;
+      height: 115px;
+      display: block;
+      margin: 0 auto;
+    }
+    .visual-caption {
       font-size: 13px;
-      line-height: 1.6;
-      color: #334155;
-      margin: 0;
+      font-weight: 800;
+      color: #475569;
+      margin-top: 4px;
+    }
+
+    .menu-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #1e293b;
+      margin: 8px 0;
     }
     .point-box {
-      margin-top: 8px;
-      font-size: 12px;
+      margin-top: 10px;
+      font-size: 14px;
       color: #0369a1;
       background: #e0f2fe;
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    /* トップ選手メニュー＆メンタルコラムボックス */
+    .pro-column-box {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: #f8fafc;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+      border: 2px solid #38bdf8;
+    }
+    .pro-column-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #38bdf8;
+      margin: 0 0 8px 0;
+    }
+    .pro-column-text {
+      font-size: 15px;
+      line-height: 1.7;
+      margin: 0 0 12px 0;
+      color: #e2e8f0;
+    }
+    .mental-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #facc15;
+      margin: 0 0 6px 0;
     }
 
     /* チーム共有＆友達追加セクション */
@@ -273,31 +341,31 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-top: 14px;
+      margin-top: 16px;
     }
     .btn-line {
       background: #06c755;
       color: white;
-      font-size: 14px;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 900;
       border: none;
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 14px;
       cursor: pointer;
     }
     .btn-copy {
       background: #334155;
       color: white;
-      font-size: 14px;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 900;
       border: none;
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 10px;
+      padding: 14px;
       cursor: pointer;
     }
     .member-box {
-      margin-top: 14px;
-      padding-top: 14px;
+      margin-top: 16px;
+      padding-top: 16px;
       border-top: 2px dashed #cbd5e1;
     }
     .member-input-row {
@@ -312,32 +380,34 @@
     .btn-add {
       background: #f97316;
       color: white;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 900;
       border: none;
-      border-radius: 8px;
-      padding: 0 16px;
+      border-radius: 10px;
+      padding: 0 18px;
       cursor: pointer;
       white-space: nowrap;
     }
     .member-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
     }
     .member-chip {
       background: #ffedd5;
       color: #9a3412;
-      font-size: 12px;
-      font-weight: 800;
-      padding: 5px 10px;
+      font-size: 14px;
+      font-weight: 900;
+      padding: 6px 12px;
       border-radius: 20px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
     .member-chip span {
       cursor: pointer;
       color: #ea580c;
+      font-size: 16px;
     }
 
     /* インスタ風 QRコードモーダル */
@@ -345,7 +415,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(9, 13, 22, 0.88);
       backdrop-filter: blur(6px);
       z-index: 999;
       justify-content: center;
@@ -354,16 +424,11 @@
     }
     .qr-card {
       background: linear-gradient(135deg, #f59e0b 0%, #ec4899 50%, #6366f1 100%);
-      padding: 4px;
+      padding: 5px;
       border-radius: 24px;
       width: 100%;
-      max-width: 340px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-      animation: popIn 0.2s ease-out;
-    }
-    @keyframes popIn {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      max-width: 360px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
     }
     .qr-inner {
       background: #ffffff;
@@ -372,14 +437,14 @@
       text-align: center;
     }
     .qr-user-title {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 900;
       color: #0f172a;
-      margin: 0 0 4px 0;
+      margin: 0 0 6px 0;
     }
     .qr-user-sub {
-      font-size: 12px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 900;
       color: #e11d48;
       margin: 0 0 16px 0;
     }
@@ -393,12 +458,12 @@
     }
     .qr-frame img {
       display: block;
-      width: 200px;
-      height: 200px;
+      width: 210px;
+      height: 210px;
     }
     .qr-hint {
-      font-size: 12px;
-      color: #475569;
+      font-size: 14px;
+      color: #334155;
       line-height: 1.5;
       margin: 0 0 16px 0;
     }
@@ -406,11 +471,11 @@
       width: 100%;
       background: #0f172a;
       color: #ffffff;
-      font-size: 14px;
-      font-weight: 800;
+      font-size: 16px;
+      font-weight: 900;
       border: none;
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: 12px;
+      padding: 14px;
       cursor: pointer;
     }
   </style>
@@ -419,22 +484,22 @@
 
 <div class="app-container">
   <header>
-    <div class="medal-hero">🥇🏃‍♂️🏆🏃‍♀️🥇</div>
-    <div class="badge">ROAD TO VICTORY ・ 陸上部公式LAB</div>
-    <h1>目指せ表彰台！メニュー＆体調管理</h1>
+    <div class="hero-icons">🏟️🥇🏃‍♂️🔥🏆</div>
+    <div class="badge">TRACK & FIELD PRO TRAINING LAB</div>
+    <h1>陸上競技 メニュー図解＆体調管理</h1>
     <div class="header-actions">
-      <button type="button" class="btn-qr-open" id="open-qr-btn">📱 自分のQRコードを見せて友達追加</button>
+      <button type="button" class="btn-qr-open" id="open-qr-btn">📱 自分のQRコードで友達追加</button>
     </div>
   </header>
 
   <div class="quote-box">
     <p class="quote-text" id="quote-text">「金メダルは練習場でつくられる。試合はただそれを取りに行くだけの場所だ。」</p>
-    <p class="quote-author" id="quote-author">- 陸上メダリストの名言</p>
+    <p class="quote-author" id="quote-author">- 陸上メダリスト格言</p>
   </div>
 
   <!-- 1. 入力フォームカード -->
   <div class="card">
-    <div class="card-title">🔥 今日のブロック・目標・練習時間を入力！</div>
+    <div class="card-title">🔥 あなたの種目・環境・体調を入力！</div>
     
     <div class="form-row">
       <label for="athlete-name">👤 自分の名前（QR・共有用）</label>
@@ -464,14 +529,22 @@
     <div class="form-row">
       <label for="practice-time">⏱️ 今日の練習時間</label>
       <select id="practice-time">
-        <option value="30">30分（サクッと集中・朝練など）</option>
-        <option value="60">1時間（60分：放課後ショート）</option>
+        <option value="30">30分（朝練・短時間集中）</option>
+        <option value="60">1時間（60分：ショート練習）</option>
         <option value="90">1時間30分（90分：標準メニュー）</option>
         <option value="120" selected>2時間（120分：しっかり強化）</option>
-        <option value="150">2時間30分（150分：本格トレーニング）</option>
+        <option value="150">2時間30分（150分：本格強化）</option>
         <option value="180">3時間（180分：休日・合同練習）</option>
-        <option value="210">3時間30分（210分：たっぷり強化）</option>
-        <option value="240">4時間（240分：半日集中・合宿レベル）</option>
+        <option value="210">3時間30分（210分：たっぷり練習）</option>
+        <option value="240">4時間（240分：半日・合宿レベル）</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="weight-env">🏋️ ウエイト器具の有無</label>
+      <select id="weight-env">
+        <option value="あり" selected>🏋️ あり（ベンチプレス・スクワット等）</option>
+        <option value="なし">🤸 なし（グラウンド・自重トレーニングのみ）</option>
       </select>
     </div>
 
@@ -497,15 +570,18 @@
       </select>
     </div>
 
-    <button type="button" class="btn-main" id="generate-btn">⚡ 時間配分つき最適メニューを生成！</button>
+    <button type="button" class="btn-main" id="generate-btn">⚡ 図解つき個別フルメニューを生成！</button>
   </div>
 
   <!-- 2. 判定結果カード -->
   <div class="card">
-    <div class="card-title">📋 本日の実践メニュー ＆ 時間配分</div>
+    <div class="card-title">📋 あなた専用のフル練習メニュー（図解つき）</div>
     <div class="goal-banner" id="goal-banner"></div>
     <div id="result-status">上の項目を選んでボタンを押してね！</div>
     <div id="result-container"></div>
+
+    <!-- トップ選手メニュー＆メンタル維持講座 -->
+    <div id="pro-academy" style="display:none;"></div>
 
     <!-- チーム共有エリア -->
     <div id="share-section" style="display:none;">
@@ -517,8 +593,8 @@
 
     <!-- 陸上部メンバーリスト（端末保存） -->
     <div class="member-box">
-      <div style="font-size:13px; font-weight:800; color:#334155; margin-bottom:6px;">
-        🤝 陸上部メンバーリスト（タップで名前切替・QR共有から自動追加もOK）
+      <div style="font-size:15px; font-weight:900; color:#1e293b; margin-bottom:8px;">
+        🤝 陸上部メンバーリスト（タップで名前切替）
       </div>
       <div class="member-input-row">
         <input type="text" id="new-member-input" placeholder="部員の名前を入力（例：佐藤）">
@@ -533,7 +609,7 @@
 <div class="qr-modal" id="qr-modal">
   <div class="qr-card">
     <div class="qr-inner">
-      <div style="font-size:28px; margin-bottom:4px;">🏅🏃‍♂️💨</div>
+      <div style="font-size:32px; margin-bottom:4px;">🏅🏃‍♂️💨</div>
       <h2 class="qr-user-title" id="qr-display-name">陸上部メンバー</h2>
       <p class="qr-user-sub" id="qr-display-info">短距離 ｜ 目標：インターハイ出場！</p>
       <div class="qr-frame">
@@ -549,6 +625,129 @@
 </div>
 
 <script>
+  // イラスト図解（SVG）ライブラリ
+  const illustrations = {
+    dynamicStretch: `
+      <svg viewBox="0 0 260 110">
+        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
+        <!-- 体幹と脚振り -->
+        <circle cx="95" cy="24" r="9" fill="#f97316"/>
+        <line x1="95" y1="33" x2="95" y2="62" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <line x1="95" y1="62" x2="95" y2="92" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <!-- 前に振り上げる脚 -->
+        <line x1="95" y1="62" x2="145" y2="45" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 135 75 Q 155 60 148 42" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4,3"/>
+        <polygon points="148,38 142,46 153,46" fill="#f59e0b"/>
+        <text x="165" y="55" font-size="12" font-weight="bold" fill="#0f172a">反動を使って</text>
+        <text x="165" y="72" font-size="12" font-weight="bold" fill="#e11d48">大きく股関節回し！</text>
+      </svg>`,
+    sprintDrill: `
+      <svg viewBox="0 0 260 110">
+        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
+        <circle cx="105" cy="20" r="9" fill="#f97316"/>
+        <line x1="105" y1="29" x2="100" y2="58" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <!-- 軸足 -->
+        <line x1="100" y1="58" x2="95" y2="92" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <!-- 90度に引き上げた腿 -->
+        <line x1="100" y1="58" x2="132" y2="55" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+        <line x1="132" y1="55" x2="132" y2="78" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+        <!-- 腕振り -->
+        <polyline points="85,42 103,40 120,30" fill="none" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+        <text x="150" y="45" font-size="12" font-weight="bold" fill="#e11d48">腿を水平まで上げる</text>
+        <text x="150" y="65" font-size="12" font-weight="bold" fill="#0284c7">真下に素早く接地！</text>
+      </svg>`,
+    startDash: `
+      <svg viewBox="0 0 260 110">
+        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
+        <!-- 前傾姿勢 -->
+        <circle cx="135" cy="34" r="9" fill="#f97316"/>
+        <line x1="130" y1="42" x2="100" y2="66" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <line x1="100" y1="66" x2="70" y2="92" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+        <polyline points="100,66 125,68 120,88" fill="none" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <!-- 前傾角度ライン -->
+        <line x1="70" y1="92" x2="150" y2="25" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,4"/>
+        <text x="155" y="48" font-size="12" font-weight="bold" fill="#e11d48">45度の低い前傾</text>
+        <text x="155" y="68" font-size="12" font-weight="bold" fill="#0f172a">地面を後ろへ押す！</text>
+      </svg>`,
+    benchPress: `
+      <svg viewBox="0 0 260 110">
+        <!-- ベンチ台 -->
+        <rect x="45" y="72" width="120" height="10" rx="3" fill="#334155"/>
+        <rect x="60" y="82" width="10" height="16" fill="#334155"/>
+        <rect x="140" y="82" width="10" height="16" fill="#334155"/>
+        <!-- 選手（仰向け） -->
+        <circle cx="55" cy="63" r="8" fill="#f97316"/>
+        <line x1="65" y1="66" x2="135" y2="66" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
+        <polyline points="135,66 165,66 172,96" fill="none" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <!-- 腕とバーベル -->
+        <line x1="85" y1="66" x2="85" y2="30" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+        <line x1="55" y1="30" x2="115" y2="30" stroke="#475569" stroke-width="4"/>
+        <rect x="52" y="18" width="7" height="24" rx="2" fill="#0284c7"/>
+        <rect x="111" y="18" width="7" height="24" rx="2" fill="#0284c7"/>
+        <text x="135" y="34" font-size="12" font-weight="bold" fill="#e11d48">胸を張って肩甲骨を寄せる</text>
+        <text x="135" y="52" font-size="12" font-weight="bold" fill="#0284c7">爆発的に押し上げる！</text>
+      </svg>`,
+    squatClean: `
+      <svg viewBox="0 0 260 110">
+        <rect x="10" y="95" width="240" height="5" rx="2" fill="#cbd5e1"/>
+        <circle cx="95" cy="34" r="9" fill="#f97316"/>
+        <line x1="95" y1="43" x2="82" y2="68" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <!-- スクワット姿勢 -->
+        <polyline points="82,68 112,72 95,95" fill="none" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+        <!-- バーベル -->
+        <line x1="65" y1="46" x2="125" y2="46" stroke="#475569" stroke-width="4"/>
+        <rect x="62" y="36" width="6" height="20" fill="#7c3aed"/>
+        <rect x="122" y="36" width="6" height="20" fill="#7c3aed"/>
+        <text x="140" y="50" font-size="12" font-weight="bold" fill="#e11d48">お尻を後ろに引く</text>
+        <text x="140" y="70" font-size="12" font-weight="bold" fill="#7c3aed">素早く立ち上がる！</text>
+      </svg>`,
+    plankCore: `
+      <svg viewBox="0 0 260 110">
+        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
+        <!-- 一直線の体幹 -->
+        <circle cx="155" cy="56" r="8" fill="#f97316"/>
+        <line x1="147" y1="60" x2="55" y2="88" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
+        <polyline points="135,63 135,88 152,88" fill="none" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+        <line x1="50" y1="52" x2="160" y2="52" stroke="#10b981" stroke-width="2" stroke-dasharray="4,4"/>
+        <text x="55" y="42" font-size="12" font-weight="bold" fill="#059669">頭からかかとまで一直線キープ！</text>
+      </svg>`,
+    boundingJump: `
+      <svg viewBox="0 0 260 110">
+        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
+        <path d="M 35 90 Q 95 25 155 88" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5,4"/>
+        <circle cx="105" cy="24" r="9" fill="#f97316"/>
+        <line x1="103" y1="33" x2="98" y2="56" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <polyline points="98,56 125,52 128,72" fill="none" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+        <line x1="98" y1="56" x2="72" y2="75" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <text x="150" y="45" font-size="12" font-weight="bold" fill="#e11d48">空中で大きく前上方へ！</text>
+        <text x="150" y="65" font-size="12" font-weight="bold" fill="#0f172a">反発をもらって弾む</text>
+      </svg>`,
+    throwForm: `
+      <svg viewBox="0 0 260 110">
+        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
+        <circle cx="95" cy="28" r="9" fill="#f97316"/>
+        <line x1="95" y1="37" x2="90" y2="64" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <line x1="90" y1="64" x2="115" y2="92" stroke="#0284c7" stroke-width="5" stroke-linecap="round"/>
+        <line x1="90" y1="64" x2="68" y2="92" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <line x1="93" y1="42" x2="128" y2="22" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="133" cy="19" r="5" fill="#dc2626"/>
+        <line x1="138" y1="16" x2="175" y2="6" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,3"/>
+        <text x="145" y="48" font-size="12" font-weight="bold" fill="#0284c7">左半身で壁（ブロック）</text>
+        <text x="145" y="68" font-size="12" font-weight="bold" fill="#e11d48">約38度へ一気に押し出す</text>
+      </svg>`,
+    coolDownStretch: `
+      <svg viewBox="0 0 260 110">
+        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
+        <!-- 長座体前屈ストレッチ -->
+        <circle cx="105" cy="52" r="8" fill="#f97316"/>
+        <line x1="100" y1="60" x2="80" y2="88" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+        <line x1="80" y1="88" x2="155" y2="88" stroke="#10b981" stroke-width="5" stroke-linecap="round"/>
+        <line x1="96" y1="64" x2="145" y2="82" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+        <text x="155" y="50" font-size="12" font-weight="bold" fill="#059669">息を吐きながら</text>
+        <text x="155" y="68" font-size="12" font-weight="bold" fill="#0284c7">20〜30秒じっくり伸ばす</text>
+      </svg>`
+  };
+
   // メダリスト・アスリートの名言集
   const quotes = [
     { text: "「金メダルは練習場でつくられる。試合はただそれを取りに行くだけの場所だ。」", author: "陸上競技 メダリスト格言" },
@@ -587,7 +786,6 @@
     });
   }
 
-  // URLパラメータから友達のQRコード読み取りを検知して自動追加
   const urlParams = new URLSearchParams(window.location.search);
   const friendName = urlParams.get("addFriend");
   const friendEvent = urlParams.get("event");
@@ -597,7 +795,6 @@
       members.push(label);
       alert(`🎉 QRコードから「${label}」さんをメンバーに追加しました！`);
     }
-    // URLをきれいに戻す
     window.history.replaceState({}, document.title, window.location.pathname);
   }
   saveAndRenderMembers();
@@ -612,7 +809,7 @@
     }
   });
 
-  // インスタ風 QRコード表示処理
+  // インスタ風 QRコード表示
   document.getElementById("open-qr-btn").addEventListener("click", () => {
     const myName = document.getElementById("athlete-name").value.trim() || "陸上部メンバー";
     const myEvent = document.getElementById("event-type").value;
@@ -621,7 +818,6 @@
     document.getElementById("qr-display-name").textContent = myName;
     document.getElementById("qr-display-info").textContent = `${myEvent} ｜ ${myAim}`;
 
-    // 現在のページURLに自分の名前を付けたリンクをQRコード化
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?addFriend=${encodeURIComponent(myName)}&event=${encodeURIComponent(myEvent)}`;
     const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(shareUrl)}`;
@@ -640,7 +836,6 @@
     }
   });
 
-  // 練習時間を「○時間○分」表記に変換
   function formatMinutes(mins) {
     const h = Math.floor(mins / 60);
     const m = mins % 60;
@@ -649,26 +844,62 @@
     return `${m}分`;
   }
 
-  // メニューカード生成
+  // メニューカード生成（図解・フェーズラベル付き）
   function createMenuHTML(summary, menus) {
     let html = `<div class="summary-text">${summary}</div>`;
     menus.forEach(item => {
+      const svgContent = item.svgKey ? `
+        <div class="visual-guide">
+          ${illustrations[item.svgKey]}
+          <div class="visual-caption">▲ フォーム図解イメージ（形を確認してから動こう）</div>
+        </div>` : "";
+
       html += `
         <div class="menu-item">
+          <span class="phase-label ${item.phaseClass}">${item.phase}</span>
           <div class="menu-header">
             <div class="menu-name">${item.name}</div>
-            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-              <span class="time-badge">⏱️ 目安：${item.duration}分</span>
+            <div class="badge-row">
+              <span class="time-badge">⏱️ ${item.duration}分</span>
               <span class="target-tag">部位：${item.target}</span>
             </div>
           </div>
+          ${svgContent}
           <p class="menu-desc">${item.howTo}</p>
-          <div class="point-box">💡 ポイント：${item.point}</div>
+          <div class="point-box">💡 コツ・意識：${item.point}</div>
         </div>
       `;
     });
     return html;
   }
+
+  // 種目別のトップ選手メニュー例＆メンタル維持講座
+  const proKnowledge = {
+    "短距離": {
+      proTitle: "👑 トップ短距離選手のリアルメニュー例（ウサイン・ボルト／桐生祥秀スタイル）",
+      proText: "世界トップのスプリンターは『何十本もダラダラ走る』ことはしません。たとえば「60m加速走 × 3〜4本」を<strong>一本ごとに8〜10分の完全休息</strong>を入れて100%のキレで走ります。また、ベンチプレスやハイクリーンで『一瞬で爆発的な力を出す神経系』を鍛えています。",
+      mentalTitle: "🧠 試合・練習のメンタル維持術【緊張を味方にする】",
+      mentalText: "スタートラインで心臓がドキドキするのは「身体が戦う準備を始めた証拠」です。「緊張してきた＝ヤバい」ではなく、<strong>「よっしゃ、身体がキレる準備ができた！」</strong>と言葉を言い換える（リフレーミング）ことで、本番の爆発力が一気に高まります。"
+    },
+    "長距離": {
+      proTitle: "👑 トップ長距離選手のリアルメニュー例（大迫傑／エリウド・キプチョゲスタイル）",
+      proText: "世界のトップランナーは練習の約80%を『会話ができる余裕のあるジョグ』で土台を作り、残りの20%で「1000m×5〜6本のインターバル」などの高強度練習を行います。毎日の接地感覚と体幹の安定（プランク等）を欠かさないのが強さの秘密です。",
+      mentalTitle: "🧠 試合・練習のメンタル維持術【キツい中盤の乗り切り方】",
+      mentalText: "レースやインターバルの後半で苦しくなったら、ゴールの遠さを考えるのをやめて<strong>「まず目の前の100mだけリズムよく走ろう」「あと1周だけ腕を振ろう」</strong>と目標を小さく区切る（チャンクダウン）ことで、脳のブレーキを外すことができます。"
+    },
+    "跳躍": {
+      proTitle: "👑 トップ跳躍選手のリアルメニュー例（橋岡優輝／カール・ルイススタイル）",
+      proText: "跳躍のトップ選手は、全助走で何十本も跳ぶと足首や腰を痛めるため、普段は<strong>「5〜7歩の短助走跳躍」</strong>と<strong>「バウンディング・ボックスジャンプ・スクワット」</strong>で助走スピードを真上へ変換するバネを徹底的に磨いています。",
+      mentalTitle: "🧠 試合・練習のメンタル維持術【助走の迷いを消すルーティン】",
+      mentalText: "跳躍は「ファウルしたらどうしよう」と迷った瞬間に足が合わず記録が落ちます。助走開始前に<strong>「深呼吸を1回して、踏切の理想の跳躍を3秒頭の中で再生する」</strong>という自分だけのルーティンを毎回同じ手順で行うと、本番でも練習通りの跳躍ができます。"
+    },
+    "投擲": {
+      proTitle: "👑 トップ投擲選手のリアルメニュー例（北口榛花／室伏広治スタイル）",
+      proText: "トップ投擲選手は、ただ重いバーベルを挙げるだけでなく<strong>「ベンチプレス・スクワット・パワークリーン」を素早いスピードで挙上</strong>し、それをメディシンボール投げや立ち投げの『全身のムチ動作』へ繋げる練習を重視しています。",
+      mentalTitle: "🧠 試合・練習のメンタル維持術【1投ごとの切り替え術】",
+      mentalText: "投擲は6投の中でベストを出せば勝てる競技です。失敗投擲のあとにイライラすると力みが生まれます。サークル（ピット）から一歩出たら<strong>「今の失敗の原因は1つだけ（例：左の壁が甘かった）。次はそこだけ直す！」</strong>と切り替えるのがトップ選手の共通点です。"
+    }
+  };
 
   let latestShareText = "";
 
@@ -679,6 +910,7 @@
     const eventType = document.getElementById("event-type").value;
     const targetAim = document.getElementById("target-aim").value;
     const totalMins = parseInt(document.getElementById("practice-time").value, 10);
+    const weightEnv = document.getElementById("weight-env").value;
     const fatigue = parseInt(document.getElementById("fatigue").value, 10);
     const pain = document.getElementById("pain").value;
 
@@ -686,189 +918,296 @@
     const bannerEl = document.getElementById("goal-banner");
     const statusEl = document.getElementById("result-status");
     const containerEl = document.getElementById("result-container");
+    const proEl = document.getElementById("pro-academy");
 
     bannerEl.style.display = "block";
-    bannerEl.innerHTML = `👤 ${name} ｜【${eventType}】練習時間：${timeLabel}<br>🎯 目標：${targetAim}`;
+    bannerEl.innerHTML = `👤 ${name} ｜【${eventType}】練習時間：${timeLabel}（器具：${weightEnv}）<br>🎯 目標：${targetAim}`;
 
-    // 時間配分の計算（W-Up 25% / メイン 45% / 補強・C-Down 30%）
-    const tWarmup = Math.max(10, Math.round((totalMins * 0.25) / 5) * 5);
-    const tMain = Math.max(10, Math.round((totalMins * 0.45) / 5) * 5);
-    const tSub = Math.max(10, totalMins - tWarmup - tMain);
-
-    // 時間に応じたボリューム目安テキスト
-    const volumeNote = totalMins <= 60 ? "（短時間集中・本数少なめ）" : (totalMins >= 180 ? "（長時間メニュー・セット数多め＋途中給水必須）" : "（標準ボリューム）");
+    // 4段階の時間配分（W-Up 20% / メイン 40% / ウエイト・補強 20% / C-Down 20%）
+    const tWup = Math.max(5, Math.round((totalMins * 0.20) / 5) * 5);
+    const tMain = Math.max(10, Math.round((totalMins * 0.40) / 5) * 5);
+    const tWeight = Math.max(5, Math.round((totalMins * 0.20) / 5) * 5);
+    const tCdown = Math.max(5, totalMins - tWup - tMain - tWeight);
 
     let statusTitle = "";
     let summary = "";
     let menus = [];
+
+    // 個別化されたクールダウンメニュー作成関数
+    function getCustomCoolDown() {
+      if (pain !== "なし") {
+        return {
+          phase: "4. クールダウン（個人別ケア）",
+          phaseClass: "phase-cdown",
+          name: `患部（${pain}）のアイシング ＆ 周辺ほぐし`,
+          duration: tCdown,
+          target: `${pain}・全身の疲労抜き`,
+          svgKey: "coolDownStretch",
+          howTo: `練習後はまず「${pain}」を15分冷やして炎症を抑えます。その後、痛みのない反対側の脚や背中・お尻をゆっくり呼吸しながら伸ばします。`,
+          point: "痛みがある場所は強く揉んだり無理に伸ばしたりしないこと！"
+        };
+      } else if (fatigue >= 3) {
+        return {
+          phase: "4. クールダウン（疲労回復特化）",
+          phaseClass: "phase-cdown",
+          name: "裸足芝生ウォーク ＆ 徹底ロングストレッチ",
+          duration: tCdown,
+          target: "ハムストリングス・腸腰筋・ふくらはぎ",
+          svgKey: "coolDownStretch",
+          howTo: "疲労が溜まっているため、5分間のゆったりジョグ（または芝生ウォーク）で血流を促してから、1部位30秒かけて全身をじっくり伸ばします。",
+          point: "練習後30分以内のプロテイン・おにぎり補給と、今夜の7.5時間以上の睡眠が最強の回復法です！"
+        };
+      } else {
+        return {
+          phase: "4. クールダウン（${eventType}専用ケア）",
+          phaseClass: "phase-cdown",
+          name: `${eventType}の疲労部位リセット・ストレッチ`,
+          duration: tCdown,
+          target: eventType === "投擲" ? "肩甲骨・腰・股関節" : "お尻（大殿筋）・太もも裏・足首",
+          svgKey: "coolDownStretch",
+          howTo: `軽いジョグで心拍数を落ち着かせたあと、今日の${eventType}練習で一番使った筋肉を中心に20秒ずつ丁寧にストレッチします。`,
+          point: "明日の練習のスタート時に「身体が軽い！」と思える状態を作って終わろう。"
+        };
+      }
+    }
 
     // 1. 痛みがある場合の最優先安全メニュー
     if (pain !== "なし") {
       statusEl.style.backgroundColor = "#fee2e2";
       statusEl.style.color = "#b91c1c";
       statusTitle = `🚨 【怪我予防優先】${pain}のケア＆別メニュー（計${timeLabel}）`;
-      summary = `<strong>【判断】</strong>「${pain}」にサインが出ています。目標（${targetAim}）のために、今日の${timeLabel}は患部を悪化させないケア＆体幹強化に充てましょう！`;
+      summary = `<strong>【状態判断】</strong>「${pain}」にサインが出ています。目標（${targetAim}）を達成するためにも、今日の${timeLabel}は患部を守りながら体幹や上半身を強化する賢いメニューに切り替えましょう！`;
 
       menus = [
         {
-          name: "1. 患部のアイシング ＆ 丁寧なケア",
-          duration: tWarmup,
-          target: pain,
-          howTo: "熱感や違和感がある部分を冷やし、ダッシュ・跳躍・投擲などの衝撃動作は完全にストップします。",
-          point: "「今日休む勇気」が1週間後の自己ベストにつながります！"
+          phase: "1. ウォーミングアップ（患部保護）",
+          phaseClass: "phase-wup",
+          name: "上半身・体幹の温め ＆ 関節モビリティ",
+          duration: tWup,
+          target: "肩甲骨・背骨・腹圧",
+          svgKey: "dynamicStretch",
+          howTo: "患部に負担をかけない範囲で、肩回し・胸郭のひねり・寝たままの股関節回しを行い、全身の血流を高めます。",
+          point: "「痛みが出る動きはゼロにする」のが早期復帰の鉄則！"
         },
         {
-          name: "2. 体幹スタビライゼーション補強",
+          phase: "2. メインメニュー（代替トレーニング）",
+          phaseClass: "phase-main",
+          name: "体幹スタビライゼーション ＆ 腕振りフォーム修正",
           duration: tMain,
-          target: "腹横筋・腹斜筋（体幹インナー）",
-          howTo: `患部に体重がかからない姿勢で、フロントプランク・サイドプランク・ドローインを時間に合わせて実施します${volumeNote}。`,
-          point: "呼吸を止めず、お腹の奥を締める意識でキープ！"
+          target: "腹横筋・腹斜筋・広背筋",
+          svgKey: "plankCore",
+          howTo: "フロントプランク・サイドプランク（各30秒×3セット）と、鏡の前での高速腕振り（30秒×4セット）を行います。",
+          point: "走・跳・投すべてに直結する「ブレない軸」を今のうちに作ろう！"
         },
         {
-          name: "3. 上半身・腕振り＆チューブ動作改善",
-          duration: tSub,
-          target: "広背筋・肩甲骨まわり",
-          howTo: "鏡の前での腕振りフォーム確認や軽いチューブ引き、イメージトレーニングを行います。",
-          point: "走・跳・投すべての土台になる肩甲骨の連動性を高めよう。"
-        }
+          phase: "3. ウエイト・補強（上半身特化）",
+          phaseClass: "phase-weight",
+          name: weightEnv === "あり" ? "ベンチプレス ＆ ラットプルダウン" : "プッシュアップ（腕立て）＆ 背筋補強",
+          duration: tWeight,
+          target: "大胸筋・広背筋・上腕三頭筋",
+          svgKey: "benchPress",
+          howTo: weightEnv === "あり"
+            ? "ベンチプレス（10回×3セット）で上半身の押し出す力を強化します。足で踏ん張ると患部が痛む場合は、足をベンチに乗せて行います。"
+            : "ワイドプッシュアップ（15回×3セット）とリバーススノーエンジェル（背筋 15回×3セット）で上半身を強化します。",
+          point: "上半身が強くなると、腕振りの推進力が上がりタイムも記録も伸びます！"
+        },
+        getCustomCoolDown()
       ];
     } else if (fatigue >= 4 || targetAim === "怪我ゼロで毎日楽しく継続！") {
       // 2. 疲労が高い場合 or 怪我ゼロ継続目標
       statusEl.style.backgroundColor = "#e0f2fe";
       statusEl.style.color = "#0369a1";
       statusTitle = `💧 【調整・フォーム重視】${eventType} コンディショニング（計${timeLabel}）`;
-      summary = `<strong>【判断】</strong>疲労度や「${targetAim}」に合わせて、${timeLabel}の中で身体に無理なく動きの質を高めるメニューです！`;
+      summary = `<strong>【状態判断】</strong>疲労度や「${targetAim}」に合わせて、${timeLabel}の中で身体に無理な衝撃を与えず、正しいフォームと柔軟性を高めるメニューです！`;
 
       menus = [
         {
-          name: "1. 芝生リラックスジョグ ＆ 動的ストレッチ",
-          duration: tWarmup,
-          target: "全身の血流・股関節可動域",
-          howTo: "柔らかい芝生の上を会話できるペースで走り、大きく股関節・肩甲骨を回すドリルを行います。",
-          point: "力みを抜いて、気持ちよく身体が動く感覚を味わおう。"
+          phase: "1. ウォーミングアップ（疲労抜き導入）",
+          phaseClass: "phase-wup",
+          name: "リラックス・ジョグ ＆ 動的ストレッチ",
+          duration: tWup,
+          target: "全身の血流・股関節・肩甲骨",
+          svgKey: "dynamicStretch",
+          howTo: "会話ができるゆったりペースでジョグをした後、レッグスイング（前後の脚振り）と股関節回しを左右10回ずつ行います。",
+          point: "力みを抜いて、筋肉のポンプ作用で疲労物質を流そう。"
         },
         {
-          name: `2. ${eventType}・技術確認ドリル（70%の強度）`,
+          phase: "2. メインメニュー（技術・フォーム定着）",
+          phaseClass: "phase-main",
+          name: `${eventType}・70%フォーム確認ドリル`,
           duration: tMain,
-          target: "神経系・正しいフォームの定着",
-          howTo: `全力は出さず、接地の位置やリズム、体重移動のフォームを丁寧に確認します${volumeNote}。`,
-          point: "疲れているときほど「丁寧な動き」を意識するとフォームが綺麗になります！"
+          target: "神経系・理想のフォーム軌道",
+          svgKey: eventType === "投擲" ? "throwForm" : (eventType === "跳躍" ? "boundingJump" : "sprintDrill"),
+          howTo: "全力は出さず、接地の位置やリズム、体重移動のフォームを1本ずつ丁寧に確認しながら動きます。",
+          point: "疲れているときほど「丁寧な動き」を意識するとフォームが劇的に綺麗になります！"
         },
         {
-          name: "3. 徹底ストレッチ ＆ リカバリーケア",
-          duration: tSub,
-          target: "ハムストリングス・腸腰筋・ふくらはぎ",
-          howTo: "練習後すぐに水分・糖質・タンパク質を補給し、全身をゆっくり伸ばします。",
-          point: "睡眠もトレーニングの一部！今日は早めに休もう。"
-        }
+          phase: "3. ウエイト・補強（インナーマッスル強化）",
+          phaseClass: "phase-weight",
+          name: "体幹プランク ＆ グルートブリッジ補強",
+          duration: tWeight,
+          target: "腹横筋・大殿筋（お尻のインナー）",
+          svgKey: "plankCore",
+          howTo: "フロントプランク（40秒×3セット）と、仰向けでお尻を持ち上げるグルートブリッジ（15回×3セット）を行います。",
+          point: "重いウエイトは使わず、走りの軸を安定させるインナーマッスルを刺激しよう。"
+        },
+        getCustomCoolDown()
       ];
     } else {
-      // 3. コンディション良好！種目ブロック別メニュー
+      // 3. コンディション良好！種目ブロック別フルメニュー
       statusEl.style.backgroundColor = "#dcfce7";
       statusEl.style.color = "#15803d";
-      statusTitle = `🔥 【絶好調】${eventType} パワーアップメニュー（計${timeLabel}）`;
-      summary = `<strong>【判断】</strong>体調バッチリ！${timeLabel}の練習時間を最大限に活かし、「${targetAim}」に向けてライバルに差をつけよう！`;
+      statusTitle = `🔥 【絶好調】${eventType} パワーアップ・フルメニュー（計${timeLabel}）`;
+      summary = `<strong>【状態判断】</strong>体調バッチリ！${timeLabel}の時間配分とウエイト補強を組み合わせて、「${targetAim}」に向けてライバルに圧倒的な差をつけよう！`;
 
       if (eventType === "短距離") {
         const dashSets = totalMins <= 60 ? "30m×2本 / 60m×2本" : (totalMins >= 180 ? "30m×4本 / 60m×4本 / 120m×2本" : "30m×3本 / 60m×3本");
         menus = [
           {
-            name: "1. W-Up ＆ スプリントドリル（ハイニー・Aスキップ）",
-            duration: tWarmup,
-            target: "腸腰筋・足首のバネ",
-            howTo: "ジョグと動的ストレッチの後、姿勢を高く保ち地面からの反発をもらって弾むドリルを行います。",
-            point: "地面を後ろに蹴るのではなく、真下に素早く叩くイメージ！"
+            phase: "1. ウォーミングアップ（神経系スイッチON）",
+            phaseClass: "phase-wup",
+            name: "ジョグ ＋ 動的ストレッチ ＋ スプリントドリル",
+            duration: tWup,
+            target: "腸腰筋・足首のバネ・股関節",
+            svgKey: "sprintDrill",
+            howTo: "5分ジョグと動的ストレッチの後、ハイニー（腿上げ）・Aスキップ（各20m×2本）で地面からの反発をもらう感覚を作ります。",
+            point: "地面を後ろに蹴るのではなく、身体の真下を素早く叩くイメージ！"
           },
           {
-            name: `2. スタートダッシュ ＆ 加速走（${dashSets}）`,
+            phase: "2. メインメニュー（スプリント強化）",
+            phaseClass: "phase-main",
+            name: `スタートダッシュ ＆ 加速走（${dashSets}）`,
             duration: tMain,
-            target: "大殿筋・ハムストリングス（爆発的加速力）",
-            howTo: `完全休息（3〜5分）を挟み、最初の10mの低い前傾からトップスピードへ繋げます${volumeNote}。`,
-            point: "後半で肩に力が入らないよう、大きな腕振りでリードする。"
+            target: "大殿筋・ハムストリングス（爆発的加速）",
+            svgKey: "startDash",
+            howTo: "完全休息（3〜5分）を挟み、最初の10mの低い前傾姿勢からトップスピードへ一気に繋げます。",
+            point: "後半で肩に力が入らないよう、大きな腕振りで脚をリードする。"
           },
           {
-            name: "3. 体幹補強 ＆ クールダウンストレッチ",
-            duration: tSub,
-            target: "体幹全体・下半身の柔軟性",
-            howTo: "プランクやレッグレイズなどの体幹補強を行ったあと、ジョグとストレッチで疲労を抜きます。",
-            point: "練習後のケアまでやり切ってこそ表彰台に近づく！"
-          }
+            phase: "3. ウエイト・フィジカル補強",
+            phaseClass: "phase-weight",
+            name: weightEnv === "あり" ? "ベンチプレス ＆ スクワット（瞬発系）" : "爆発的プッシュアップ ＆ ジャンプスクワット",
+            duration: tWeight,
+            target: "大胸筋・大腿四頭筋・大殿筋",
+            svgKey: weightEnv === "あり" ? "benchPress" : "squatClean",
+            howTo: weightEnv === "あり"
+              ? "ベンチプレス（8回×3セット）で腕振りのパワーを高め、スクワット（8回×3セット）で地面を強く押す脚力を作ります。"
+              : "素早く押し上げる腕立て伏せ（12回×3セット）と、全力で高く跳ぶジャンプスクワット（10回×3セット）を行います。",
+            point: "重さよりも『挙げるスピード（爆発力）』を意識するとスプリントに直結します！"
+          },
+          getCustomCoolDown()
         ];
       } else if (eventType === "長距離") {
         const repCount = totalMins <= 60 ? "1000m × 2〜3本" : (totalMins >= 180 ? "1000m × 5〜7本 ＋ 距離走" : "1000m × 3〜5本");
         menus = [
           {
-            name: "1. ビルドアップジョグ ＆ 動き作りドリル",
-            duration: tWarmup,
-            target: "心肺機能・股関節の連動性",
-            howTo: "最初はゆっくり入り、徐々にペースを上げて呼吸とリズムを整えます。",
-            point: "骨盤の真下に接地し、ブレーキをかけない走りを意識！"
+            phase: "1. ウォーミングアップ（心肺＆股関節準備）",
+            phaseClass: "phase-wup",
+            name: "ビルドアップジョグ ＆ 股関節動的ストレッチ",
+            duration: tWup,
+            target: "心肺機能・股関節・肩甲骨",
+            svgKey: "dynamicStretch",
+            howTo: "最初はゆっくり入り徐々にペースを上げるジョグの後、大きな股関節回し・腕振りドリルでフォームを整えます。",
+            point: "骨盤の真下に接地し、ブレーキをかけない省エネ走法を作ろう！"
           },
           {
-            name: `2. インターバル走（${repCount} / つなぎ200mジョグ）`,
+            phase: "2. メインメニュー（スピード持久力）",
+            phaseClass: "phase-main",
+            name: `インターバル走（${repCount}）＋ 流し3本`,
             duration: tMain,
-            target: "最大酸素摂取量・スピード持久力",
-            howTo: `目標レースペースより少し速い設定で、一定のラップを刻みます${volumeNote}。`,
-            point: "キツくなった後半こそ、肘を後ろに引いてリズムを保とう！"
+            target: "最大酸素摂取量・心肺持久力",
+            svgKey: "sprintDrill",
+            howTo: "目標レースペースより少し速い設定で一定のラップを刻みます（つなぎは200mジョグ）。最後に100m流しを3本入れます。",
+            point: "キツくなった後半こそ、肘を後ろに引いてリズムをキープ！"
           },
           {
-            name: "3. ウィンドスプリント（流し 100m×3本）＆ ダウン",
-            duration: tSub,
-            target: "神経系・ラストスパートのキレ",
-            howTo: "80%の力でフォームを大きく使って走ったあと、ゆっくりジョグとストレッチを行います。",
-            point: "練習の最後に良い走りのイメージを脳に焼き付けよう。"
-          }
+            phase: "3. ウエイト・体幹補強（フォーム維持力）",
+            phaseClass: "phase-weight",
+            name: weightEnv === "あり" ? "軽負荷ベンチプレス ＆ ランジ補強" : "体幹プランク ＆ ウォーキングランジ",
+            duration: tWeight,
+            target: "腹横筋・中殿筋・背筋群",
+            svgKey: "plankCore",
+            howTo: weightEnv === "あり"
+              ? "軽めの重量でのベンチプレス（15回×2セット）で後半でも腕が振れる上半身を作り、プランク（45秒×3セット）で体幹を固めます。"
+              : "フロント＆サイドプランク（各40秒×3セット）とウォーキングランジ（20歩×2セット）で終盤のフォーム崩れを防ぎます。",
+            point: "ラスト1周で腰が落ちない強い体幹を手に入れよう！"
+          },
+          getCustomCoolDown()
         ];
       } else if (eventType === "跳躍") {
         const jumpReps = totalMins <= 60 ? "短助走跳躍 × 4本" : (totalMins >= 180 ? "短助走×5本 ＋ 全助走跳躍×5本" : "助走合わせ ＋ 跳躍 × 6本");
         menus = [
           {
-            name: "1. プライオメトリクス（バウンディング・ホッピング）",
-            duration: tWarmup,
-            target: "大殿筋・アキレス腱のバネ・体幹",
-            howTo: "一歩ごとに大きく前上方へ跳び、空中で姿勢をキープして次の跳躍へ繋げます。",
-            point: "着地で腰が落ちないよう、お腹とお尻で衝撃を受け止める！"
+            phase: "1. ウォーミングアップ（バネ起動）",
+            phaseClass: "phase-wup",
+            name: "ジョグ ＋ 動的ストレッチ ＋ バウンディング",
+            duration: tWup,
+            target: "アキレス腱のバネ・大殿筋・腸腰筋",
+            svgKey: "boundingJump",
+            howTo: "全身を温めたあと、バウンディング・ホッピング（各30m×2本）で地面からの強い反発をもらう感覚を作ります。",
+            point: "着地で腰が落ちないよう、お腹とお尻で衝撃を受け止めて跳ねる！"
           },
           {
-            name: `2. 助走合わせ ＆ 跳躍練習（${jumpReps}）`,
+            phase: "2. メインメニュー（踏切＆空中技術）",
+            phaseClass: "phase-main",
+            name: `助走合わせ ＆ 跳躍練習（${jumpReps}）`,
             duration: tMain,
-            target: "踏切技術・空中姿勢の安定",
-            howTo: `踏切板（バー）への入り方と、最後の2歩のリズム（タ・タン！）を集中して確認します${volumeNote}。`,
+            target: "踏切技術・空中姿勢コントロール",
+            svgKey: "boundingJump",
+            howTo: "踏切板（バー）への入り方と、最後の2歩のリズム（タ・タン！）を集中して確認しながら跳躍します。",
             point: "助走スピードを殺さず、真上・斜め上へ一気に変換しよう！"
           },
           {
-            name: "3. 体幹・腸腰筋補強 ＆ クールダウン",
-            duration: tSub,
-            target: "腸腰筋・腹直筋（空中での引きつけ）",
-            howTo: "仰向けでの脚上げ動作やプランクで、空中で身体をコントロールする筋力を鍛えます。",
-            point: "最後の着地で1cmでも遠くへ足を投げ出すための重要補強！"
-          }
+            phase: "3. ウエイト・瞬発フィジカル補強",
+            phaseClass: "phase-weight",
+            name: weightEnv === "あり" ? "スクワット（またはクリーン）＆ ベンチプレス" : "ジャンプスクワット ＆ 吊り下げレッグレイズ",
+            duration: tWeight,
+            target: "大腿四頭筋・大殿筋・腸腰筋",
+            svgKey: "squatClean",
+            howTo: weightEnv === "あり"
+              ? "スクワット（8回×3セット）で踏切の爆発力を鍛え、ベンチプレス（8回×2セット）で腕の引き上げ力を強化します。"
+              : "全力ジャンプスクワット（10回×3セット）とレッグレイズ（脚上げ 15回×3セット）で空中の引きつけを鍛えます。",
+            point: "踏切の一瞬で地面を突き破る爆発力を養おう！"
+          },
+          getCustomCoolDown()
         ];
       } else {
         // 投擲
         const throwReps = totalMins <= 60 ? "立ち投げ・ターン投げ 計10本" : (totalMins >= 180 ? "立ち投げ10本 ＋ 全力投擲15〜20本" : "立ち投げ・助走投げ 計15本");
         menus = [
           {
-            name: "1. メディシンボール投げ ＆ 肩・股関節ドリル",
-            duration: tWarmup,
-            target: "全身の連動性・体幹の回旋力",
-            howTo: "脚の曲げ伸ばし（地面反力）から腰・胸・腕へと順番に力を伝えてボールを弾き出します。",
-            point: "腕の力だけで投げず、下半身からのエネルギーを爆発させよう！"
+            phase: "1. ウォーミングアップ（全身連動）",
+            phaseClass: "phase-wup",
+            name: "動的ストレッチ ＋ メディシンボール投げ",
+            duration: tWup,
+            target: "肩甲骨・体幹回旋・股関節",
+            svgKey: "dynamicStretch",
+            howTo: "肩・股関節の可動域を広げたあと、メディシンボール（フロント・バック・回転投げ 各5球）で全身の連動性を高めます。",
+            point: "腕の力だけで投げず、下半身からのエネルギーをボールに伝えよう！"
           },
           {
-            name: `2. 投擲技術練習（${throwReps}）`,
+            phase: "2. メインメニュー（投擲技術）",
+            phaseClass: "phase-main",
+            name: `投擲技術練習（${throwReps}）`,
             duration: tMain,
             target: "投擲フォームの軸・リリース角度",
-            howTo: `ブロック（左半身の壁）をしっかり作り、理想の角度（約35〜40度）へ押し出します${volumeNote}。`,
+            svgKey: "throwForm",
+            howTo: "ブロック（左半身の壁）をしっかり作り、理想の角度（約35〜40度）へ一気に押し出します。",
             point: "1投ごとに「どこが良かったか」を振り返りながら投げよう。"
           },
           {
-            name: "3. スクワット・瞬発系補強 ＆ ケア",
-            duration: tSub,
-            target: "大腿四頭筋・大殿筋・背筋群（瞬発力）",
-            howTo: "素早く立ち上がる意識で下半身と背中の出力を高め、最後に肩・腰のストレッチを行います。",
-            point: "投擲は瞬発力が命！スピードを意識して動かそう。"
-          }
+            phase: "3. ウエイト・最大出力トレーニング",
+            phaseClass: "phase-weight",
+            name: weightEnv === "あり" ? "ベンチプレス ＆ スクワット（高出力強化）" : "爆発的プッシュアップ ＆ ジャンプスクワット",
+            duration: tWeight,
+            target: "大胸筋・三角筋・大腿四頭筋・大殿筋",
+            svgKey: "benchPress",
+            howTo: weightEnv === "あり"
+              ? "ベンチプレス（6〜8回×3セット）で突き出しの爆発力を鍛え、スクワット（6〜8回×3セット）で下半身の土台を強化します。"
+              : "クラッププッシュアップ（または高速腕立て 12回×3セット）とジャンプスクワット（12回×3セット）を行います。",
+            point: "投擲は『体重×スピード』！バーベルを素早く押し上げる意識で行おう。"
+          },
+          getCustomCoolDown()
         ];
       }
     }
@@ -876,16 +1215,28 @@
     statusEl.textContent = statusTitle;
     containerEl.innerHTML = createMenuHTML(summary, menus);
 
+    // トップ選手メニュー＆メンタル維持講座の表示
+    const knowledge = proKnowledge[eventType];
+    proEl.style.display = "block";
+    proEl.innerHTML = `
+      <div class="pro-column-box">
+        <div class="pro-column-title">${knowledge.proTitle}</div>
+        <p class="pro-column-text">${knowledge.proText}</p>
+        <div class="mental-title">${knowledge.mentalTitle}</div>
+        <p class="pro-column-text" style="margin-bottom:0;">${knowledge.mentalText}</p>
+      </div>
+    `;
+
     // 共有用テキストを作成
     const menuNames = menus.map(m => `・${m.name}（${m.duration}分）`).join("\n");
     latestShareText = 
       `🥇【陸上部メニュー共有】\n` +
       `名前：${name}（${eventType}）\n` +
       `目標：${targetAim}\n` +
-      `時間：${timeLabel}\n` +
+      `時間：${timeLabel}（器具：${weightEnv}）\n` +
       `判定：${statusTitle}\n\n` +
       `▼今日のメニュー\n${menuNames}\n\n` +
-      `表彰台目指して今日も頑張ろう🔥`;
+      `今日も自己ベスト＆表彰台目指して頑張ろう🔥`;
 
     document.getElementById("share-section").style.display = "block";
   });
