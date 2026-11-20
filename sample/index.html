@@ -144,7 +144,7 @@
   </fieldset>
 
   <div class="btn-wrapper">
-    <button type="button" onclick="calculateMenu()">🔍 最適な練習メニューを生成する</button>
+    <button type="button" id="generate-btn">🔍 最適な練習メニューを生成する</button>
   </div>
 
   <fieldset>
@@ -155,16 +155,21 @@
 </div>
 
 <script>
-  function calculateMenu() {
+  document.getElementById("generate-btn").addEventListener("click", function() {
     const fatigue = parseInt(document.getElementById("fatigue").value, 10);
     const pain = document.getElementById("pain").value;
     const goal = document.getElementById("goal").value;
 
+    const titleEl = document.getElementById("output-title");
+    const detailEl = document.getElementById("output-detail");
+
     let resultTitle = "";
     let resultDetail = "";
+    let titleColor = "#2c3e50";
 
     // 1. 痛みの安全判定（怪我予防を最優先）
     if (pain === "太もも裏（ハムストリングス）") {
+      titleColor = "#c0392b";
       resultTitle = "【警告】スプリント即中止！リカバリー優先";
       resultDetail = 
         "■ 状態判断: 太もも裏に痛みのサインがあります。肉離れのリスクが極めて高いため、本日のダッシュは全面禁止です。\n\n" +
@@ -174,6 +179,7 @@
         " 3. 栄養補給 ＆ 早めの就寝\n\n" +
         "※痛みが続く場合は無理をせず専門院を受診してください。";
     } else if (pain === "脛（シンスプリント気配）") {
+      titleColor = "#d35400";
       resultTitle = "【注意】走り込み量50%削減 ＆ 補強メイン";
       resultDetail = 
         "■ 状態判断: 脛周辺に負荷がかかっています。着地衝撃を減らし、土台補強に切り替えます。\n\n" +
@@ -184,5 +190,75 @@
         "    - シングルレッグ・スクワット 各10回\n" +
         " 3. 走力練習: 80%の流し 3本のみ（着地衝撃を抑える）";
     } else if (pain === "膝" || pain === "足首・ふくらはぎ") {
+      titleColor = "#d35400";
       resultTitle = "【慎重】低衝撃・フォーム確認ドリル中心";
-      resultDetail =
+      resultDetail = 
+        "■ 状態判断: 関節・末端部に違和感があります。急加速や切り返しを避け、接地感覚の確認に留めます。\n\n" +
+        "■ 推奨メニュー:\n" +
+        " 1. W-Up: 芝生やタータンでのウォーキング・動的ストレッチ\n" +
+        " 2. 技術ドリル:\n" +
+        "    - 腕振りフォーム確認（その場・歩きながら）\n" +
+        "    - 股関節の可動域を広げるハードルドリル\n" +
+        " 3. 補強: 患部に負担のかからない体幹トレーニング";
+    } else if (fatigue >= 4) {
+      // 2. 疲労度が高い場合の判定
+      titleColor = "#2980b9";
+      resultTitle = "【調整】疲労抜き・アクティブレスト優先";
+      resultDetail = 
+        "■ 状態判断: 痛みはありませんが疲労が蓄積しています。無理に追い込むと怪我やフォーム崩れにつながります。\n\n" +
+        "■ 推奨メニュー:\n" +
+        " 1. W-Up: 10分間の軽いジョグ ＆ 全身ストレッチ\n" +
+        " 2. リラックス走: 70〜75%の力でフォームを意識した流し 60m×3本\n" +
+        " 3. C-Down: 股関節・お尻周りの念入りなストレッチ";
+    } else {
+      // 3. コンディション良好時の目的別メニュー
+      titleColor = "#27ae60";
+      if (goal === "スピード・技術向上") {
+        resultTitle = "【良好】高強度スプリント・トップスピード強化";
+        resultDetail = 
+          "■ 状態判断: 身体のキレが良い状態です。質の高いダッシュでトップスピードを引き上げましょう。\n\n" +
+          "■ 推奨メニュー:\n" +
+          " 1. W-Up: 動的ストレッチ ＋ スプリントドリル（スキップ・ハイニー）\n" +
+          " 2. メイン走:\n" +
+          "    - スタートダッシュ 30m×3本（完全休息）\n" +
+          "    - 加速走 60m（20m助走＋40m全力）×3本\n" +
+          " 3. C-Down: 軽いジョグ ＆ ストレッチ";
+      } else if (goal === "フォーム意識・リラックス") {
+        resultTitle = "【良好】リズム・フォーム最適化メニュー";
+        resultDetail = 
+          "■ 状態判断: 良い状態で技術練習に取り組めます。力みを抜き、大きなストライドを意識しましょう。\n\n" +
+          "■ 推奨メニュー:\n" +
+          " 1. W-Up: ミニハードル走（接地ポジションの確認）\n" +
+          " 2. メイン走:\n" +
+          "    - 85%の快調走 100m×4本（肩の力を抜いて弾むイメージ）\n" +
+          " 3. C-Down: 股関節周りのストレッチ";
+      } else if (goal === "体幹・補強") {
+        resultTitle = "【良好】スプリント連動・フィジカル強化";
+        resultDetail = 
+          "■ 状態判断: 走りを支える体幹とバネを鍛えるのに最適なコンディションです。\n\n" +
+          "■ 推奨メニュー:\n" +
+          " 1. W-Up: ジョグ ＋ 動的ストレッチ\n" +
+          " 2. 補強サーキット（3セット）:\n" +
+          "    - バウンディング 30m\n" +
+          "    - ランジウォーク 20歩\n" +
+          "    - プランク・レッグレイズ 各30秒\n" +
+          " 3. 仕上げの流し: 80m×2本";
+      } else {
+        resultTitle = "【良好】コンディショニング・疲労回復";
+        resultDetail = 
+          "■ 状態判断: 大きな問題はありません。次のポイント練習に向けて体調を整えましょう。\n\n" +
+          "■ 推奨メニュー:\n" +
+          " 1. 15分間のリラックスジョグ\n" +
+          " 2. 全身の静的ストレッチ（特に腸腰筋・ハムストリングス）\n" +
+          " 3. 軽い体幹トレーニング（ドローイン・ヒップリフト）";
+      }
+    }
+
+    titleEl.style.color = titleColor;
+    titleEl.textContent = resultTitle;
+    detailEl.textContent = resultDetail;
+  });
+</script>
+
+</body>
+</html>
