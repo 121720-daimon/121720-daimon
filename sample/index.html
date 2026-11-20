@@ -3,260 +3,539 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>スプリントコンディション分析・練習メニュー自動提案アプリ</title>
+  <title>SPRINT LAB | コンディション連動型メニュー提案</title>
   <style>
     * {
       box-sizing: border-box;
       font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     }
     body {
-      background-color: #f4f6f8;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f8fafc;
       margin: 0;
-      padding: 15px;
+      padding: 16px;
       display: flex;
       justify-content: center;
+      min-height: 100vh;
     }
     .app-container {
       width: 100%;
-      max-width: 540px;
+      max-width: 600px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-block;
+      background: #e11d48;
+      color: #fff;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 6px;
     }
     h1 {
-      font-size: 16px;
-      font-weight: bold;
-      color: #2c3e50;
-      text-align: center;
-      margin: 12px 0 16px 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: 0.5px;
     }
-    fieldset {
-      background-color: #ffffff;
-      border: 1px solid #d0d7de;
-      border-radius: 4px;
-      padding: 12px 15px;
-      margin-bottom: 12px;
+    .quote-box {
+      background: rgba(255, 255, 255, 0.08);
+      border-left: 4px solid #f59e0b;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
     }
-    legend {
+    .quote-text {
       font-size: 13px;
+      font-style: italic;
+      color: #fef3c7;
+      margin: 0 0 4px 0;
+      line-height: 1.5;
+    }
+    .quote-author {
+      font-size: 11px;
+      color: #cbd5e1;
+      text-align: right;
+      margin: 0;
       font-weight: bold;
-      color: #2c3e50;
-      padding: 0 6px;
+    }
+    .card {
+      background-color: #ffffff;
+      color: #1e293b;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin: 0 0 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
     .form-row {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0;
-      gap: 10px;
+      flex-direction: column;
+      margin-bottom: 14px;
+    }
+    @media (min-width: 480px) {
+      .form-row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
     label {
       font-size: 14px;
-      color: #333;
-      flex: 1;
+      font-weight: bold;
+      color: #334155;
+      margin-bottom: 4px;
     }
     select {
-      width: 220px;
-      padding: 6px 8px;
+      width: 100%;
+      max-width: 260px;
+      padding: 9px 12px;
       font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color: #fff;
+      font-weight: bold;
+      color: #0f172a;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      background-color: #f8fafc;
+      cursor: pointer;
+    }
+    select:focus {
+      outline: none;
+      border-color: #e11d48;
     }
     .btn-wrapper {
       text-align: center;
-      margin: 16px 0;
+      margin: 18px 0;
     }
     button {
-      background-color: #27ae60;
+      width: 100%;
+      background: linear-gradient(90deg, #e11d48 0%, #f97316 100%);
       color: white;
-      font-size: 14px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 800;
       border: none;
-      border-radius: 4px;
-      padding: 10px 20px;
+      border-radius: 8px;
+      padding: 14px 20px;
       cursor: pointer;
-      transition: background-color 0.2s;
+      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
     }
     button:hover {
-      background-color: #219150;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.6);
     }
     button:active {
-      background-color: #1e8449;
+      transform: translateY(0);
     }
-    #output-title {
-      font-size: 14px;
-      font-weight: bold;
-      color: #7f8c8d;
-      margin: 4px 0 8px 0;
+    #result-status {
+      font-size: 16px;
+      font-weight: 800;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      background-color: #f1f5f9;
+      color: #475569;
     }
-    #output-detail {
-      width: 100%;
-      min-height: 240px;
-      background-color: #f8f9fa;
-      border: 1px solid #d0d7de;
-      border-radius: 4px;
-      padding: 10px;
+    .summary-text {
       font-size: 13px;
-      line-height: 1.5;
-      color: #222;
-      white-space: pre-wrap;
-      overflow-y: auto;
+      line-height: 1.6;
+      color: #334155;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border-left: 3px solid #64748b;
+      margin-bottom: 14px;
+    }
+    .menu-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #ffffff;
+    }
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .menu-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .target-tag {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .menu-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #334155;
+      margin: 0;
+    }
+    .point-box {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #b45309;
+      background: #fef3c7;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
 <div class="app-container">
-  <h1>🏃‍♂️ コンディション連動型スプリントメニュー提案 🏃‍♀️</h1>
+  <header>
+    <div class="badge">TRACK & FIELD CONDITIONING</div>
+    <h1>🔥 SPRINT TRAINING LAB 🔥</h1>
+  </header>
 
-  <fieldset>
-    <legend>本日のコンディション入力</legend>
+  <div class="quote-box" id="quote-box">
+    <p class="quote-text" id="quote-text">「限界などない。あるのは、自分が勝手に作った壁だけだ。」</p>
+    <p class="quote-author" id="quote-author">- ウサイン・ボルト（100m・200m 世界記録保持者）</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 本日のコンディションチェック</div>
     
     <div class="form-row">
-      <label for="fatigue">1. 今日の疲労度:</label>
+      <label for="fatigue">1. 今日の疲労度</label>
       <select id="fatigue">
-        <option value="1">1 (絶好調)</option>
-        <option value="2" selected>2 (良好)</option>
-        <option value="3">3 (普通・やや疲労)</option>
-        <option value="4">4 (疲労あり)</option>
-        <option value="5">5 (非常に重い)</option>
+        <option value="1">1：絶好調（身体が軽い・キレがある）</option>
+        <option value="2" selected>2：良好（いつも通り動ける）</option>
+        <option value="3">3：普通（やや張り・疲れがある）</option>
+        <option value="4">4：疲労あり（脚が重い・だるい）</option>
+        <option value="5">5：限界（非常に重い・睡眠不足など）</option>
       </select>
     </div>
 
     <div class="form-row">
-      <label for="pain">2. 身体の違和感・痛み:</label>
+      <label for="pain">2. 身体の違和感・痛み</label>
       <select id="pain">
-        <option value="なし" selected>なし</option>
+        <option value="なし" selected>なし（ベストな状態）</option>
         <option value="太もも裏（ハムストリングス）">太もも裏（ハムストリングス）</option>
         <option value="脛（シンスプリント気配）">脛（シンスプリント気配）</option>
-        <option value="膝">膝</option>
+        <option value="膝">膝まわり</option>
         <option value="足首・ふくらはぎ">足首・ふくらはぎ</option>
       </select>
     </div>
 
     <div class="form-row">
-      <label for="goal">3. 今日の主な目的:</label>
+      <label for="goal">3. 今日のトレーニング目的</label>
       <select id="goal">
-        <option value="スピード・技術向上" selected>スピード・技術向上</option>
-        <option value="フォーム意識・リラックス">フォーム意識・リラックス</option>
-        <option value="体幹・補強">体幹・補強</option>
-        <option value="疲労回復">疲労回復</option>
+        <option value="スピード・技術向上" selected>スピード・トップスピード向上</option>
+        <option value="フォーム意識・リラックス">フォーム修正・リラックス走</option>
+        <option value="体幹・補強">バネ強化・体幹フィジカル補強</option>
+        <option value="疲労回復">疲労抜き・コンディショニング</option>
       </select>
     </div>
-  </fieldset>
 
-  <div class="btn-wrapper">
-    <button type="button" id="generate-btn">🔍 最適な練習メニューを生成する</button>
+    <div class="btn-wrapper">
+      <button type="button" id="generate-btn">⚡ 今日の最適メニューを生成する</button>
+    </div>
   </div>
 
-  <fieldset>
-    <legend>判定結果 ＆ 推奨メニュー</legend>
-    <div id="output-title">コンディションを入力してボタンを押してください</div>
-    <div id="output-detail"></div>
-  </fieldset>
+  <div class="card">
+    <div class="card-title">🎯 判定結果 ＆ 実践メニュー詳細</div>
+    <div id="result-status">コンディションを選んでボタンを押してください</div>
+    <div id="result-container"></div>
+  </div>
 </div>
 
 <script>
+  // 陸上選手・アスリートの名言リスト
+  const quotes = [
+    { text: "「スタートラインに立つ前に、勝負の9割は準備で決まっている。」", author: "ウサイン・ボルト（陸上短距離）" },
+    { text: "「キツい練習を乗り越えた日だけが、本番のラスト20mで自分を助けてくれる。」", author: "アリソン・フェリックス（陸上短距離）" },
+    { text: "「速く走ろうと力むな。地面からの反発を信じて、弾むように進め。」", author: "カール・ルイス（陸上短距離・走幅跳）" },
+    { text: "「0.01秒を削り出すのは、毎日の地味なドリルとケアの積み重ねだ。」", author: "朝原宣治（北京五輪 4×100mリレー メダリスト）" },
+    { text: "「勇気を持って休むことも、トップアスリートになるための重要なトレーニングだ。」", author: "エリウド・キプチョゲ（マラソン世界記録保持者）" },
+    { text: "「昨日の自分より1ミリでも前へ。その意識がやがて大きな差になる。」", author: "桐生祥秀（日本人初の100m 9秒台達成者）" }
+  ];
+
+  // ランダムに名言を表示する関数
+  function setRandomQuote() {
+    const random = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById("quote-text").textContent = random.text;
+    document.getElementById("quote-author").textContent = "- " + random.author;
+  }
+
+  // ページ読み込み時に名言をセット
+  setRandomQuote();
+
+  // メニューカードを生成するヘルパー関数
+  function createMenuHTML(summary, menus) {
+    let html = `<div class="summary-text">${summary}</div>`;
+    menus.forEach(item => {
+      html += `
+        <div class="menu-item">
+          <div class="menu-header">
+            <div class="menu-name">${item.name}</div>
+            <div class="target-tag">効く部位：${item.target}</div>
+          </div>
+          <p class="menu-desc">${item.howTo}</p>
+          <div class="point-box">💡 意識するポイント：${item.point}</div>
+        </div>
+      `;
+    });
+    return html;
+  }
+
   document.getElementById("generate-btn").addEventListener("click", function() {
+    setRandomQuote();
+
     const fatigue = parseInt(document.getElementById("fatigue").value, 10);
     const pain = document.getElementById("pain").value;
     const goal = document.getElementById("goal").value;
 
-    const titleEl = document.getElementById("output-title");
-    const detailEl = document.getElementById("output-detail");
-
-    let resultTitle = "";
-    let resultDetail = "";
-    let titleColor = "#2c3e50";
+    const statusEl = document.getElementById("result-status");
+    const containerEl = document.getElementById("result-container");
 
     // 1. 痛みの安全判定（怪我予防を最優先）
     if (pain === "太もも裏（ハムストリングス）") {
-      titleColor = "#c0392b";
-      resultTitle = "【警告】スプリント即中止！リカバリー優先";
-      resultDetail = 
-        "■ 状態判断: 太もも裏に痛みのサインがあります。肉離れのリスクが極めて高いため、本日のダッシュは全面禁止です。\n\n" +
-        "■ 推奨メニュー:\n" +
-        " 1. 患部のアイシング ＆ 軽めの静的ストレッチ\n" +
-        " 2. 上半身の体幹トレーニング（プランク 30秒×3セット）\n" +
-        " 3. 栄養補給 ＆ 早めの就寝\n\n" +
-        "※痛みが続く場合は無理をせず専門院を受診してください。";
+      statusEl.style.backgroundColor = "#fee2e2";
+      statusEl.style.color = "#b91c1c";
+      statusEl.textContent = "🚨 【警告】ダッシュ即中止！肉離れ予防リカバリー";
+
+      containerEl.innerHTML = createMenuHTML(
+        "<strong>【状態判断】</strong>ハムストリングスに違和感があります。スプリント動作は肉離れ（長期離脱）に直結するため、今日は走る練習を完全にストップしましょう。",
+        [
+          {
+            name: "1. 患部のアイシング ＆ 軽めのケア",
+            target: "ハムストリングス（太もも裏）",
+            howTo: "氷嚢や保冷剤で15分ほど冷やし、炎症を抑えます。強く伸ばすストレッチは筋繊維を傷つけるため禁止です。",
+            point: "「少し走れそう」が一番危険。今日は勇気ある休養をとること。"
+          },
+          {
+            name: "2. フロントプランク（30秒 × 3セット / 休息30秒）",
+            target: "腹直筋・腹横筋（体幹インナーマッスル）",
+            howTo: "両肘とつま先を床につき、頭からかかとまで一直線をキープします。お尻が上がったり腰が反ったりしないよう注意。",
+            point: "脚に力を入れず、お腹の奥を固めるイメージで行う。"
+          },
+          {
+            name: "3. 腕振りフォーム確認（1分間 × 3セット）",
+            target: "広背筋・三角筋後部（肩甲骨まわり）",
+            howTo: "鏡の前で立ち、肘を約90度に保ったまま、肩甲骨から大きく前後に腕を振ります。",
+            point: "肩をすくめず、リズムよく肘を後ろに引く意識を持つ。"
+          }
+        ]
+      );
     } else if (pain === "脛（シンスプリント気配）") {
-      titleColor = "#d35400";
-      resultTitle = "【注意】走り込み量50%削減 ＆ 補強メイン";
-      resultDetail = 
-        "■ 状態判断: 脛周辺に負荷がかかっています。着地衝撃を減らし、土台補強に切り替えます。\n\n" +
-        "■ 推奨メニュー:\n" +
-        " 1. W-Up: 足首・ふくらはぎの丁寧なほぐし\n" +
-        " 2. 補強ドリル:\n" +
-        "    - グルートブリッジ（お尻の補強） 15回×3セット\n" +
-        "    - シングルレッグ・スクワット 各10回\n" +
-        " 3. 走力練習: 80%の流し 3本のみ（着地衝撃を抑える）";
+      statusEl.style.backgroundColor = "#ffedd5";
+      statusEl.style.color = "#c2410c";
+      statusEl.textContent = "⚠️ 【注意】着地衝撃カット ＆ 股関節・お尻補強";
+
+      containerEl.innerHTML = createMenuHTML(
+        "<strong>【状態判断】</strong>脛（すね）の骨膜に疲労が溜まっています。硬い地面での反復ジャンプや長い距離の走り込みを避け、お尻の筋肉を使って走る土台を作ります。",
+        [
+          {
+            name: "1. 足指タオルギャザー ＆ ふくらはぎほぐし（5分）",
+            target: "足底筋群・後脛骨筋（土踏まず〜すね内側）",
+            howTo: "床に敷いたタオルを足の指だけで手繰り寄せます。その後、すねの内側の筋肉を指で優しくほぐします。",
+            point: "足裏のアーチを鍛えることで、着地時のすねへの負担を減らします。"
+          },
+          {
+            name: "2. グルートブリッジ（15回 × 3セット）",
+            target: "大殿筋・ハムストリングス（お尻・太もも裏）",
+            howTo: "仰向けに寝て膝を90度に立て、お尻を限界まで高く持ち上げて2秒キープします。片足ずつ行うとさらに効果的です。",
+            point: "腰を反らせるのではなく、お尻の穴を締める感覚で持ち上げる。"
+          },
+          {
+            name: "3. 芝生での80%流し（60m × 3本のみ）",
+            target: "全身の連動性・接地ポジション",
+            howTo: "衝撃の少ない芝生の上で、スパイクではなくアップシューズを履いてフォーム確認の流しを行います。",
+            point: "つま先で地面を引っ掻かず、身体の真下にフラットに接地する。"
+          }
+        ]
+      );
     } else if (pain === "膝" || pain === "足首・ふくらはぎ") {
-      titleColor = "#d35400";
-      resultTitle = "【慎重】低衝撃・フォーム確認ドリル中心";
-      resultDetail = 
-        "■ 状態判断: 関節・末端部に違和感があります。急加速や切り返しを避け、接地感覚の確認に留めます。\n\n" +
-        "■ 推奨メニュー:\n" +
-        " 1. W-Up: 芝生やタータンでのウォーキング・動的ストレッチ\n" +
-        " 2. 技術ドリル:\n" +
-        "    - 腕振りフォーム確認（その場・歩きながら）\n" +
-        "    - 股関節の可動域を広げるハードルドリル\n" +
-        " 3. 補強: 患部に負担のかからない体幹トレーニング";
+      statusEl.style.backgroundColor = "#ffedd5";
+      statusEl.style.color = "#c2410c";
+      statusEl.textContent = "⚠️ 【慎重】低衝撃ドリル ＆ 股関節可動域アップ";
+
+      containerEl.innerHTML = createMenuHTML(
+        "<strong>【状態判断】</strong>関節や末端部にサインが出ています。急激な加速やストップ動作を控え、股関節主導で動くための技術ドリルに集中しましょう。",
+        [
+          {
+            name: "1. ハードルまたぎドリル（10台 × 3セット）",
+            target: "腸腰筋・中殿筋（股関節まわり）",
+            howTo: "高さを低く設定したハードルを横向き・前向きで大きくまたぎ越します。軸足がブレないようゆっくり行います。",
+            point: "膝下ではなく、おへその下（腸腰筋）から脚を引き上げる感覚を掴む。"
+          },
+          {
+            name: "2. サイドプランク（左右30秒 × 3セット）",
+            target: "腹斜筋・中殿筋（横腹・お尻の横）",
+            howTo: "横向きに寝て片肘で身体を支え、腰を浮かせます。余裕があれば上の脚をゆっくり上下させます。",
+            point: "走行中の骨盤の左右のブレ（腰落ち）を防ぐ重要なトレーニングです。"
+          },
+          {
+            name: "3. ウォーキング・ランジ（10歩 × 2セット）",
+            target: "大殿筋・大腿四頭筋（お尻・太もも全体）",
+            howTo: "大きく一歩踏み出し、後ろの膝が地面につくギリギリまで腰を落とします。膝が痛む場合は浅めでOKです。",
+            point: "前膝がつま先より前に出すぎないよう、お尻に体重を乗せる。"
+          }
+        ]
+      );
     } else if (fatigue >= 4) {
       // 2. 疲労度が高い場合の判定
-      titleColor = "#2980b9";
-      resultTitle = "【調整】疲労抜き・アクティブレスト優先";
-      resultDetail = 
-        "■ 状態判断: 痛みはありませんが疲労が蓄積しています。無理に追い込むと怪我やフォーム崩れにつながります。\n\n" +
-        "■ 推奨メニュー:\n" +
-        " 1. W-Up: 10分間の軽いジョグ ＆ 全身ストレッチ\n" +
-        " 2. リラックス走: 70〜75%の力でフォームを意識した流し 60m×3本\n" +
-        " 3. C-Down: 股関節・お尻周りの念入りなストレッチ";
+      statusEl.style.backgroundColor = "#e0f2fe";
+      statusEl.style.color = "#0369a1";
+      statusEl.textContent = "💧 【調整】疲労抜き・神経系リセットメニュー";
+
+      containerEl.innerHTML = createMenuHTML(
+        "<strong>【状態判断】</strong>痛みはありませんが疲労が蓄積しています。ここで無理に追い込むとフォームが崩れ、怪我の原因になります。血流を促して翌日に疲れを残さないメニューです。",
+        [
+          {
+            name: "1. リラックス・ジョグ ＆ 動的ストレッチ（15分）",
+            target: "全身の毛細血管・関節可動域",
+            howTo: "会話ができるペースで10分ジョグをした後、肩回し・股関節回し・レッグスイング（前後・左右の脚振り）を行います。",
+            point: "心拍数を少し上げることで筋肉の老廃物を流しやすくします。"
+          },
+          {
+            name: "2. 70%フォーム意識流し（60m × 3本 / 休息たっぷり）",
+            target: "神経系・リラックスした走りのリズム",
+            howTo: "全力の7割程度の力で、顔や肩の力を完全に抜いて走ります。1本ごとに息が完全に整うまで歩きます。",
+            point: "「頑張らないのに進む」感覚を脳と神経に覚えさせる。"
+          },
+          {
+            name: "3. 徹底クールダウン・静的ストレッチ（15分）",
+            target: "腸腰筋・ハムストリングス・殿筋群",
+            howTo: "呼吸を止めずに、1部位につき20〜30秒かけてゆっくり筋肉を伸ばします。",
+            point: "練習後30分以内のプロテイン・糖質補給と、今夜の7時間以上の睡眠をセットで行う。"
+          }
+        ]
+      );
     } else {
       // 3. コンディション良好時の目的別メニュー
-      titleColor = "#27ae60";
+      statusEl.style.backgroundColor = "#dcfce7";
+      statusEl.style.color = "#15803d";
+
       if (goal === "スピード・技術向上") {
-        resultTitle = "【良好】高強度スプリント・トップスピード強化";
-        resultDetail = 
-          "■ 状態判断: 身体のキレが良い状態です。質の高いダッシュでトップスピードを引き上げましょう。\n\n" +
-          "■ 推奨メニュー:\n" +
-          " 1. W-Up: 動的ストレッチ ＋ スプリントドリル（スキップ・ハイニー）\n" +
-          " 2. メイン走:\n" +
-          "    - スタートダッシュ 30m×3本（完全休息）\n" +
-          "    - 加速走 60m（20m助走＋40m全力）×3本\n" +
-          " 3. C-Down: 軽いジョグ ＆ ストレッチ";
+        statusEl.textContent = "🔥 【絶好調】トップスピード ＆ 加速力強化メニュー";
+        containerEl.innerHTML = createMenuHTML(
+          "<strong>【状態判断】</strong>身体のキレが抜群です！一本一本の質にこだわり、完全休息を挟みながら最大スピードと加速力を引き上げましょう。",
+          [
+            {
+              name: "1. スプリントドリル（ハイニー・Aスキップ 各20m×2本）",
+              target: "腸腰筋・足首のスティフネス（バネ）",
+              howTo: "背筋を伸ばし、接地時間を極限まで短くして弾むように進みます。上げた脚を素早く地面へ振り下ろします。",
+              point: "地面を「押す」のではなく、上から「叩いて跳ね返る」イメージ。"
+            },
+            {
+              name: "2. スタートダッシュ（30m × 3本 / 休息3〜4分）",
+              target: "大殿筋・大腿四頭筋・ヒラメ筋（爆発的加速力）",
+              howTo: "クラウチングまたはスタンディングから、最初の10mは前傾姿勢を保ち、低い角度で力強く地面を後ろへ押します。",
+              point: "急に頭を上げず、腕の大きな振りに合わせて脚を回転させる。"
+            },
+            {
+              name: "3. 加速走（60m：20m助走＋40m全力 × 3本 / 休息5分）",
+              target: "ハムストリングス・体幹（トップスピード維持）",
+              howTo: "最初の20mでスムーズにスピードに乗り、残り40mを最大スピード・最小の力みで駆け抜けます。",
+              point: "終盤で顎が上がらないよう、目線はまっすぐ前方をキープ。"
+            }
+          ]
+        );
       } else if (goal === "フォーム意識・リラックス") {
-        resultTitle = "【良好】リズム・フォーム最適化メニュー";
-        resultDetail = 
-          "■ 状態判断: 良い状態で技術練習に取り組めます。力みを抜き、大きなストライドを意識しましょう。\n\n" +
-          "■ 推奨メニュー:\n" +
-          " 1. W-Up: ミニハードル走（接地ポジションの確認）\n" +
-          " 2. メイン走:\n" +
-          "    - 85%の快調走 100m×4本（肩の力を抜いて弾むイメージ）\n" +
-          " 3. C-Down: 股関節周りのストレッチ";
+        statusEl.textContent = "✨ 【良好】ストライド拡大 ＆ リズム最適化メニュー";
+        containerEl.innerHTML = createMenuHTML(
+          "<strong>【状態判断】</strong>良いコンディションで技術習得に集中できます。力みをゼロにし、大きなストライドで効率よく進む感覚を養いましょう。",
+          [
+            {
+              name: "1. ミニハードル走（間隔5〜6足長 × 4本）",
+              target: "腸腰筋・ハムストリングス（脚の回転と接地位置）",
+              howTo: "等間隔に並べたミニハードルをリズミカルに越えます。身体の真下で接地し、脚が後ろに流れないよう意識します。",
+              point: "腰の位置を高く保ち、一本の線の上を走るように進む。"
+            },
+            {
+              name: "2. 85%快調走（100m × 4本 / 休息3分）",
+              target: "全身の連動性・スプリント持久力",
+              howTo: "全力の85〜90%の力で、スタートからゴールまで同じリズム・大きなストライドで走ります。",
+              point: "手のひらを軽く開き、顔の筋肉を緩めて「笑顔で走れるくらい」リラックスする。"
+            },
+            {
+              name: "3. 骨盤前後傾ストレッチ ＆ 股関節ケア（10分）",
+              target: "骨盤周辺・腸腰筋・内転筋",
+              howTo: "四つん這いで背中を丸める・反らす動作を繰り返し、骨盤の柔軟性を高めてから股関節を伸ばします。",
+              point: "骨盤が立つ（やや前傾する）感覚を身体に定着させる。"
+            }
+          ]
+        );
       } else if (goal === "体幹・補強") {
-        resultTitle = "【良好】スプリント連動・フィジカル強化";
-        resultDetail = 
-          "■ 状態判断: 走りを支える体幹とバネを鍛えるのに最適なコンディションです。\n\n" +
-          "■ 推奨メニュー:\n" +
-          " 1. W-Up: ジョグ ＋ 動的ストレッチ\n" +
-          " 2. 補強サーキット（3セット）:\n" +
-          "    - バウンディング 30m\n" +
-          "    - ランジウォーク 20歩\n" +
-          "    - プランク・レッグレイズ 各30秒\n" +
-          " 3. 仕上げの流し: 80m×2本";
+        statusEl.textContent = "💪 【良好】スプリント連動・バネ＆フィジカル強化";
+        containerEl.innerHTML = createMenuHTML(
+          "<strong>【状態判断】</strong>走りを支えるエンジンの出力を高める絶好の機会です。地面から大きな反発をもらうためのバネと体幹を鍛えましょう。",
+          [
+            {
+              name: "1. バウンディング（30m × 3本）",
+              target: "大殿筋・ハムストリングス・ふくらはぎ（跳躍力と推進力）",
+              howTo: "一歩ごとに大きく前上方へ跳び、空中で大きなフォームを作ります。着地と同時に次の跳躍へつなげます。",
+              point: "着地で膝が折れないよう、お尻と体幹で衝撃を受け止めて跳ねる。"
+            },
+            {
+              name: "2. 補強サーキット（2〜3セット / セット間休息2分）",
+              target: "体幹全体・腸腰筋・下半身",
+              howTo: "①レッグレイズ（仰向け脚上げ）15回 → ②マウンテンクライマー 20秒 → ③ジャンプスクワット 10回 を休憩なしで連続で行います。",
+              point: "疲れてきたときほどフォームを崩さず、スピーディーに動く。"
+            },
+            {
+              name: "3. 仕上げの流し（80m × 2本）",
+              target: "神経系（鍛えた筋肉を走りに統合する）",
+              howTo: "補強で使ったお尻・体幹の意識をそのまま走りに繋げるイメージで、軽快に2本走ります。",
+              point: "補強のあとに走ることで「筋肉の使い方」がスプリント技術に変わります。"
+            }
+          ]
+        );
       } else {
-        resultTitle = "【良好】コンディショニング・疲労回復";
-        resultDetail = 
-          "■ 状態判断: 大きな問題はありません。次のポイント練習に向けて体調を整えましょう。\n\n" +
-          "■ 推奨メニュー:\n" +
-          " 1. 15分間のリラックスジョグ\n" +
-          " 2. 全身の静的ストレッチ（特に腸腰筋・ハムストリングス）\n" +
-          " 3. 軽い体幹トレーニング（ドローイン・ヒップリフト）";
+        statusEl.textContent = "🌿 【良好】コンディショニング・疲労回復メニュー";
+        containerEl.innerHTML = createMenuHTML(
+          "<strong>【状態判断】</strong>体調は良好です。試合前やハードな練習の合間として、身体のバランスを整え最高のパフォーマンスを引き出す準備をしましょう。",
+          [
+            {
+              name: "1. 芝生リラックスジョグ（15分）",
+              target: "全身の血流促進・足裏の感覚調整",
+              howTo: "スパイクを脱ぎ、柔らかい芝生の上を気持ちよく走ります。フォームの左右差がないか確認しながら進みます。",
+              point: "呼吸を深く保ち、心身ともにリフレッシュさせる。"
+            },
+            {
+              name: "2. ドローイン ＆ ヒップリフト（各10回 × 2セット）",
+              target: "腹横筋・大殿筋（姿勢維持と骨盤の安定）",
+              howTo: "息を吐きながらお腹を限界まで凹ませて10秒キープ（ドローイン）した後、お尻を持ち上げるヒップリフトを行います。",
+              point: "地味ですが、走りの軸を安定させる最も重要なインナーケアです。"
+            },
+            {
+              name: "3. 全身ストレッチ ＆ フォームローラーケア（15分）",
+              target: "太もも前後・お尻・ふくらはぎ・背中",
+              howTo: "張りを感じる部分を中心にゆっくり伸ばします。痛気持ちいい強さで行いましょう。",
+              point: "明日の練習に向けたイメージトレーニングをしながらケアを行う。"
+            }
+          ]
+        );
       }
     }
-
-    titleEl.style.color = titleColor;
-    titleEl.textContent = resultTitle;
-    detailEl.textContent = resultDetail;
   });
 </script>
 
