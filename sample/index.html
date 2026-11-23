@@ -2,1842 +2,1775 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>TRACK & FIELD PRO | 陸上部アプリ・メニュー＆青春ラボ</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-    body {
-      background-color: #090d16;
-      background-image: 
-        radial-gradient(circle at 20% 0%, rgba(56, 189, 248, 0.25) 0%, transparent 45%),
-        radial-gradient(circle at 80% 0%, rgba(250, 204, 21, 0.25) 0%, transparent 45%),
-        repeating-linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.08) 0px,
-          rgba(255, 255, 255, 0.08) 3px,
-          transparent 3px,
-          transparent 64px
-        ),
-        linear-gradient(180deg, #0f172a 0%, #7f1d1d 60%, #450a0a 100%);
-      color: #0f172a;
-      margin: 0;
-      padding: 0 0 90px 0;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-      font-size: 16px;
-    }
-    .app-container {
-      width: 100%;
-      max-width: 680px;
-      padding: 12px 14px;
-    }
-
-    /* スマホアプリ風トップバー */
-    .app-topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 12px 16px;
-      border-radius: 16px;
-      margin-bottom: 12px;
-      border: 2px solid #facc15;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-    }
-    .app-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .app-logo-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 1.2;
-    }
-    .app-logo-sub {
-      font-size: 11px;
-      font-weight: 800;
-      color: #facc15;
-    }
-    .btn-qr-mini {
-      background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6);
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 900;
-      border: none;
-      border-radius: 20px;
-      padding: 8px 14px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
-    }
-
-    /* ランク＆経験値ステータスバー */
-    .rank-bar {
-      background: linear-gradient(90deg, #1e293b, #0f172a);
-      border: 1px solid #38bdf8;
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-      color: #f8fafc;
-    }
-    .rank-badge {
-      background: #0284c7;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 900;
-      padding: 3px 10px;
-      border-radius: 6px;
-    }
-    .role-badge-top {
-      background: #e11d48;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 900;
-      padding: 3px 10px;
-      border-radius: 6px;
-    }
-    .rank-count {
-      font-size: 13px;
-      font-weight: 800;
-      color: #facc15;
-    }
-
-    /* タブ画面切り替え */
-    .tab-view {
-      display: none;
-    }
-    .tab-view.active {
-      display: block;
-      animation: fadeIn 0.2s ease-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .quote-box {
-      background: #fffbeb;
-      border-left: 7px solid #f59e0b;
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin-bottom: 14px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    }
-    .quote-text {
-      font-size: 15px;
-      font-weight: 900;
-      color: #78350f;
-      margin: 0 0 4px 0;
-      line-height: 1.5;
-    }
-    .quote-author {
-      font-size: 13px;
-      color: #b45309;
-      text-align: right;
-      margin: 0;
-      font-weight: bold;
-    }
-
-    .card {
-      background-color: #ffffff;
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
-      border-top: 6px solid #f59e0b;
-    }
-    .card-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: #0f172a;
-      border-bottom: 3px solid #f1f5f9;
-      padding-bottom: 10px;
-      margin: 0 0 14px 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 13px;
-    }
-    @media (min-width: 540px) {
-      .form-row {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLUB COMPASS | 部活コンディショニング＆目標達成サポート</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              900: '#134e4a',
+            },
+            navy: {
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#020617',
+            }
+          }
+        }
       }
     }
-    label {
-      font-size: 15px;
-      font-weight: 900;
-      color: #1e293b;
-      margin-bottom: 5px;
-    }
-    select, input[type="text"] {
-      width: 100%;
-      max-width: 310px;
-      padding: 10px 12px;
-      font-size: 15px;
-      font-weight: bold;
-      color: #0f172a;
-      border: 2px solid #94a3b8;
-      border-radius: 10px;
-      background-color: #f8fafc;
-    }
-    select:focus, input[type="text"]:focus {
-      outline: none;
-      border-color: #f97316;
-      background-color: #ffffff;
-    }
-    select:disabled, input:disabled {
-      background-color: #e2e8f0;
-      color: #64748b;
-      cursor: not-allowed;
-    }
-    .btn-main {
-      width: 100%;
-      background: linear-gradient(90deg, #f97316 0%, #facc15 100%);
-      color: #0f172a;
-      font-size: 18px;
-      font-weight: 900;
-      border: none;
-      border-radius: 12px;
-      padding: 16px 20px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
-      margin-top: 6px;
-    }
-
-    /* 目標＆時間バッジ表示 */
-    .goal-banner {
-      background: linear-gradient(90deg, #0f172a, #1e293b);
-      color: #facc15;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 900;
-      margin-bottom: 12px;
-      display: none;
-      line-height: 1.6;
-    }
-    #result-status {
-      font-size: 17px;
-      font-weight: 900;
-      padding: 12px 14px;
-      border-radius: 10px;
-      margin-bottom: 14px;
+  </script>
+  <style>
+    /* カスタムアニメーションとスクロール調整 */
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
       background-color: #f1f5f9;
-      color: #334155;
-      line-height: 1.4;
-    }
-    .summary-text {
-      font-size: 15px;
-      line-height: 1.7;
-      color: #1e293b;
-      background: #f8fafc;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border-left: 5px solid #f59e0b;
-      margin-bottom: 16px;
-    }
-
-    /* フェーズ区切り */
-    .phase-label {
-      display: inline-block;
-      font-size: 13px;
-      font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 6px;
-      margin-bottom: 6px;
-      color: #ffffff;
-    }
-    .phase-wup { background: #0284c7; }
-    .phase-main { background: #dc2626; }
-    .phase-weight { background: #7c3aed; }
-    .phase-cdown { background: #059669; }
-
-    .menu-item {
-      border: 2px solid #cbd5e1;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 16px;
-      background: #ffffff;
-    }
-    .menu-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 8px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-    .menu-name {
-      font-size: 17px;
-      font-weight: 900;
       color: #0f172a;
-      line-height: 1.4;
-    }
-    .badge-row {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .time-badge {
-      background: #0f172a;
-      color: #facc15;
-      font-size: 13px;
-      font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-    .target-tag {
-      background: #fef3c7;
-      color: #92400e;
-      font-size: 13px;
-      font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 6px;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* 7種目リスト表示 */
-    .drill-grid {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin: 10px 0;
-    }
-    .drill-grid-title {
-      font-size: 14px;
-      font-weight: 900;
-      color: #0f172a;
-      margin: 0 0 8px 0;
-    }
-    .drill-step {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #1e293b;
-      padding: 5px 0;
-      border-bottom: 1px dashed #cbd5e1;
-    }
-    .drill-step:last-child {
-      border-bottom: none;
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* 休憩バッジ・ボックス */
-    .rest-banner {
-      background: #ecfeff;
-      border: 2px solid #06b6d4;
-      color: #0e7490;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin: 10px 0;
-      font-size: 15px;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    @keyframes cardPop {
+      0% { transform: scale(0.98); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
-    /* SVGイラスト図解ボックス */
-    .visual-guide {
-      background: #f1f5f9;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 10px;
-      margin: 10px 0;
-      text-align: center;
-    }
-    .visual-guide svg {
-      max-width: 100%;
-      height: 115px;
-      display: block;
-      margin: 0 auto;
-    }
-    .visual-caption {
-      font-size: 13px;
-      font-weight: 800;
-      color: #475569;
-      margin-top: 4px;
+    .animate-fade-up {
+      animation: fadeSlideUp 0.35s ease-out forwards;
     }
 
-    .menu-desc {
-      font-size: 15px;
-      line-height: 1.7;
-      color: #1e293b;
-      margin: 8px 0;
-    }
-    .point-box {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #0369a1;
-      background: #e0f2fe;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-weight: 800;
-      line-height: 1.5;
+    .animate-card-pop {
+      animation: cardPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* 青春＆恋愛アドバイス・男子が燃えるミッションカード */
-    .youth-card {
-      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
-      border: 2px solid #fb7185;
-      border-radius: 14px;
-      padding: 16px;
-      margin-top: 16px;
-    }
-    .youth-title {
-      font-size: 17px;
-      font-weight: 900;
-      color: #be123c;
-      margin: 0 0 8px 0;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .youth-text {
-      font-size: 15px;
-      line-height: 1.7;
-      color: #881337;
-      margin: 0;
-    }
-
-    .boys-challenge {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      border: 2px solid #facc15;
-      border-radius: 14px;
-      padding: 16px;
-      margin-top: 16px;
-      color: #ffffff;
-    }
-    .boys-title {
-      font-size: 17px;
-      font-weight: 900;
-      color: #facc15;
-      margin: 0 0 8px 0;
-    }
-    .boys-text {
-      font-size: 15px;
-      line-height: 1.7;
-      color: #e2e8f0;
-      margin: 0;
-    }
-
-    /* 青春相談室の個別ボタン */
-    .topic-btns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .topic-btn {
-      background: #f1f5f9;
-      border: 2px solid #cbd5e1;
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 14px;
-      font-weight: 900;
-      color: #1e293b;
-      cursor: pointer;
-      text-align: center;
-    }
-    .topic-btn.active {
-      background: #ffe4e6;
-      border-color: #e11d48;
-      color: #be123c;
-    }
-
-    /* チーム共有＆友達追加セクション */
-    .share-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .btn-line {
-      background: #06c755;
-      color: white;
-      font-size: 15px;
-      font-weight: 900;
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
-      cursor: pointer;
-    }
-    .btn-copy {
-      background: #334155;
-      color: white;
-      font-size: 15px;
-      font-weight: 900;
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
-      cursor: pointer;
-    }
-    .member-input-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-    .member-input-row input {
-      max-width: none;
-      flex: 1;
-      min-width: 140px;
-    }
-    .member-input-row select {
-      max-width: 130px;
-    }
-    .btn-add {
-      background: #f97316;
-      color: white;
-      font-size: 15px;
-      font-weight: 900;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 18px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .member-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .member-chip {
-      background: #ffedd5;
-      color: #9a3412;
-      font-size: 14px;
-      font-weight: 900;
-      padding: 8px 14px;
-      border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-    .member-chip.role-advisor {
-      background: #dbeafe;
-      color: #1e40af;
-      border: 1px solid #93c5fd;
-    }
-    .member-chip.role-captain {
-      background: #fef3c7;
-      color: #92400e;
-      border: 1px solid #fcd34d;
-    }
-    .member-chip .del-btn {
-      color: #ea580c;
-      font-size: 16px;
-      margin-left: 4px;
-    }
-
-    /* 役職ロックボックス（インスタ風制限） */
-    .role-lock-box {
-      background: #f8fafc;
-      border: 2px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
-    }
-    .lock-notice {
-      font-size: 13px;
-      font-weight: 800;
-      color: #be123c;
-      background: #ffe4e6;
-      padding: 8px 10px;
-      border-radius: 8px;
-      margin-top: 8px;
-      line-height: 1.5;
-    }
-    .btn-lock-save {
-      background: #0f172a;
-      color: #facc15;
-      font-size: 14px;
-      font-weight: 900;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 16px;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    /* 出席確認カード */
-    .attendance-btns {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin: 10px 0;
-    }
-    .att-btn {
-      padding: 12px 6px;
-      border-radius: 10px;
-      border: 2px solid #cbd5e1;
-      font-size: 15px;
-      font-weight: 900;
-      cursor: pointer;
-      background: #f8fafc;
-      color: #0f172a;
-    }
-    .att-btn.present { border-color: #10b981; background: #d1fae5; color: #065f46; }
-    .att-btn.late { border-color: #f59e0b; background: #fef3c7; color: #92400e; }
-    .att-btn.absent { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
-    .att-log-list {
-      margin-top: 12px;
-      background: #f8fafc;
-      border-radius: 10px;
-      padding: 10px;
-      border: 1px solid #e2e8f0;
-      max-height: 220px;
-      overflow-y: auto;
-    }
-    .att-log-item {
-      font-size: 13px;
-      padding: 8px;
-      border-bottom: 1px solid #e2e8f0;
-      line-height: 1.5;
-    }
-    .att-log-item:last-child { border-bottom: none; }
-
-    /* LINE風チャットルーム */
-    .chat-box {
-      background: #7494c0;
-      border-radius: 14px;
-      padding: 14px;
-      height: 360px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .chat-msg {
-      display: flex;
-      flex-direction: column;
-      max-width: 82%;
-    }
-    .chat-msg.me {
-      align-self: flex-end;
-      align-items: flex-end;
-    }
-    .chat-msg.other {
-      align-self: flex-start;
-      align-items: flex-start;
-    }
-    .chat-sender {
-      font-size: 11px;
-      font-weight: 900;
-      color: #ffffff;
-      margin-bottom: 3px;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-    }
-    .chat-bubble {
-      background: #ffffff;
-      color: #0f172a;
-      padding: 10px 14px;
-      border-radius: 16px;
-      font-size: 14px;
-      line-height: 1.5;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      word-break: break-word;
-    }
-    .chat-msg.me .chat-bubble {
-      background: #8de055;
-    }
-    .chat-bubble img {
-      max-width: 100%;
-      max-height: 200px;
-      border-radius: 10px;
-      display: block;
-      margin-top: 6px;
-    }
-    .chat-time {
-      font-size: 10px;
-      color: #f1f5f9;
-      margin-top: 2px;
-    }
-    .chat-input-bar {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .chat-input-bar input[type="text"] {
-      max-width: none;
-      flex: 1;
-    }
-    .btn-photo {
-      background: #0284c7;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 12px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .btn-send-chat {
-      background: #06c755;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 11px 16px;
-      font-size: 15px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-
-    /* スマホアプリ風・下部固定ナビゲーションバー */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(15, 23, 42, 0.98);
-      backdrop-filter: blur(10px);
-      border-top: 2px solid #334155;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 4px 10px 4px;
-      z-index: 900;
-    }
-    .nav-item {
-      background: none;
-      border: none;
-      color: #94a3b8;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      font-size: 11px;
-      font-weight: 900;
-      cursor: pointer;
-      padding: 4px 6px;
-      border-radius: 10px;
-      flex: 1;
-      max-width: 110px;
-    }
-    .nav-item.active {
-      color: #facc15;
-      background: rgba(250, 204, 21, 0.12);
-    }
-    .nav-icon {
-      font-size: 20px;
-      line-height: 1;
-    }
-
-    /* インスタ風 QRコードモーダル */
-    .qr-modal {
+    /* カスタムスクロールバー（横スクロールタブ用） */
+    .no-scrollbar::-webkit-scrollbar {
       display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(9, 13, 22, 0.88);
-      backdrop-filter: blur(6px);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
     }
-    .qr-card {
-      background: linear-gradient(135deg, #f59e0b 0%, #ec4899 50%, #6366f1 100%);
-      padding: 5px;
-      border-radius: 24px;
-      width: 100%;
-      max-width: 360px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-    }
-    .qr-inner {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 24px 20px;
-      text-align: center;
-    }
-    .qr-user-title {
-      font-size: 20px;
-      font-weight: 900;
-      color: #0f172a;
-      margin: 0 0 6px 0;
-    }
-    .qr-user-sub {
-      font-size: 14px;
-      font-weight: 900;
-      color: #e11d48;
-      margin: 0 0 16px 0;
-    }
-    .qr-frame {
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 14px;
-      display: inline-block;
-      margin-bottom: 12px;
-    }
-    .qr-frame img {
-      display: block;
-      width: 210px;
-      height: 210px;
-    }
-    .qr-hint {
-      font-size: 14px;
-      color: #334155;
-      line-height: 1.5;
-      margin: 0 0 16px 0;
-    }
-    .btn-qr-close {
-      width: 100%;
-      background: #0f172a;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 900;
-      border: none;
-      border-radius: 12px;
-      padding: 14px;
-      cursor: pointer;
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col antialiased selection:bg-teal-500 selection:text-white">
 
-<div class="app-container">
-  <!-- アプリ風トップバー -->
-  <div class="app-topbar">
-    <div class="app-logo">
-      <span style="font-size:28px;">🔥</span>
-      <div>
-        <div class="app-logo-title">TRACK & FIELD PRO</div>
-        <div class="app-logo-sub">高校陸上部・強化＆青春サポート</div>
-      </div>
-    </div>
-    <button type="button" class="btn-qr-mini" id="open-qr-btn">📱 QR友達追加</button>
-  </div>
+  <!-- トースト通知（alertの代替） -->
+  <div id="toast-container" class="fixed bottom-5 right-4 left-4 sm:left-auto sm:w-80 z-50 pointer-events-none flex flex-col gap-2"></div>
 
-  <!-- ランク＆役職表示バー -->
-  <div class="rank-bar">
-    <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-      <span class="role-badge-top" id="top-role-badge">役職：未設定</span>
-      <span class="rank-badge" id="athlete-rank">階級：ルーキー</span>
-    </div>
-    <div class="rank-count" id="practice-count-display">メニュー生成：0回達成</div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- タブ1：今日のメニュー作成画面 -->
-  <!-- ========================================== -->
-  <div id="tab-menu" class="tab-view active">
-    <div class="quote-box">
-      <p class="quote-text" id="quote-text">「金メダルは練習場でつくられる。試合はただそれを取りに行くだけの場所だ。」</p>
-      <p class="quote-author" id="quote-author">- 陸上メダリスト格言</p>
-    </div>
-
-    <div class="card">
-      <div class="card-title">⚡ 今日のコンディション・目標を入力</div>
-      
-      <div class="form-row">
-        <label for="athlete-name">👤 自分の名前（QR・トーク・出席用）</label>
-        <input type="text" id="athlete-name" placeholder="例：陸上部 翔太">
-      </div>
-
-      <div class="form-row">
-        <label for="event-type">🏅 専門ブロック（種目）</label>
-        <select id="event-type">
-          <option value="短距離" selected>⚡ 短距離・ハードル（100m〜400mH）</option>
-          <option value="長距離">👟 中・長距離・競歩（800m〜駅伝）</option>
-          <option value="跳躍">🦘 跳躍（走幅跳・三段跳・走高跳・棒高跳）</option>
-          <option value="投擲">☄️ 投擲（砲丸・円盤・やり・ハンマー）</option>
-        </select>
-      </div>
-
-      <div class="form-row">
-        <label for="target-aim">🎯 目指している目標</label>
-        <select id="target-aim">
-          <option value="インターハイ・全国大会出場！" selected>🏆 インターハイ・全国大会出場！</option>
-          <option value="県大会・ブロック大会突破！">🔥 県大会・ブロック大会突破！</option>
-          <option value="自己ベスト（PB）更新！">⚡ 自己ベスト（PB）更新！</option>
-          <option value="怪我ゼロで毎日楽しく継続！">🛡️ 怪我ゼロで毎日楽しく継続！</option>
-        </select>
-      </div>
-
-      <div class="form-row">
-        <label for="practice-time">⏱️ 今日の練習時間</label>
-        <select id="practice-time">
-          <option value="30">30分（朝練・短時間集中）</option>
-          <option value="60">1時間（60分：ショート練習）</option>
-          <option value="90">1時間30分（90分：標準メニュー）</option>
-          <option value="120" selected>2時間（120分：しっかり強化）</option>
-          <option value="150">2時間30分（150分：本格強化）</option>
-          <option value="180">3時間（180分：休日・合同練習）</option>
-          <option value="210">3時間30分（210分：たっぷり練習）</option>
-          <option value="240">4時間（240分：半日・合宿レベル）</option>
-        </select>
-      </div>
-
-      <div class="form-row">
-        <label for="weight-env">🏋️ ウエイト器具の有無</label>
-        <select id="weight-env">
-          <option value="あり" selected>🏋️ あり（ベンチプレス・スクワット等）</option>
-          <option value="なし">🤸 なし（グラウンド・自重メニューのみ）</option>
-        </select>
-      </div>
-
-      <div class="form-row">
-        <label for="fatigue">🔋 今日の疲労度</label>
-        <select id="fatigue">
-          <option value="1">1：絶好調（身体が軽い・キレ抜群！）</option>
-          <option value="2" selected>2：良好（いつも通り動ける）</option>
-          <option value="3">3：普通（やや張り・疲れあり）</option>
-          <option value="4">4：疲労あり（重だるい・休息も視野）</option>
-          <option value="5">5：限界（非常に重い・無理禁物）</option>
-        </select>
-      </div>
-
-      <div class="form-row">
-        <label for="pain">🩹 身体の違和感・痛み</label>
-        <select id="pain">
-          <option value="なし" selected>なし（ベストコンディション！）</option>
-          <option value="太もも裏（ハムストリングス）">太もも裏（ハムストリングス）</option>
-          <option value="脛・ふくらはぎ（シンスプ気配）">脛・ふくらはぎ（シンスプ気配）</option>
-          <option value="膝・股関節">膝・股関節まわり</option>
-          <option value="腰・肩・肘（投擲/跳躍負荷）">腰・肩・肘まわり</option>
-        </select>
-      </div>
-
-      <button type="button" class="btn-main" id="generate-btn">🔥 今日のフルメニュー＆休憩プラン生成！</button>
-    </div>
-
-    <!-- 結果表示カード -->
-    <div class="card" id="result-card">
-      <div class="card-title">📋 本日の実践メニュー（7種目W-Up＆C-Down付）</div>
-      <div class="goal-banner" id="goal-banner"></div>
-      <div id="result-status">上の項目を選んでボタンを押してね！</div>
-      <div id="result-container"></div>
-
-      <!-- 男子部が燃えるチャレンジ＆青春一言 -->
-      <div id="bonus-cards" style="display:none;"></div>
-
-      <!-- チーム共有ボタン -->
-      <div id="share-section" style="display:none;">
-        <div class="share-grid">
-          <button type="button" class="btn-line" id="line-share-btn">💬 LINEで仲間に送る</button>
-          <button type="button" class="btn-copy" id="copy-share-btn">📋 メニューをコピー</button>
+  <!-- =====================================================================
+       1. 初期設定画面（プロフィール未登録時に表示）
+       ===================================================================== -->
+  <section id="onboarding-screen" class="hidden min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-950 flex items-center justify-center p-4 sm:p-6">
+    <div class="w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-up">
+      <!-- ヘッダーバナー -->
+      <div class="bg-slate-900 px-6 py-7 sm:px-8 text-white relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-teal-500/20 blur-xl"></div>
+        <div class="flex items-center gap-2.5 text-teal-400 font-bold text-xs tracking-widest uppercase mb-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          CLUB COMPASS
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- タブ2：部員全員トーク（LINE風＆写真送信） -->
-  <!-- ========================================== -->
-  <div id="tab-chat" class="tab-view">
-    <div class="card" style="border-top-color: #06c755;">
-      <div class="card-title">💬 陸上部・全体連絡＆写真トークルーム</div>
-      <p style="font-size:14px; color:#334155; margin-top:0; line-height:1.5;">
-        顧問・部長・部員みんなで連絡や練習風景の写真を共有しよう！（自分の名前と役職で送信されます）
-      </p>
-
-      <div class="chat-box" id="chat-box"></div>
-
-      <div class="chat-input-bar">
-        <input type="file" id="chat-photo-input" accept="image/*" style="display:none;">
-        <button type="button" class="btn-photo" id="chat-photo-btn" title="写真を送る">📷</button>
-        <input type="text" id="chat-text-input" placeholder="みんなへメッセージを入力...">
-        <button type="button" class="btn-send-chat" id="chat-send-btn">送信</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- タブ3：高校生の青春＆恋愛・メンタル相談室 -->
-  <!-- ========================================== -->
-  <div id="tab-youth" class="tab-view">
-    <div class="card" style="border-top-color: #e11d48;">
-      <div class="card-title">🌸 高校陸上部・青春＆人生アドバイス室</div>
-      <p style="font-size:15px; color:#334155; line-height:1.6; margin-top:0;">
-        部活に勉強に恋に、高校生活は一瞬！気になるテーマをタップすると、今の君に刺さるアドバイスと行動ヒントが出るぞ！
-      </p>
-
-      <div class="topic-btns">
-        <button type="button" class="topic-btn active" data-topic="love">💘 好きな人がいる時の攻略法</button>
-        <button type="button" class="topic-btn" data-topic="mental">🔥 試合の緊張・スランプ突破</button>
-        <button type="button" class="topic-btn" data-topic="boys">💪 男子部員の絆＆カッコよさ</button>
-        <button type="button" class="topic-btn" data-topic="study">📚 部活と勉強の両立テクニック</button>
-      </div>
-
-      <div id="youth-advice-area"></div>
-    </div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- タブ4：トップ選手の秘密＆ウエイト講座 -->
-  <!-- ========================================== -->
-  <div id="tab-pro" class="tab-view">
-    <div class="card" style="border-top-color: #0284c7;">
-      <div class="card-title">👑 世界＆日本のトップ選手メニュー図鑑</div>
-      <div id="pro-library-area"></div>
-    </div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- タブ5：出席確認・役職ロック・メンバー管理 -->
-  <!-- ========================================== -->
-  <div id="tab-team" class="tab-view">
-    <!-- 出席確認送信カード -->
-    <div class="card" style="border-top-color: #10b981;">
-      <div class="card-title">📣 今日の出席確認（顧問・部長へ送信）</div>
-      <p style="font-size:14px; color:#334155; margin-top:0; line-height:1.5;">
-        ボタンを押すと、登録されている<strong>顧問・部長</strong>宛てに出席連絡が記録＆送信されます。
-      </p>
-      <div class="form-row">
-        <label for="att-reason">📝 連絡メモ（遅刻・欠席の理由など）</label>
-        <input type="text" id="att-reason" placeholder="例：補習のため15分遅れます / 体調万全！">
-      </div>
-      <div class="attendance-btns">
-        <button type="button" class="att-btn present" data-status="出席">🙆‍♂️ 出席します</button>
-        <button type="button" class="att-btn late" data-status="遅刻">🏃‍♂️ 遅刻します</button>
-        <button type="button" class="att-btn absent" data-status="欠席">🏥 欠席します</button>
-      </div>
-      <button type="button" class="btn-line" id="send-att-line-btn" style="width:100%; margin-top:6px;">
-        💬 顧問・部長にLINEで出席連絡を送る
-      </button>
-
-      <div class="att-log-list" id="att-log-list"></div>
-    </div>
-
-    <!-- 自分の役職設定（インスタ風ロック機能付き） -->
-    <div class="card" style="border-top-color: #e11d48;">
-      <div class="card-title">🔒 自分の役職設定（変更ロック機能）</div>
-      <div class="role-lock-box">
-        <p style="font-size:14px; color:#1e293b; margin:0 0 8px 0; font-weight:bold;">
-          最初に「一般部員」「部長」「副部長」「顧問」を設定すると、なりすまし防止のため<strong>14日間は変更できなくなります</strong>。
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">プロフィール初期設定</h1>
+        <p class="text-slate-300 text-sm mt-1.5 leading-relaxed">
+          あなたの役割・目標・コンディションに合わせたトレーニングメニューと、日々の行動ヒントを提案します。
         </p>
-        <select id="my-role-select" style="max-width:100%;">
-          <option value="一般部員">🏃‍♂️ 一般部員</option>
-          <option value="部長">👑 部長（キャプテン）</option>
-          <option value="副部長">⚡ 副部長</option>
-          <option value="顧問">🎓 顧問の先生</option>
-        </select>
-        <button type="button" class="btn-lock-save" id="lock-role-btn">🔐 この役職で確定する（14日間ロック）</button>
-        <div class="lock-notice" id="role-lock-status" style="display:none;"></div>
       </div>
-    </div>
 
-    <!-- 陸上部メンバーリスト＆QR -->
-    <div class="card" style="border-top-color: #f97316;">
-      <div class="card-title">🤝 陸上部メンバー（顧問・部長・部員）</div>
-      <p style="font-size:14px; color:#334155; line-height:1.5; margin-top:0;">
-        最初から顧問と部長が登録されています。タップで自分の名前欄にセットできます。
-      </p>
-      <div class="member-input-row">
-        <input type="text" id="new-member-input" placeholder="名前（例：高橋）">
-        <select id="new-member-role">
-          <option value="一般部員">一般部員</option>
-          <option value="部長">部長</option>
-          <option value="副部長">副部長</option>
-          <option value="顧問">顧問</option>
-        </select>
-        <button type="button" class="btn-add" id="add-member-btn">＋追加</button>
-      </div>
-      <div class="member-list" id="member-list"></div>
-    </div>
-  </div>
-</div>
-
-<!-- スマホアプリ風・下部ナビゲーションバー -->
-<nav class="bottom-nav">
-  <button type="button" class="nav-item active" data-target="tab-menu">
-    <span class="nav-icon">🏃‍♂️</span>
-    <span>メニュー</span>
-  </button>
-  <button type="button" class="nav-item" data-target="tab-chat">
-    <span class="nav-icon">💬</span>
-    <span>トーク</span>
-  </button>
-  <button type="button" class="nav-item" data-target="tab-youth">
-    <span class="nav-icon">💘</span>
-    <span>青春・恋愛</span>
-  </button>
-  <button type="button" class="nav-item" data-target="tab-pro">
-    <span class="nav-icon">👑</span>
-    <span>トップ選手</span>
-  </button>
-  <button type="button" class="nav-item" data-target="tab-team">
-    <span class="nav-icon">📣</span>
-    <span>出席・部員</span>
-  </button>
-</nav>
-
-<!-- インスタ風 QRコードモーダル -->
-<div class="qr-modal" id="qr-modal">
-  <div class="qr-card">
-    <div class="qr-inner">
-      <div style="font-size:32px; margin-bottom:4px;">🏅🏃‍♂️💨</div>
-      <h2 class="qr-user-title" id="qr-display-name">陸上部メンバー</h2>
-      <p class="qr-user-sub" id="qr-display-info">短距離 ｜ 目標：インターハイ出場！</p>
-      <div class="qr-frame">
-        <img id="qr-image" src="" alt="プロフィールQRコード">
-      </div>
-      <p class="qr-hint">
-        スマホのカメラで読み取ると、このアプリが開いて<br>
-        <strong>自動的にメンバーリストに友達追加</strong>されます！
-      </p>
-      <button type="button" class="btn-qr-close" id="close-qr-btn">閉じる</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  // ==========================================
-  // 1. タブ切り替えロジック
-  // ==========================================
-  document.querySelectorAll(".nav-item").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".tab-view").forEach(v => v.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.target).classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  });
-
-  // ==========================================
-  // 2. 自分の名前＆インスタ風「役職14日間ロック」機能
-  // ==========================================
-  const LOCK_DURATION_MS = 14 * 24 * 60 * 60 * 1000; // 14日間
-  const athleteNameInput = document.getElementById("athlete-name");
-  const myRoleSelect = document.getElementById("my-role-select");
-  const lockRoleBtn = document.getElementById("lock-role-btn");
-  const roleLockStatus = document.getElementById("role-lock-status");
-  const topRoleBadge = document.getElementById("top-role-badge");
-
-  athleteNameInput.value = localStorage.getItem("tf_my_name") || "";
-  athleteNameInput.addEventListener("input", () => {
-    localStorage.setItem("tf_my_name", athleteNameInput.value.trim());
-  });
-
-  function getMyRole() {
-    return localStorage.getItem("tf_my_role") || "一般部員";
-  }
-
-  function updateRoleLockUI() {
-    const savedRole = localStorage.getItem("tf_my_role");
-    const lockedAt = parseInt(localStorage.getItem("tf_role_locked_at") || "0", 10);
-    const now = Date.now();
-
-    if (savedRole) {
-      myRoleSelect.value = savedRole;
-      topRoleBadge.textContent = `役職：${savedRole}`;
-    } else {
-      topRoleBadge.textContent = "役職：一般部員（未確定）";
-    }
-
-    if (lockedAt && (now - lockedAt < LOCK_DURATION_MS)) {
-      const remainMs = LOCK_DURATION_MS - (now - lockedAt);
-      const remainDays = Math.ceil(remainMs / (1000 * 60 * 60 * 24));
-      const unlockDate = new Date(lockedAt + LOCK_DURATION_MS);
-      const dateStr = `${unlockDate.getMonth() + 1}月${unlockDate.getDate()}日`;
-
-      myRoleSelect.disabled = true;
-      lockRoleBtn.disabled = true;
-      lockRoleBtn.style.opacity = "0.5";
-      lockRoleBtn.textContent = "🔒 役職ロック中";
-      roleLockStatus.style.display = "block";
-      roleLockStatus.innerHTML = `⚠️ 役職「<strong>${savedRole}</strong>」はロックされています。<br>次回の変更は <strong>あと${remainDays}日後（${dateStr}以降）</strong> に可能になります。`;
-    } else {
-      myRoleSelect.disabled = false;
-      lockRoleBtn.disabled = false;
-      lockRoleBtn.style.opacity = "1";
-      lockRoleBtn.textContent = "🔐 この役職で確定する（14日間ロック）";
-      roleLockStatus.style.display = "none";
-    }
-  }
-
-  lockRoleBtn.addEventListener("click", () => {
-    const chosen = myRoleSelect.value;
-    if (!confirm(`役職を「${chosen}」に確定しますか？\n確定すると14日間は変更できなくなります。`)) return;
-    localStorage.setItem("tf_my_role", chosen);
-    localStorage.setItem("tf_role_locked_at", String(Date.now()));
-    updateRoleLockUI();
-    alert(`役職を「${chosen}」に確定しました！`);
-  });
-
-  updateRoleLockUI();
-
-  // ==========================================
-  // 3. メンバー管理（初期メンバーに顧問・部長を追加）
-  // ==========================================
-  const defaultMembers = [
-    { name: "顧問の先生", role: "顧問" },
-    { name: "主将（キャプテン）", role: "部長" },
-    { name: "副主将", role: "副部長" }
-  ];
-
-  let teamMembers = JSON.parse(localStorage.getItem("tf_members_v2") || "null") || defaultMembers;
-
-  // URLパラメータからQR友達追加された場合の処理
-  const urlParams = new URLSearchParams(window.location.search);
-  const addFriendName = urlParams.get("addFriend");
-  const addFriendRole = urlParams.get("role") || "一般部員";
-  if (addFriendName) {
-    if (!teamMembers.some(m => m.name === addFriendName)) {
-      teamMembers.push({ name: addFriendName, role: addFriendRole });
-      localStorage.setItem("tf_members_v2", JSON.stringify(teamMembers));
-    }
-    window.history.replaceState({}, document.title, window.location.pathname);
-  }
-
-  function renderMembers() {
-    const listEl = document.getElementById("member-list");
-    listEl.innerHTML = "";
-    teamMembers.forEach((m, idx) => {
-      const chip = document.createElement("div");
-      let roleClass = "";
-      let icon = "🏃‍♂️";
-      if (m.role === "顧問") { roleClass = "role-advisor"; icon = "🎓"; }
-      else if (m.role === "部長") { roleClass = "role-captain"; icon = "👑"; }
-      else if (m.role === "副部長") { roleClass = "role-captain"; icon = "⚡"; }
-
-      chip.className = `member-chip ${roleClass}`;
-      chip.innerHTML = `${icon} [${m.role}] ${m.name} <span class="del-btn" title="削除">×</span>`;
-      chip.addEventListener("click", (e) => {
-        if (e.target.classList.contains("del-btn")) {
-          teamMembers.splice(idx, 1);
-          localStorage.setItem("tf_members_v2", JSON.stringify(teamMembers));
-          renderMembers();
-        } else {
-          athleteNameInput.value = m.name;
-          localStorage.setItem("tf_my_name", m.name);
-          alert(`自分の名前を「${m.name}」にセットしました！`);
-        }
-      });
-      listEl.appendChild(chip);
-    });
-  }
-  renderMembers();
-
-  document.getElementById("add-member-btn").addEventListener("click", () => {
-    const nameVal = document.getElementById("new-member-input").value.trim();
-    const roleVal = document.getElementById("new-member-role").value;
-    if (!nameVal) return alert("名前を入力してください！");
-    teamMembers.push({ name: nameVal, role: roleVal });
-    localStorage.setItem("tf_members_v2", JSON.stringify(teamMembers));
-    document.getElementById("new-member-input").value = "";
-    renderMembers();
-  });
-
-  // ==========================================
-  // 4. 出席確認（顧問と部長に送信）
-  // ==========================================
-  let attendanceLogs = JSON.parse(localStorage.getItem("tf_att_logs") || "[]");
-
-  function getAdvisorsAndCaptains() {
-    const targets = teamMembers.filter(m => m.role === "顧問" || m.role === "部長");
-    return targets.length > 0
-      ? targets.map(t => `${t.name}(${t.role})`).join("・")
-      : "顧問・部長";
-  }
-
-  function renderAttendanceLogs() {
-    const container = document.getElementById("att-log-list");
-    if (attendanceLogs.length === 0) {
-      container.innerHTML = `<div style="font-size:13px; color:#64748b;">まだ本日の出席送信履歴はありません。</div>`;
-      return;
-    }
-    container.innerHTML = attendanceLogs.map(log => `
-      <div class="att-log-item">
-        <strong>【${log.status}】${log.sender}（${log.role}）</strong> <span style="color:#64748b;">${log.time}</span><br>
-        <span style="color:#0284c7;">送信先：${log.recipients}</span>
-        ${log.reason ? `<br>メモ：${log.reason}` : ""}
-      </div>
-    `).join("");
-  }
-  renderAttendanceLogs();
-
-  let latestAttMessage = "";
-
-  document.querySelectorAll(".att-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const status = btn.dataset.status;
-      const sender = athleteNameInput.value.trim() || "名前未設定の部員";
-      const role = getMyRole();
-      const reason = document.getElementById("att-reason").value.trim();
-      const recipients = getAdvisorsAndCaptains();
-      const now = new Date();
-      const timeStr = `${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
-
-      const entry = { status, sender, role, reason, recipients, time: timeStr };
-      attendanceLogs.unshift(entry);
-      localStorage.setItem("tf_att_logs", JSON.stringify(attendanceLogs));
-      renderAttendanceLogs();
-
-      latestAttMessage = `【陸上部 出席連絡】\n宛先：${recipients}\n氏名：${sender}（${role}）\n出欠：${status}\n${reason ? "理由・メモ：" + reason + "\n" : ""}送信時刻：${timeStr}`;
-
-      // 全体トークにも自動通知を流す
-      addChatMessage("システム通知（出席管理）", "自動送信", `${recipients} 宛てに【${status}】が届きました！\n送信者：${sender}（${role}）${reason ? " / メモ：" + reason : ""}`, null, false);
-
-      alert(`✅ ${recipients} へ「${status}」を送信しました！\n下の緑ボタンからLINEでも直接送れます。`);
-    });
-  });
-
-  document.getElementById("send-att-line-btn").addEventListener("click", () => {
-    const sender = athleteNameInput.value.trim() || "部員";
-    const role = getMyRole();
-    const reason = document.getElementById("att-reason").value.trim();
-    const recipients = getAdvisorsAndCaptains();
-    const text = latestAttMessage || `【陸上部 出席連絡】\n宛先：${recipients}\n氏名：${sender}（${role}）\n出欠：出席します\n${reason ? "メモ：" + reason : ""}`;
-    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text)}`, "_blank");
-  });
-
-  // ==========================================
-  // 5. LINE風・全員トーク＆写真送信機能
-  // ==========================================
-  let chatHistory = JSON.parse(localStorage.getItem("tf_chat_history") || "null") || [
-    {
-      sender: "顧問の先生",
-      role: "顧問",
-      text: "今日も怪我に気をつけて、一本一本集中して練習しよう！連絡事項や練習動画・写真があればここに送ってください。",
-      image: null,
-      time: "15:30",
-      isMe: false
-    },
-    {
-      sender: "主将（キャプテン）",
-      role: "部長",
-      text: "了解です！みんな集合5分前にはアップ開始できるように準備しよう🔥",
-      image: null,
-      time: "15:32",
-      isMe: false
-    }
-  ];
-
-  function renderChat() {
-    const box = document.getElementById("chat-box");
-    box.innerHTML = "";
-    chatHistory.forEach(msg => {
-      const div = document.createElement("div");
-      div.className = `chat-msg ${msg.isMe ? "me" : "other"}`;
-      div.innerHTML = `
-        <div class="chat-sender">${msg.sender} [${msg.role}]</div>
-        <div class="chat-bubble">
-          ${msg.text ? msg.text.replace(/\n/g, "<br>") : ""}
-          ${msg.image ? `<img src="${msg.image}" alt="送信画像">` : ""}
+      <!-- 初期設定フォーム -->
+      <form id="onboarding-form" class="p-6 sm:p-8 space-y-6">
+        <!-- ① 名前 -->
+        <div>
+          <label for="init-name" class="block text-sm font-bold text-slate-800 mb-1.5">
+            ① 名前（ニックネーム可） <span class="text-rose-500">*</span>
+          </label>
+          <input type="text" id="init-name" required maxlength="20" placeholder="例：健太、はるか"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 focus:ring-2 focus:ring-teal-500/20 outline-none transition text-base font-medium">
         </div>
-        <div class="chat-time">${msg.time}</div>
-      `;
-      box.appendChild(div);
-    });
-    box.scrollTop = box.scrollHeight;
-  }
-  renderChat();
 
-  function addChatMessage(sender, role, text, image = null, isMe = true) {
-    const now = new Date();
-    const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
-    chatHistory.push({ sender, role, text, image, time: timeStr, isMe });
-    // 容量オーバー防止のため最新40件を保持
-    if (chatHistory.length > 40) chatHistory.shift();
-    try {
-      localStorage.setItem("tf_chat_history", JSON.stringify(chatHistory));
-    } catch (e) {
-      alert("画像サイズが大きいため履歴の一時保存をスキップしました。");
-    }
-    renderChat();
-  }
+        <!-- ② 役割・役職（自動変更なし・固定） -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="init-role" class="block text-sm font-bold text-slate-800">
+              ② 役割・役職 <span class="text-rose-500">*</span>
+            </label>
+            <span class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
+              設定変更するまでずっと固定
+            </span>
+          </div>
+          <input type="text" id="init-role" required maxlength="20" placeholder="例：キャプテン、マネージャー、プレイヤー"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 focus:ring-2 focus:ring-teal-500/20 outline-none transition text-base font-medium">
+          <!-- 役割の選択候補チップ -->
+          <div class="flex flex-wrap gap-1.5 mt-2.5" id="init-role-presets">
+            <button type="button" data-value="キャプテン" class="preset-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">キャプテン</button>
+            <button type="button" data-value="副キャプテン" class="preset-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">副キャプテン</button>
+            <button type="button" data-value="マネージャー" class="preset-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">マネージャー</button>
+            <button type="button" data-value="レギュラー・主力" class="preset-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">レギュラー・主力</button>
+            <button type="button" data-value="プレイヤー・部員" class="preset-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">プレイヤー・部員</button>
+          </div>
+        </div>
 
-  document.getElementById("chat-send-btn").addEventListener("click", () => {
-    const input = document.getElementById("chat-text-input");
-    const text = input.value.trim();
-    if (!text) return;
-    const sender = athleteNameInput.value.trim() || "匿名部員";
-    const role = getMyRole();
-    addChatMessage(sender, role, text, null, true);
-    input.value = "";
-  });
+        <!-- ③ 目標（どこが目標か） -->
+        <div>
+          <label for="init-goal" class="block text-sm font-bold text-slate-800 mb-1.5">
+            ③ どこが目標？（大会・個人目標） <span class="text-rose-500">*</span>
+          </label>
+          <input type="text" id="init-goal" required maxlength="30" placeholder="例：全国大会出場、県大会ベスト8、レギュラー定着"
+            class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 focus:ring-2 focus:ring-teal-500/20 outline-none transition text-base font-medium">
+          <!-- 目標の選択候補チップ -->
+          <div class="flex flex-wrap gap-1.5 mt-2.5" id="init-goal-presets">
+            <button type="button" data-value="全国大会出場" class="goal-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">全国大会出場</button>
+            <button type="button" data-value="県大会ベスト8以上" class="goal-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">県大会ベスト8以上</button>
+            <button type="button" data-value="レギュラー定着" class="goal-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">レギュラー定着</button>
+            <button type="button" data-value="自己ベスト更新" class="goal-chip px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 hover:text-teal-700 hover:border-teal-300 border border-slate-200 text-slate-700 transition">自己ベスト更新</button>
+          </div>
+        </div>
 
-  document.getElementById("chat-text-input").addEventListener("keypress", (e) => {
-    if (e.key === "Enter") document.getElementById("chat-send-btn").click();
-  });
+        <!-- ④ 性別選択（男子 / 女子） -->
+        <div>
+          <span class="block text-sm font-bold text-slate-800 mb-2">
+            ④ 性別（コンディショニング最適化に使用） <span class="text-rose-500">*</span>
+          </span>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="cursor-pointer">
+              <input type="radio" name="init-gender" value="male" class="peer sr-only" required>
+              <div class="p-3.5 rounded-2xl border-2 border-slate-200 bg-slate-50 peer-checked:border-sky-600 peer-checked:bg-sky-50 peer-checked:text-sky-900 flex items-center justify-center gap-2.5 font-bold text-slate-700 transition hover:bg-slate-100">
+                <span class="w-3 h-3 rounded-full bg-sky-500"></span>
+                <span>男子</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="init-gender" value="female" class="peer sr-only" required>
+              <div class="p-3.5 rounded-2xl border-2 border-slate-200 bg-slate-50 peer-checked:border-teal-600 peer-checked:bg-teal-50 peer-checked:text-teal-900 flex items-center justify-center gap-2.5 font-bold text-slate-700 transition hover:bg-slate-100">
+                <span class="w-3 h-3 rounded-full bg-teal-500"></span>
+                <span>女子</span>
+              </div>
+            </label>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">
+            ※「女子」を選択した場合、周期に合わせた体調管理・生理中の無理をしない専用メニュー機能が利用できます。
+          </p>
+        </div>
 
-  // 写真選択＆圧縮して送信
-  const photoInput = document.getElementById("chat-photo-input");
-  document.getElementById("chat-photo-btn").addEventListener("click", () => {
-    photoInput.click();
-  });
+        <button type="submit"
+          class="w-full py-4 px-6 rounded-2xl bg-teal-600 hover:bg-teal-700 active:scale-[0.99] text-white font-bold text-base shadow-lg shadow-teal-600/25 transition flex items-center justify-center gap-2">
+          <span>この内容でスタートする</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
 
-  photoInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      const img = new Image();
-      img.onload = function() {
-        const canvas = document.createElement("canvas");
-        const maxW = 500;
-        const scale = Math.min(1, maxW / img.width);
-        canvas.width = img.width * scale;
-        canvas.height = img.height * scale;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.75);
+  <!-- =====================================================================
+       2. メインダッシュボード画面
+       ===================================================================== -->
+  <div id="main-app" class="hidden flex-1 flex flex-col">
+    <!-- トップナビ＆常時表示プロフィールヘッダー -->
+    <header class="bg-slate-900 text-white sticky top-0 z-30 shadow-md border-b border-slate-800">
+      <div class="max-w-5xl mx-auto px-4 py-3.5 sm:px-6">
+        <div class="flex items-center justify-between gap-3">
+          <!-- ブランドロゴ＆日付 -->
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-teal-500 flex items-center justify-center text-slate-950 font-black shadow-inner">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold tracking-tight text-sm sm:text-base text-white">CLUB COMPASS</span>
+                <span id="header-date" class="text-xs text-slate-400 font-medium hidden sm:inline"></span>
+              </div>
+              <p id="header-date-mobile" class="text-[11px] text-slate-400 sm:hidden"></p>
+            </div>
+          </div>
 
-        const sender = athleteNameInput.value.trim() || "匿名部員";
-        const role = getMyRole();
-        addChatMessage(sender, role, "📷 写真を送信しました", compressedDataUrl, true);
+          <!-- 設定ボタン（いつでも編集可能） -->
+          <button id="open-settings-btn" type="button"
+            class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs sm:text-sm font-bold flex items-center gap-1.5 transition">
+            <svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <span>プロフィール設定</span>
+          </button>
+        </div>
+
+        <!-- 常時表示プロフィールステータスバー -->
+        <div class="mt-3 pt-3 border-t border-slate-800/90 flex flex-wrap items-center justify-between gap-2.5">
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- 名前 -->
+            <span id="display-name" class="text-base sm:text-lg font-extrabold text-white"></span>
+            <!-- 役割バッジ（固定） -->
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-teal-500/20 border border-teal-500/40 text-teal-300 text-xs font-bold">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <span id="display-role"></span>
+            </span>
+            <!-- 性別バッジ -->
+            <span id="display-gender-badge" class="px-2 py-0.5 rounded-md text-[11px] font-bold"></span>
+          </div>
+
+          <!-- 目標表示 -->
+          <div class="flex items-center gap-2 bg-slate-800/90 px-3 py-1.5 rounded-xl border border-slate-700/80 max-w-full">
+            <span class="text-xs font-bold text-amber-400 shrink-0">🎯 目標</span>
+            <span id="display-goal" class="text-xs sm:text-sm font-bold text-slate-100 truncate"></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- メインコンテンツエリア -->
+    <main class="max-w-5xl w-full mx-auto px-4 py-6 sm:px-6 space-y-6 flex-1">
+
+      <!-- =================================================================
+           【女子選択時のみ表示】コンディション・生理周期管理パネル
+           ※男子選択時はJavaScriptで完全に非表示（hidden）
+           ================================================================= -->
+      <section id="female-cycle-panel" class="hidden bg-white rounded-3xl shadow-sm border border-rose-100 overflow-hidden animate-fade-up">
+        <div class="bg-gradient-to-r from-rose-50 via-amber-50/60 to-teal-50/50 px-5 py-4 sm:px-6 border-b border-rose-100/80 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-base sm:text-lg font-extrabold text-slate-900">コンディション・生理周期管理</h2>
+              <p class="text-xs text-slate-500">体調リズムに合わせて練習強度を賢くコントロール</p>
+            </div>
+          </div>
+
+          <!-- 「現在生理中」ワンタップ切り替えトグル -->
+          <div class="flex items-center gap-3 bg-white px-4 py-2.5 rounded-2xl border border-rose-200 shadow-xs">
+            <span class="text-sm font-extrabold text-slate-800">現在生理中</span>
+            <button id="period-toggle-btn" type="button" role="switch" aria-checked="false"
+              class="relative inline-flex h-7 w-13 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-200 transition-colors duration-200 ease-in-out focus:outline-none">
+              <span id="period-toggle-knob"
+                class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 生理中ON時の安心メッセージバナー -->
+        <div id="period-active-banner" class="hidden bg-rose-500 text-white px-5 py-3 sm:px-6 text-xs sm:text-sm font-bold flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span>生理中モードON：下のトレーニングが【無理をしないコンディショニングメニュー】に切り替わっています。</span>
+          </div>
+        </div>
+
+        <!-- 周期計算＆入力グリッド -->
+        <div class="p-5 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+          <!-- 周期入力エリア -->
+          <div class="md:col-span-5 space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+            <div>
+              <label for="last-period-date" class="block text-xs font-bold text-slate-600 mb-1">前回の生理開始日</label>
+              <div class="flex gap-2">
+                <input type="date" id="last-period-date"
+                  class="flex-1 px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold text-slate-800 focus:border-teal-600 outline-none">
+                <button type="button" id="set-today-period-btn"
+                  class="px-3 py-2 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-bold whitespace-nowrap transition">
+                  今日開始
+                </button>
+              </div>
+            </div>
+            <div>
+              <label for="cycle-length-input" class="block text-xs font-bold text-slate-600 mb-1">平均周期（日）</label>
+              <div class="flex items-center gap-2">
+                <input type="number" id="cycle-length-input" min="20" max="45" value="28"
+                  class="w-24 px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold text-slate-800 focus:border-teal-600 outline-none">
+                <span class="text-xs font-bold text-slate-500">日周期（標準：28日）</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 現在のサイクル状態＆次回予定日 -->
+          <div class="md:col-span-7 space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                <span class="text-[11px] font-bold text-slate-500 block">現在のサイクル状態</span>
+                <div id="cycle-phase-badge" class="mt-1 inline-block px-2.5 py-1 rounded-lg text-xs sm:text-sm font-extrabold bg-teal-100 text-teal-800">
+                  開始日を入力してください
+                </div>
+                <p id="cycle-day-text" class="text-xs text-slate-500 mt-1 font-medium">日付を設定すると周期を表示</p>
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                <span class="text-[11px] font-bold text-slate-500 block">次回予定日の目安</span>
+                <div id="next-period-date" class="mt-1 text-base sm:text-lg font-extrabold text-slate-900">
+                  --月--日
+                </div>
+                <p id="next-period-countdown" class="text-xs text-slate-500 mt-0.5 font-medium">--</p>
+              </div>
+            </div>
+
+            <!-- サイクル別スポーツアドバイス -->
+            <div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/70 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <span class="font-bold text-amber-900">💡 サイクル別ケアポイント：</span>
+              <span id="cycle-phase-advice">前回の開始日を入力するか、「現在生理中」スイッチを切り替えると、今の時期に合ったコンディショニングの目安が表示されます。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           3. 今日のトレーニング＆行動メニュー（性別・役割・目標・体調連動）
+           ================================================================= -->
+      <section id="training-section" class="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden animate-fade-up">
+        <!-- メニューヘッダー（生理中モード時は色調が穏やかに変化） -->
+        <div id="training-header" class="px-5 py-5 sm:px-6 bg-slate-900 text-white transition-colors duration-300">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span id="menu-mode-tag" class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-teal-500 text-slate-950">
+                  通常トレーニングモード
+                </span>
+                <span id="menu-progress-text" class="text-xs font-bold text-slate-300">達成率 0%</span>
+              </div>
+              <h2 id="menu-main-title" class="text-lg sm:text-xl font-extrabold tracking-tight">
+                今日のトレーニング＆行動メニュー
+              </h2>
+              <p id="menu-subtitle" class="text-xs sm:text-sm text-slate-300 mt-1">
+                役割と目標に合わせた本日の重点アクションです。
+              </p>
+            </div>
+
+            <!-- 今日の体調セレクター -->
+            <div class="flex items-center gap-1.5 bg-white/10 p-1.5 rounded-xl backdrop-blur-xs">
+              <button type="button" data-condition="good" class="cond-btn px-2.5 py-1.5 rounded-lg text-xs font-bold transition">🔥 絶好調</button>
+              <button type="button" data-condition="normal" class="cond-btn px-2.5 py-1.5 rounded-lg text-xs font-bold transition">👍 普通</button>
+              <button type="button" data-condition="tired" class="cond-btn px-2.5 py-1.5 rounded-lg text-xs font-bold transition">🔋 疲労気味</button>
+            </div>
+          </div>
+
+          <!-- 進捗プログレスバー -->
+          <div class="mt-4 w-full bg-white/15 h-2.5 rounded-full overflow-hidden">
+            <div id="menu-progress-bar" class="h-full bg-teal-400 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- メニューリスト本体 -->
+        <div class="p-5 sm:p-6 space-y-4">
+          <div id="menu-list-container" class="space-y-3">
+            <!-- JSで動的にメニューカードを生成 -->
+          </div>
+
+          <!-- 自分のメニューを追加するミニフォーム -->
+          <form id="custom-task-form" class="pt-3 border-t border-slate-100 flex gap-2">
+            <input type="text" id="custom-task-input" maxlength="50" placeholder="＋ 自分だけの今日やることを追加（例：素振り100回、英単語30個）"
+              class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-600 text-sm outline-none transition">
+            <button type="submit"
+              class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm font-bold shrink-0 transition">
+              追加
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           4. 「人生アドバイス」セクション
+           ================================================================= -->
+      <section class="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden animate-fade-up">
+        <div class="px-5 py-5 sm:px-6 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">人生アドバイス</h2>
+              <p class="text-xs text-slate-500">部活・勉強・メンタル・人間関係・進路——迷ったときの思考のヒント</p>
+            </div>
+          </div>
+
+          <button id="draw-advice-btn" type="button"
+            class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 active:scale-95 text-white text-xs sm:text-sm font-bold shadow-sm shadow-teal-600/20 flex items-center gap-1.5 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span>別のアドバイスを引く</span>
+          </button>
+        </div>
+
+        <!-- ジャンル選択タブ -->
+        <div class="px-5 pt-4 sm:px-6">
+          <div id="advice-category-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2">
+            <button type="button" data-cat="all" class="advice-tab px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition">すべて</button>
+            <button type="button" data-cat="club" class="advice-tab px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition">部活・練習の壁</button>
+            <button type="button" data-cat="study" class="advice-tab px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition">勉強との両立</button>
+            <button type="button" data-cat="mental" class="advice-tab px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition">メンタル・逆境</button>
+            <button type="button" data-cat="team" class="advice-tab px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition">人間関係・チーム</button>
+            <button type="button" data-cat="future" class="advice-tab px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition">進路・将来の視点</button>
+            <button type="button" data-cat="favorites" class="advice-tab px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition">★ お気に入り</button>
+          </div>
+        </div>
+
+        <!-- メイン表示アドバイスカード -->
+        <div class="p-5 sm:p-6">
+          <div id="advice-card" class="rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 sm:p-7 shadow-md relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-teal-500/10 blur-xl pointer-events-none"></div>
+
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span id="advice-badge" class="px-3 py-1 rounded-lg bg-teal-500/20 border border-teal-400/30 text-teal-300 text-xs font-bold">
+                部活・練習の壁
+              </span>
+              <span id="advice-pick-label" class="text-[11px] font-semibold text-slate-400">今日のピックアップ</span>
+            </div>
+
+            <h3 id="advice-title" class="text-lg sm:text-xl font-extrabold text-white leading-snug mb-3">
+              <!-- JSで挿入 -->
+            </h3>
+
+            <p id="advice-body" class="text-sm sm:text-base text-slate-200 leading-relaxed mb-5">
+              <!-- JSで挿入 -->
+            </p>
+
+            <!-- アクションアクションバー -->
+            <div class="pt-4 border-t border-slate-700/80 flex flex-wrap items-center justify-between gap-3">
+              <div class="text-xs text-teal-300 font-bold" id="advice-action-tip">
+                <!-- 実践ワンポイント -->
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button id="fav-advice-btn" type="button"
+                  class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-bold text-slate-200 flex items-center gap-1.5 transition">
+                  <span id="fav-advice-icon">☆</span>
+                  <span id="fav-advice-text">お気に入り</span>
+                </button>
+                <button id="copy-advice-btn" type="button"
+                  class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-bold text-slate-200 flex items-center gap-1.5 transition">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                  </svg>
+                  <span>コピー</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ジャンル内一覧（コンパクトリスト） -->
+          <div class="mt-5">
+            <div class="flex items-center justify-between mb-2.5">
+              <h4 class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">このジャンルの他のヒント</h4>
+              <span id="advice-count-label" class="text-xs text-slate-400 font-medium"></span>
+            </div>
+            <div id="advice-sublist" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <!-- JSでコンパクトカードを生成 -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           5. 今日の振り返り・一言メモ（localStorage保存）
+           ================================================================= -->
+      <section class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-5 sm:p-6">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-2">
+            <span>📝 今日の練習・コンディションメモ</span>
+          </h2>
+          <span id="memo-saved-status" class="text-xs text-teal-600 font-bold opacity-0 transition-opacity">保存しました</span>
+        </div>
+        <textarea id="daily-memo-input" rows="2" maxlength="300"
+          placeholder="今日の練習で気づいたこと、良かったプレー、明日の意識ポイントなどを自由にメモ（自動保存）"
+          class="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-600 text-sm text-slate-800 outline-none transition resize-none"></textarea>
+      </section>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="max-w-5xl w-full mx-auto px-4 py-6 text-center text-xs text-slate-400">
+      CLUB COMPASS — 高校生・部活動コンディショニング＆目標達成サポート（データはお使いの端末内にのみ安全に保存されます）
+    </footer>
+  </div>
+
+  <!-- =====================================================================
+       3. プロフィール編集モーダル
+       ===================================================================== -->
+  <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden animate-card-pop max-h-[92vh] flex flex-col">
+      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        <h3 class="text-base sm:text-lg font-extrabold">プロフィール設定の編集</h3>
+        <button id="close-settings-btn" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <form id="edit-profile-form" class="p-6 space-y-5 overflow-y-auto">
+        <div>
+          <label for="edit-name" class="block text-sm font-bold text-slate-800 mb-1">名前</label>
+          <input type="text" id="edit-name" required maxlength="20"
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 text-sm font-bold outline-none">
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label for="edit-role" class="block text-sm font-bold text-slate-800">役割・役職</label>
+            <span class="text-[11px] font-semibold text-teal-700">※自動変更なし（固定）</span>
+          </div>
+          <input type="text" id="edit-role" required maxlength="20"
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 text-sm font-bold outline-none">
+          <div class="flex flex-wrap gap-1.5 mt-2">
+            <button type="button" data-edit-role="キャプテン" class="edit-role-chip px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 text-slate-700 border border-slate-200">キャプテン</button>
+            <button type="button" data-edit-role="副キャプテン" class="edit-role-chip px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 text-slate-700 border border-slate-200">副キャプテン</button>
+            <button type="button" data-edit-role="マネージャー" class="edit-role-chip px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 text-slate-700 border border-slate-200">マネージャー</button>
+            <button type="button" data-edit-role="レギュラー・主力" class="edit-role-chip px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 text-slate-700 border border-slate-200">レギュラー・主力</button>
+            <button type="button" data-edit-role="プレイヤー・部員" class="edit-role-chip px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-teal-50 text-slate-700 border border-slate-200">プレイヤー・部員</button>
+          </div>
+        </div>
+
+        <div>
+          <label for="edit-goal" class="block text-sm font-bold text-slate-800 mb-1">目標（どこが目標か）</label>
+          <input type="text" id="edit-goal" required maxlength="30"
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-teal-600 text-sm font-bold outline-none">
+        </div>
+
+        <div>
+          <span class="block text-sm font-bold text-slate-800 mb-1.5">性別</span>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="cursor-pointer">
+              <input type="radio" name="edit-gender" value="male" class="peer sr-only" required>
+              <div class="p-3 rounded-xl border-2 border-slate-200 bg-slate-50 peer-checked:border-sky-600 peer-checked:bg-sky-50 peer-checked:text-sky-900 flex items-center justify-center gap-2 font-bold text-sm text-slate-700 transition">
+                <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                <span>男子</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="edit-gender" value="female" class="peer sr-only" required>
+              <div class="p-3 rounded-xl border-2 border-slate-200 bg-slate-50 peer-checked:border-teal-600 peer-checked:bg-teal-50 peer-checked:text-teal-900 flex items-center justify-center gap-2 font-bold text-sm text-slate-700 transition">
+                <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+                <span>女子</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-2 flex flex-col gap-2.5">
+          <button type="submit"
+            class="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm shadow-md transition">
+            変更を保存する
+          </button>
+
+          <!-- 2段階リセットボタン（confirm()不使用） -->
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-400">最初からやり直す場合</span>
+            <button type="button" id="reset-data-btn"
+              class="px-3 py-1.5 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-50 border border-rose-200 transition">
+              全データを初期化
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       JavaScript ロジック
+       ===================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ===================================================================
+      // 1. ストレージキー＆アプリケーション状態管理
+      // ===================================================================
+      const STORAGE_KEYS = {
+        PROFILE: 'club_compass_profile_v1',
+        CYCLE: 'club_compass_cycle_v1',
+        DAILY: 'club_compass_daily_v1',
+        FAVORITES: 'club_compass_favorites_v1'
       };
-      img.src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-    photoInput.value = "";
-  });
 
-  // ==========================================
-  // 6. ランク＆生成回数管理
-  // ==========================================
-  let practiceCount = parseInt(localStorage.getItem("tf_practice_count") || "0", 10);
-  function updateRankUI() {
-    document.getElementById("practice-count-display").textContent = `メニュー生成：${practiceCount}回達成`;
-    let rank = "階級：ルーキー";
-    if (practiceCount >= 30) rank = "階級：👑 全国レジェンド";
-    else if (practiceCount >= 15) rank = "階級：🔥 インターハイ候補";
-    else if (practiceCount >= 7) rank = "階級：⚡ 県大会ファイナリスト";
-    else if (practiceCount >= 3) rank = "階級：🏃‍♂️ レギュラー候補";
-    document.getElementById("athlete-rank").textContent = rank;
-  }
-  updateRankUI();
-
-  // ==========================================
-  // 7. イラスト図解（SVG）＆名言集
-  // ==========================================
-  const illustrations = {
-    dynamicStretch: `
-      <svg viewBox="0 0 260 110">
-        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
-        <circle cx="95" cy="24" r="9" fill="#f97316"/>
-        <line x1="95" y1="33" x2="95" y2="62" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-        <line x1="95" y1="62" x2="95" y2="92" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-        <line x1="95" y1="62" x2="145" y2="45" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
-        <path d="M 135 75 Q 155 60 148 42" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4,3"/>
-        <polygon points="148,38 142,46 153,46" fill="#f59e0b"/>
-        <text x="165" y="55" font-size="12" font-weight="bold" fill="#0f172a">反動を使って</text>
-        <text x="165" y="72" font-size="12" font-weight="bold" fill="#e11d48">大きく股関節回し！</text>
-      </svg>`,
-    sprintDrill: `
-      <svg viewBox="0 0 260 110">
-        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
-        <circle cx="105" cy="20" r="9" fill="#f97316"/>
-        <line x1="105" y1="29" x2="100" y2="58" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-        <line x1="100" y1="58" x2="95" y2="92" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-        <line x1="100" y1="58" x2="132" y2="55" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
-        <line x1="132" y1="55" x2="132" y2="78" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
-        <polyline points="85,42 103,40 120,30" fill="none" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
-        <text x="150" y="45" font-size="12" font-weight="bold" fill="#e11d48">腿を水平まで上げる</text>
-        <text x="150" y="65" font-size="12" font-weight="bold" fill="#0284c7">真下に素早く接地！</text>
-      </svg>`,
-    startDash: `
-      <svg viewBox="0 0 260 110">
-        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
-        <circle cx="135" cy="34" r="9" fill="#f97316"/>
-        <line x1="130" y1="42" x2="100" y2="66" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-        <line x1="100" y1="66" x2="70" y2="92" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
-        <polyline points="100,66 125,68 120,88" fill="none" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-        <line x1="70" y1="92" x2="150" y2="25" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,4"/>
-        <text x="155" y="48" font-size="12" font-weight="bold" fill="#e11d48">45度の低い前傾</text>
-        <text x="155" y="68" font-size="12" font-weight="bold" fill="#0f172a">地面を後ろへ押す！</text>
-      </svg>`,
-    squatClean: `
-      <svg viewBox="0 0 260 110">
-        <rect x="10" y="95" width="240" height="5" rx="2" fill="#cbd5e1"/>
-        <circle cx="95" cy="34" r="9" fill="#f97316"/>
-        <line x1="95" y1="43" x2="82" y2="68" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-        <polyline points="82,68 112,72 95,95" fill="none" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
-        <line x1="65" y1="46" x2="125" y2="46" stroke="#475569" stroke-width="4"/>
-        <rect x="62" y="36" width="6" height="20" fill="#7c3aed"/>
-        <rect x="122" y="36" width="6" height="20" fill="#7c3aed"/>
-        <text x="140" y="50" font-size="12" font-weight="bold" fill="#e11d48">お尻を後ろに引く</text>
-        <text x="140" y="70" font-size="12" font-weight="bold" fill="#7c3aed">素早く立ち上がる！</text>
-      </svg>`,
-    coolDownStretch: `
-      <svg viewBox="0 0 260 110">
-        <rect x="10" y="92" width="240" height="6" rx="3" fill="#cbd5e1"/>
-        <circle cx="105" cy="52" r="8" fill="#f97316"/>
-        <line x1="100" y1="60" x2="80" y2="88" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
-        <line x1="80" y1="88" x2="155" y2="88" stroke="#10b981" stroke-width="5" stroke-linecap="round"/>
-        <line x1="96" y1="64" x2="145" y2="82" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
-        <text x="155" y="50" font-size="12" font-weight="bold" fill="#059669">息を吐きながら</text>
-        <text x="155" y="68" font-size="12" font-weight="bold" fill="#0284c7">20〜30秒じっくり伸ばす</text>
-      </svg>`
-  };
-
-  const quotes = [
-    { text: "「金メダルは練習場でつくられる。試合はただそれを取りに行くだけの場所だ。」", author: "陸上競技 メダリスト格言" },
-    { text: "「苦しいときこそ笑顔で。楽しんだ者が最後に一番遠くへ跳び、速く走る。」", author: "室伏広治（アテネ五輪 ハンマー投 金メダリスト）" },
-    { text: "「記録は狙って出すものじゃない。毎日の正しい動きの先に自然についてくる。」", author: "北口榛花（パリ五輪 やり投 金メダリスト）" },
-    { text: "「スタートラインに立つ前に、勝負の9割は準備で決まっている。」", author: "ウサイン・ボルト（五輪 8冠金メダリスト）" }
-  ];
-  const q = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById("quote-text").textContent = q.text;
-  document.getElementById("quote-author").textContent = "- " + q.author;
-
-  // ==========================================
-  // 8. ウォーミングアップ＆クールダウン7種目＋メニュー生成
-  // ==========================================
-  function getWarmUp7Steps(eventType, pain) {
-    if (pain !== "なし") {
-      return [
-        "① <strong>足首・手首の回旋運動（左右15回）</strong>：末端からゆっくり血流を上げる",
-        "② <strong>キャット＆ドッグ（10回）</strong>：四つん這いで背骨と骨盤を優しくほぐす",
-        "③ <strong>お尻・股関節のダイナミックストレッチ（左右10回）</strong>：患部に負担をかけず可動域確保",
-        "④ <strong>体幹プランク＆ドローイン（30秒×2）</strong>：お腹のインナーマッスルにスイッチを入れる",
-        "⑤ <strong>ゆっくりジョグ＆ウォーキング（5分）</strong>：痛みの出ない範囲で心拍数を上げる",
-        "⑥ <strong>チューブまたは自重での臀部活性化（15回）</strong>：お尻の筋肉を先に働かせる",
-        "⑦ <strong>フォーム確認の流し（60m×2本・60%出力）</strong>：違和感ゼロを確かめながら終了"
-      ];
-    }
-    const specific = {
-      "短距離": "⑦ <strong>マーク走＆加速流し（50m×3本）</strong>：ピッチとストライドの噛み合わせ確認",
-      "長距離": "⑦ <strong>ビルドアップ流し（100m×3本）</strong>：ラスト20mだけレースペースへ移行",
-      "跳躍": "⑦ <strong>助走リズム確認＆弾み流し（40m×3本）</strong>：踏み切り前のテンポアップ確認",
-      "投擲": "⑦ <strong>メディシンボールまたはチューブ回旋（10回×2）</strong>：下半身から指先への連動確認"
-    };
-    return [
-      "① <strong>ジョギング＆ステップワーク（6分）</strong>：全身の体温を上げ関節液を巡らせる",
-      "② <strong>ブラジル体操・動的ストレッチ（各10回）</strong>：前後・左右のレッグスイングで股関節解放",
-      "③ <strong>肩甲骨＆胸郭まわし（前後15回）</strong>：腕振りのキレを出すための上半身ほぐし",
-      "④ <strong>Aスキップ（腿上げスキップ 30m×2）</strong>：真下への力強い接地感覚をつくる",
-      "⑤ <strong>Bスキップ（振り出しスキップ 30m×2）</strong>：ハムストリングスの素早い切り返し習得",
-      "⑥ <strong>ハイニー（高速腿上げ 20m×2）</strong>：神経系を刺激しトップスピードの準備",
-      specific[eventType] || specific["短距離"]
-    ];
-  }
-
-  function getCoolDown7Steps() {
-    return [
-      "① <strong>リラックス・ダウンジョグ（5分）</strong>：呼吸を整え疲労物質の回収を促す",
-      "② <strong>ハムストリングス（太もも裏）ストレッチ（左右30秒）</strong>：肉離れ予防の最優先ケア",
-      "③ <strong>大腿四頭筋（太もも前）＆腸腰筋ストレッチ（左右30秒）</strong>：腰の反り・張りをリセット",
-      "④ <strong>臀部（お尻・梨状筋）ストレッチ（左右30秒）</strong>：坐骨神経まわりと骨盤の疲労抜き",
-      "⑤ <strong>ふくらはぎ・アキレス腱ストレッチ（左右30秒）</strong>：シンスプリント・足底筋膜炎予防",
-      "⑥ <strong>肩甲骨・広背筋ストレッチ（30秒）</strong>：腕振り・投擲・ウエイトで固まった上半身ケア",
-      "⑦ <strong>深呼吸＆水分・プロテイン補給（15分以内）</strong>：ゴールデンタイムに栄養を入れて超回復！"
-    ];
-  }
-
-  function getMainMenuData(eventType, timeMin, weightEnv, fatigue, pain) {
-    if (fatigue >= 4 || pain !== "なし") {
-      return {
-        title: "🛡️ リカバリー＆フォーム修正メニュー（怪我予防最優先）",
-        time: `${Math.max(15, timeMin - 30)}分`,
-        rest: "セット間休憩：完全回復するまでたっぷり（3〜5分）＋水分補給",
-        desc: `今日は疲労度が高め、または「${pain}」に違和感があるため、無理な追い込みは厳禁です。鏡やスマホ動画でフォームの左右差をチェックしながら、60〜70%の力で技術練習のみ行います。`,
-        point: "練習を勇気を持って抑えるのも一流選手の条件！アイシングと入浴後のストレッチを徹底しよう。",
-        svg: illustrations.startDash
-      };
-    }
-    const menus = {
-      "短距離": {
-        title: "⚡ スピード持久力＆スタート加速（SD 30m×4 ＋ 150m×3）",
-        time: `${Math.round(timeMin * 0.45)}分`,
-        rest: "30m間：3分休憩 / 150m間：6〜8分完全休憩（心拍数をしっかり落とす）",
-        desc: "前半はスタブロを使った30mダッシュで低い前傾姿勢と一次加速を強化。後半は150m（90〜95%出力）で後半のフォーム崩れを防ぎ、トップスピードの維持力を高めます。",
-        point: "後半100m以降で顎が上がらないよう、おへその下（丹田）に力を入れて腕をコンパクトに振ろう！",
-        svg: illustrations.startDash
-      },
-      "長距離": {
-        title: "👟 インターバル走（1000m×4〜5本）＋ 400mレペティション",
-        time: `${Math.round(timeMin * 0.5)}分`,
-        rest: "1000m間：200mジョグ（約90秒休憩） / レペ前：5分完全休憩",
-        desc: "3000m〜5000mのレースペースより少し速い設定で心肺機能（最大酸素摂取量）を強化。ラスト1本は余力をすべて出し切るつもりでギアを上げます。",
-        point: "苦しくなってきた後半こそ肩の力を抜き、肘を後ろに引くリズムでピッチをキープ！",
-        svg: illustrations.sprintDrill
-      },
-      "跳躍": {
-        title: "🦘 短助走跳躍（8歩〜10歩助走×6本）＋ バウンディング50m×4",
-        time: `${Math.round(timeMin * 0.45)}分`,
-        rest: "跳躍1本ごと：3〜4分休憩 / バウンディング間：3分休憩",
-        desc: "全助走ではなく短助走で踏み切り局面の「乗り込み」と「高い跳び出し角度」を徹底反復。その後バウンディングで地面からの反発をもらう感覚を養います。",
-        point: "踏み切り足が体の前に突っ込みすぎないよう、重心の上でフラットに地面を叩こう！",
-        svg: illustrations.sprintDrill
-      },
-      "投擲": {
-        title: "☄️ 立ち投げ・ハーフターン技術投擲（15本）＋ メディシン爆発投げ",
-        time: `${Math.round(timeMin * 0.45)}分`,
-        rest: "投擲5本ごとに3分休憩（1本ずつフォーム動画を確認）",
-        desc: "下半身の捻り戻しから左半身のブロック（壁）を作り、リリース角度38〜40度へ一気に力を伝える技術練習。手投げにならず地面反力を指先まで伝えます。",
-        point: "投げる瞬間に視線を落としすぎず、胸を空へ大きく開いてリリースしよう！",
-        svg: illustrations.dynamicStretch
+      // 今日の日付キー (YYYY-MM-DD)
+      function getTodayKey() {
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
       }
-    };
-    return menus[eventType] || menus["短距離"];
-  }
 
-  function getWeightMenuData(weightEnv, timeMin, fatigue) {
-    if (fatigue >= 4) {
-      return {
-        title: "🧘 体幹スタビライゼーション（自重インナーマッスル強化）",
-        time: "15分",
-        rest: "各種目間：30秒休憩",
-        desc: "プランク45秒・サイドプランク左右30秒・バードドッグ左右15回を2セット。重りを使わず軸のブレをなくします。",
-        point: "腰が反らないようにお腹を薄く凹ませたまま呼吸を止めずにキープ！",
-        svg: illustrations.squatClean
+      // 初期状態オブジェクト
+      let state = {
+        profile: null, // { name, role, goal, gender }
+        cycle: {
+          lastPeriodStart: '',
+          cycleLength: 28,
+          isPeriodNow: false
+        },
+        daily: {
+          dateKey: getTodayKey(),
+          completedIds: [],
+          customTasks: [],
+          condition: 'normal', // 'good' | 'normal' | 'tired'
+          memo: ''
+        },
+        favorites: [],
+        adviceCategory: 'all',
+        currentAdviceId: null,
+        resetConfirmPending: false
       };
-    }
-    if (weightEnv === "あり") {
-      return {
-        title: "🏋️ 爆発的ウエイト（ハイクリーン・ハーフスクワット・ベンチプレス）",
-        time: `${Math.max(20, Math.round(timeMin * 0.25))}分`,
-        rest: "セット間休憩：2分30秒〜3分（神経系を回復させて爆発力を出す）",
-        desc: "・ハングクリーン：60〜70%負荷×5回×3セット\n・ハーフスクワット：75〜80%負荷×6回×3セット\n・ベンチプレス：70%負荷×8回×3セット（切り返しを素早く！）",
-        point: "重さを持ち上げることよりも『挙げるスピード（爆発力）』を最優先にしよう！",
-        svg: illustrations.squatClean
-      };
-    }
-    return {
-      title: "🤸 自重プライオメトリクス＆サーキット補強",
-      time: `${Math.max(20, Math.round(timeMin * 0.25))}分`,
-      rest: "1周ごとに3分休憩（全3セット）",
-      desc: "・タックジャンプ（抱え込み跳び）10回\n・ランジジャンプ左右10回\n・プッシュアップ（素早い腕立て）15回\n・V字腹筋20回を連続で行います。",
-      point: "接地時間を短く！地面に触れた瞬間にバネのように跳ね返る意識を持とう。",
-      svg: illustrations.sprintDrill
-    };
-  }
 
-  let latestGeneratedText = "";
+      // ===================================================================
+      // 2. 人生アドバイス データベース（高校生向け・実践的ヒント集）
+      // ===================================================================
+      const LIFE_ADVICE_DATA = [
+        {
+          id: 'adv-01',
+          category: 'club',
+          categoryLabel: '部活・練習の壁',
+          title: '「練習量」を「思考の解像度」に変えた選手から伸びていく',
+          body: 'ただ言われたメニューをこなす100本と、「今の1本はなぜズレたか」「どう修正するか」を1回ごとに言語化して打つ30本では、1ヶ月後に圧倒的な差がつきます。練習中の待ち時間こそ、自分のフォームと課題の仮説を立てる時間に使おう。',
+          action: '今日の練習で「1つだけ意識するテーマ」を決めてからグラウンド・コートに入ろう。'
+        },
+        {
+          id: 'adv-02',
+          category: 'club',
+          categoryLabel: '部活・練習の壁',
+          title: 'スランプは「成長の踊り場」。フォームを壊すな、基本に戻れ',
+          body: '急に調子が落ちると、焦って新しいやり方に手を出したくなります。でも不調の原因の8割は「無意識の力み」と「基本姿勢のわずかなズレ」です。調子が悪いときほど、1年生が最初に教わる基礎メニューを丁寧に行うのが最短の復活ルートです。',
+          action: '不調を感じたら、鏡や動画で構え・スタート姿勢の基本だけをチェックする。'
+        },
+        {
+          id: 'adv-03',
+          category: 'club',
+          categoryLabel: '部活・練習の壁',
+          title: 'レギュラーと控えの差は「準備の早さ」と「声の質」に出る',
+          body: '試合に出られる人数は限られていますが、チームに不可欠な存在になる道は全員に開かれています。監督や仲間が見ているのは、プレーのうまさだけでなく「切り替えの早さ」「道具の扱い」「苦しい場面で前向きな声をかけられるか」という人間力です。',
+          action: '練習の集合・移動で、チームの中で一番早く反応して行動してみる。'
+        },
+        {
+          id: 'adv-04',
+          category: 'study',
+          categoryLabel: '勉強との両立',
+          title: '部活後の勉強は「机に向かうまで3分」の仕組み化がすべて',
+          body: '疲れて帰宅してから「さあ勉強しよう」と気合を出すのは大人でも不可能です。コツは、朝学校へ行く前に「帰宅後すぐ開く参考書1冊とペン」を机の真ん中に置いておくこと。帰宅して15分だけやると決めれば、自然と集中スイッチが入ります。',
+          action: '明日の朝、家を出る前に机の上に「夜やるワーク1冊」を開いて置いておく。'
+        },
+        {
+          id: 'adv-05',
+          category: 'study',
+          categoryLabel: '勉強との両立',
+          title: '通学時間とスキマ10分を制する者が、テスト前に焦らない',
+          body: '部活生はまとまった勉強時間が少ない分、「細切れ時間の使い方」で圧倒的な差がつきます。電車・バスの移動時間や練習前の10分間で英単語や暗記科目を済ませておけば、夜の貴重な時間は数学や記述問題など思考力を使う勉強に集中できます。',
+          action: '今日、通学中や休み時間にスマホを見る前の「最初の5分」だけ暗記カードを開く。'
+        },
+        {
+          id: 'adv-06',
+          category: 'study',
+          categoryLabel: '勉強との両立',
+          title: '睡眠を削る勉強は、部活のケガと成績ダウンを同時に招く',
+          body: '記憶が脳に定着するのも、筋肉や疲労が回復するのも睡眠中です。寝不足のまま練習すれば集中力が落ちてケガのリスクが高まり、授業中に眠くなって効率が下がります。「24時までに寝る」とデッドラインを決めることで、夕方の時間の使い方が劇的に濃くなります。',
+          action: '今夜の就寝時刻を先に決め、そこからの逆算でスマホを置く時間を設定する。'
+        },
+        {
+          id: 'adv-07',
+          category: 'mental',
+          categoryLabel: 'メンタル・逆境',
+          title: '緊張するのは「本気で準備してきた証拠」。消そうとしなくていい',
+          body: '大事な試合やテスト前に心臓がバクバクするのは、脳が「これから重要な勝負だ、パフォーマンスを上げよう」とアドレナリンを出している正常な反応です。「緊張してきた、最悪だ」ではなく「よし、体が戦う準備に入った」と言い換えるだけで動きが変わります。',
+          action: '緊張したら4秒吸って8秒かけてゆっくり吐き、「いい準備ができた」と心の中で唱える。'
+        },
+        {
+          id: 'adv-08',
+          category: 'mental',
+          categoryLabel: 'メンタル・逆境',
+          title: '「コントロールできること」と「できないこと」を切り分ける',
+          body: '審判の判定、相手の強さ、天候、過去のミス——これらは自分では変えられません。変えられるのは「次の1プレーへの集中」「自分の態度」「これからの準備」だけです。コントロール不能なことにエネルギーを使うのをやめると、メンタルは驚くほど安定します。',
+          action: 'ミスをしたら3秒だけ悔しがり、4秒目には「次にやるべき1つの行動」に意識を向ける。'
+        },
+        {
+          id: 'adv-09',
+          category: 'mental',
+          categoryLabel: 'メンタル・逆境',
+          title: '悔しさや挫折は、数年後に「一番語れる武器」になる',
+          body: '順風満帆に勝った経験よりも、悔しくて眠れなかった夜や、理不尽に思える壁を歯を食いしばって乗り越えた経験のほうが、人の器を大きくします。今感じている悔しさは、あなたが本気で向き合っているからこそ得られる貴重な財産です。',
+          action: '今一番悔しいこと・壁に感じていることをメモに書き出し、明日変えられる小さな一歩を1つ書く。'
+        },
+        {
+          id: 'adv-10',
+          category: 'team',
+          categoryLabel: '人間関係・チーム',
+          title: '強いチームの共通点は「指摘し合える空気」と「感謝の言葉」',
+          body: '仲が良いだけのチームはピンチに弱く、厳しさだけのチームは萎縮します。強いチームは「ナイスカバー！」「今の助かった」という感謝の言葉が日常的に飛び交っているからこそ、厳しい要求や戦術の意見も素直に受け入れられます。',
+          action: '今日の練習中、仲間の良いプレーやサポートに対して「ありがとう」を3回口に出す。'
+        },
+        {
+          id: 'adv-11',
+          category: 'team',
+          categoryLabel: '人間関係・チーム',
+          title: 'リーダーシップは役職ではなく「基準を示す姿勢」のこと',
+          body: 'キャプテンや役職者であってもなくても、誰かがダレそうなときに一番声を出したり、誰も見ていないところで道具を揃えたりする人がチームの空気を作ります。言葉で引っ張るのが苦手なら、行動の基準（スタンダード）を背中で示せばいいのです。',
+          action: '今日、チームの中で誰よりも丁寧な挨拶と後片付けを実践する。'
+        },
+        {
+          id: 'adv-12',
+          category: 'team',
+          categoryLabel: '人間関係・チーム',
+          title: '人と比べて落ち込むときは、比較対象を「昨日の自分」に戻す',
+          body: 'SNSや周りの仲間を見ると、自分より恵まれていたり結果を出していたりする人が目に入ります。でもスタート地点も体格も環境も全員違います。見るべきは「1ヶ月前の自分より何が1ミリでも前進したか」だけです。',
+          action: '1ヶ月前の自分と比べて「できるようになったこと」を1つ思い出す。'
+        },
+        {
+          id: 'adv-13',
+          category: 'future',
+          categoryLabel: '進路・将来の視点',
+          title: '部活で身につく最大の資産は「目標から逆算して粘る力」',
+          body: '社会に出ても大学に行っても、競技そのもの以上に評価されるのは「高い目標を掲げ、うまくいかない時期も投げ出さずに改善を続けた経験」です。今あなたが毎日取り組んでいる目標設定とコンディショニングは、一生使える自己管理スキルになります。',
+          action: '目標達成のために「今月中にクリアしたい中間マイルストーン」を1つ決める。'
+        },
+        {
+          id: 'adv-14',
+          category: 'future',
+          categoryLabel: '進路・将来の視点',
+          title: '進路に迷ったら「どんな自分でありたいか」から逆算しよう',
+          body: '「どの大学・専門学校に行くか」「どの職業に就くか」という名前だけで選ぶと迷いやすくなります。「どんな力を身につけたいか」「どんな人と一緒にいたいか」という基準を持つと、今やるべき選択がクリアに見えてきます。',
+          action: '尊敬する先輩や大人の「どんなところがカッコいいと思うか」を1つ挙げてみる。'
+        },
+        {
+          id: 'adv-15',
+          category: 'future',
+          categoryLabel: '進路・将来の視点',
+          title: '高校時代の「本気の熱量」は、将来の自分の背中を押し続ける',
+          body: '「あのときあれだけ本気でやり切れたんだから、今回もきっと乗り越えられる」。この自己効力感（自分を信じる力）は、口先だけでは手に入りません。結果がどうであれ、今日一日を悔いなくやり切ることが、未来の自分への最高のプレゼントになります。',
+          action: '今日の練習と生活を終えるとき、「今日はやり切った」と言える基準を1つ決める。'
+        }
+      ];
 
-  document.getElementById("generate-btn").addEventListener("click", () => {
-    const name = athleteNameInput.value.trim() || "陸上部アスリート";
-    const role = getMyRole();
-    const eventType = document.getElementById("event-type").value;
-    const targetAim = document.getElementById("target-aim").value;
-    const timeMin = parseInt(document.getElementById("practice-time").value, 10);
-    const weightEnv = document.getElementById("weight-env").value;
-    const fatigue = parseInt(document.getElementById("fatigue").value, 10);
-    const pain = document.getElementById("pain").value;
+      // ===================================================================
+      // 3. トレーニング＆行動メニュー生成ロジック（性別・生理周期・役割・目標連動）
+      // ===================================================================
+      function generateDailyMenus() {
+        const profile = state.profile;
+        if (!profile) return [];
 
-    practiceCount++;
-    localStorage.setItem("tf_practice_count", String(practiceCount));
-    updateRankUI();
+        const isFemale = profile.gender === 'female';
+        const isPeriodMode = isFemale && state.cycle.isPeriodNow;
+        const condition = state.daily.condition;
 
-    const wupSteps = getWarmUp7Steps(eventType, pain);
-    const mainMenu = getMainMenuData(eventType, timeMin, weightEnv, fatigue, pain);
-    const weightMenu = getWeightMenuData(weightEnv, timeMin, fatigue);
-    const cdownSteps = getCoolDown7Steps();
+        // -----------------------------------------------------------------
+        // パターンA：【女子・生理中専用】無理をしないコンディショニングメニュー
+        // -----------------------------------------------------------------
+        if (isPeriodMode) {
+          const roleSupportTask = getRoleSpecificPeriodTask(profile.role, profile.goal);
+          return [
+            {
+              id: 'period-stretch-1',
+              tag: '骨盤・股関節ケア',
+              tagColor: 'bg-rose-100 text-rose-800',
+              title: '骨盤周りのゆるめストレッチ＆深呼吸（10分）',
+              detail: '仰向けでの膝抱え・合蹠（がっせき）のポーズ・キャット＆カウで骨盤内の血流を促し、腰や下腹部の重だるさを和らげます。痛みがある場合は無理に伸ばさず呼吸を深くしましょう。'
+            },
+            {
+              id: 'period-core-2',
+              tag: '低負荷フィジカル',
+              tagColor: 'bg-amber-100 text-amber-800',
+              title: '軽い体幹安定＆フォーム確認（ジャンプ・ダッシュ控えめ）',
+              detail: '腹圧を強くかけすぎる筋トレや激しいダッシュは控え、ドローイン（呼吸を使ったインナーマッスル意識）や、鏡・動画を使ったゆっくりとしたフォーム確認に切り替えます。'
+            },
+            {
+              id: 'period-nutrition-3',
+              tag: '栄養・冷え対策',
+              tagColor: 'bg-teal-100 text-teal-800',
+              title: '温かい飲み物＋鉄分・たんぱく質補給を意識する',
+              detail: '冷たい飲み物の一気飲みを避け、白湯や温かいお茶で内臓を冷やさないようにします。食事では赤身肉・レバー・小松菜・納豆・卵など鉄分とたんぱく質を意識して貧血を予防しましょう。'
+            },
+            {
+              id: 'period-role-4',
+              tag: `${profile.role}のスマート貢献`,
+              tagColor: 'bg-indigo-100 text-indigo-800',
+              title: roleSupportTask.title,
+              detail: roleSupportTask.detail
+            }
+          ];
+        }
 
-    const goalBanner = document.getElementById("goal-banner");
-    goalBanner.style.display = "block";
-    goalBanner.innerHTML = `👤 ${name}（${role}）｜🎯 目標：${targetAim}<br>🏅 専門：${eventType} ｜ ⏱️ 合計時間：${timeMin}分`;
+        // -----------------------------------------------------------------
+        // パターンB：通常トレーニング＆行動メニュー（男子＆女子非生理時）
+        // -----------------------------------------------------------------
+        const intensityNote = condition === 'tired'
+          ? '※疲労気味のため、質を重視しセット数は8割に調整＋入念なストレッチを実施'
+          : condition === 'good'
+            ? '※絶好調コンディション！フォームを崩さない範囲でMAX強度にチャレンジ'
+            : '※標準強度でフォームとリズムの精度を高めよう';
 
-    document.getElementById("result-status").innerHTML = `✅ ${eventType}ブロック用・本日の実践メニューが完成しました！`;
+        const roleAction = getRoleSpecificNormalTask(profile.role, profile.goal);
+        const goalAction = getGoalSpecificTask(profile.goal, condition);
 
-    const container = document.getElementById("result-container");
-    container.innerHTML = `
-      <div class="summary-text">
-        <strong>コーチ分析：</strong>疲労度「${fatigue}/5」・痛み「${pain}」を考慮し、合計${timeMin}分で最大限のパフォーマンスを引き出す構成にしました。休憩時間を守って質を高めよう！
-      </div>
+        const menus = [
+          {
+            id: 'norm-phys-1',
+            tag: 'フィジカル・体幹',
+            tagColor: 'bg-sky-100 text-sky-800',
+            title: condition === 'tired'
+              ? '動的ストレッチ＋股関節・肩甲骨のモビリティワーク（15分）'
+              : '体幹スタビリティ＆瞬発力連動トレーニング（20分）',
+            detail: condition === 'tired'
+              ? `疲労蓄積によるケガを防ぐため、関節の可動域を広げる動的ケアを中心に実施します。${intensityNote}`
+              : `プランク各種・片脚バランス・アジリティステップを組み合わせ、競技動作に直結する軸の強さを作ります。${intensityNote}`
+          },
+          {
+            id: 'norm-goal-2',
+            tag: `目標直結：${profile.goal}`,
+            tagColor: 'bg-teal-100 text-teal-800',
+            title: goalAction.title,
+            detail: goalAction.detail
+          },
+          {
+            id: 'norm-role-3',
+            tag: `役割アクション：${profile.role}`,
+            tagColor: 'bg-amber-100 text-amber-800',
+            title: roleAction.title,
+            detail: roleAction.detail
+          },
+          {
+            id: 'norm-care-4',
+            tag: 'リカバリー・栄養',
+            tagColor: 'bg-emerald-100 text-emerald-800',
+            title: '練習後30分以内の補食＆入浴・睡眠コンディショニング',
+            detail: '練習後はおにぎりやプロテイン・乳製品などで糖質とたんぱく質を早めに補給。入浴で血流を促し、就寝前のストレッチで翌日に疲労を残さない体を作ります。'
+          }
+        ];
 
-      <!-- 1. ウォーミングアップ -->
-      <div class="menu-item">
-        <span class="phase-label phase-wup">PHASE 1：ウォーミングアップ</span>
-        <div class="menu-header">
-          <div class="menu-name">🔥 専門ブロック別・7種目アップルーティン</div>
-          <div class="badge-row">
-            <span class="time-badge">⏱️ 20〜25分</span>
-            <span class="target-tag">可動域＆神経活性化</span>
-          </div>
-        </div>
-        <div class="visual-guide">
-          ${illustrations.dynamicStretch}
-          <div class="visual-caption">股関節を大きく動かし、地面からの反発を受ける準備をしよう</div>
-        </div>
-        <div class="drill-grid">
-          <div class="drill-grid-title">📋 アップ7種目チェックリスト</div>
-          ${wupSteps.map(s => `<div class="drill-step">${s}</div>`).join("")}
-        </div>
-        <div class="rest-banner">💧 【休憩】アップ終了後：5分休憩（スパイク履き替え＆水分・塩分補給）</div>
-      </div>
+        // 女子の卵胞期・黄体期など周期に応じたワンポイント補足を追加
+        if (isFemale && state.cycle.lastPeriodStart) {
+          const cycleInfo = calculateCycleInfo(state.cycle.lastPeriodStart, state.cycle.cycleLength);
+          if (cycleInfo && cycleInfo.phaseKey === 'follicular') {
+            menus[0].detail += ' 【好調期チャンス】卵胞期は筋力・持久力ともに伸びやすい時期です。フォームを意識して質の高い負荷をかけましょう！';
+          } else if (cycleInfo && cycleInfo.phaseKey === 'luteal') {
+            menus[3].detail += ' 【黄体期ケア】むくみや眠気が出やすい時期です。無理に追い込みすぎず、睡眠時間の確保とマグネシウム・ビタミンB6の摂取を意識しましょう。';
+          }
+        }
 
-      <!-- 2. メインメニュー -->
-      <div class="menu-item">
-        <span class="phase-label phase-main">PHASE 2：メイン練習</span>
-        <div class="menu-header">
-          <div class="menu-name">${mainMenu.title}</div>
-          <div class="badge-row">
-            <span class="time-badge">⏱️ ${mainMenu.time}</span>
-            <span class="target-tag">${targetAim}</span>
-          </div>
-        </div>
-        <div class="visual-guide">
-          ${mainMenu.svg}
-          <div class="visual-caption">1本ごとにフォームの意識ポイントを明確にして集中！</div>
-        </div>
-        <p class="menu-desc">${mainMenu.desc}</p>
-        <div class="rest-banner">⏱️ 【重要休憩】${mainMenu.rest}</div>
-        <div class="point-box">💡 攻略ポイント：${mainMenu.point}</div>
-      </div>
+        return menus;
+      }
 
-      <!-- 3. ウエイト・補強 -->
-      <div class="menu-item">
-        <span class="phase-label phase-weight">PHASE 3：ウエイト・補強トレーニング</span>
-        <div class="menu-header">
-          <div class="menu-name">${weightMenu.title}</div>
-          <div class="badge-row">
-            <span class="time-badge">⏱️ ${weightMenu.time}</span>
-            <span class="target-tag">器具：${weightEnv}</span>
-          </div>
-        </div>
-        <div class="visual-guide">
-          ${weightMenu.svg}
-          <div class="visual-caption">フォームを崩さず爆発的なスピードで切り返す</div>
-        </div>
-        <p class="menu-desc">${weightMenu.desc.replace(/\n/g, "<br>")}</p>
-        <div class="rest-banner">🔋 【休憩】${weightMenu.rest}</div>
-        <div class="point-box">💡 攻略ポイント：${weightMenu.point}</div>
-      </div>
+      // 役割別・通常時タスク生成
+      function getRoleSpecificNormalTask(role, goal) {
+        const r = role.toLowerCase();
+        if (r.includes('キャプテン') || r.includes('主将') || r.includes('部長')) {
+          return {
+            title: `【${role}】練習前の目標共有と雰囲気づくり`,
+            detail: `「${goal}」に向けて、今日の練習でチーム全員が徹底すべき基準を1つ短く伝えよう。誰よりも早く声を出し、ダレそうな場面で空気を引き締める。`
+          };
+        }
+        if (r.includes('副')) {
+          return {
+            title: `【${role}】リーダーのフォローと全体への目配り`,
+            detail: `キャプテンの指示を噛み砕いて周りに伝えつつ、1年生や調子が上がらない仲間に個別に声をかけて「${goal}」に向かう一体感を作ろう。`
+          };
+        }
+        if (r.includes('マネージャー') || r.includes('マネ')) {
+          return {
+            title: `【${role}】先読みサポート＆選手の体調・タイム観察`,
+            detail: `ボトル補充・タイマー管理・道具準備を1手先読みして実行。「${goal}」達成のため、選手の動きの変化や疲労サインに気づいたら積極的に共有しよう。`
+          };
+        }
+        if (r.includes('エース') || r.includes('レギュラー') || r.includes('主力')) {
+          return {
+            title: `【${role}】勝負どころを想定したプレッシャー練習`,
+            detail: `「${goal}」の舞台でチームを勝たせるため、練習の最後の1本・苦しい場面こそ試合本番と同じ緊張感と精度でやり切ろう。`
+          };
+        }
+        return {
+          title: `【${role}】自分の強みを1つ磨き、チームに勢いを与える`,
+          detail: `「${goal}」を達成するチームの一員として、全力の挨拶・素早い行動・自分の武器となるプレーの反復で存在感を示そう。`
+        };
+      }
 
-      <!-- 4. クールダウン -->
-      <div class="menu-item">
-        <span class="phase-label phase-cdown">PHASE 4：クールダウン（7種目ケア）</span>
-        <div class="menu-header">
-          <div class="menu-name">🧊 翌日に疲れを残さない・7種目ダウンルーティン</div>
-          <div class="badge-row">
-            <span class="time-badge">⏱️ 15分</span>
-            <span class="target-tag">超回復・怪我ゼロ</span>
-          </div>
-        </div>
-        <div class="visual-guide">
-          ${illustrations.coolDownStretch}
-          <div class="visual-caption">呼吸を止めず、気持ちいい範囲でじっくり筋肉を伸ばす</div>
-        </div>
-        <div class="drill-grid">
-          <div class="drill-grid-title">📋 ダウン7種目チェックリスト</div>
-          ${cdownSteps.map(s => `<div class="drill-step">${s}</div>`).join("")}
-        </div>
-      </div>
-    `;
+      // 役割別・生理中タスク生成
+      function getRoleSpecificPeriodTask(role, goal) {
+        const r = role.toLowerCase();
+        if (r.includes('キャプテン') || r.includes('主将') || r.includes('部長') || r.includes('副')) {
+          return {
+            title: `【${role}】観察眼を活かした戦術確認＆仲間への声かけ`,
+            detail: `激しい動きは控えつつ、外から全体を見て気づいたポジショニングや連携の修正点を仲間にフィードバック。「${goal}」に向けて頭脳面からチームを牽引しよう。`
+          };
+        }
+        if (r.includes('マネージャー') || r.includes('マネ')) {
+          return {
+            title: `【${role}】冷え対策を万全にして、記録・データ分析に集中`,
+            detail: `カイロや上着で腰・お腹を温めながら、練習メニューのタイム計測や動画撮影など負担の少ないサポート業務に集中し、「${goal}」を支えよう。`
+          };
+        }
+        return {
+          title: `【${role}】イメージトレーニング＆試合動画・戦術ノート整理`,
+          detail: `体調が万全でない日は無理に追い込まず、理想のフォームや「${goal}」の試合展開を頭の中でシミュレーションする時間に充てよう。休む勇気も一流の条件です。`
+        };
+      }
 
-    // ボーナスカード表示
-    const bonusCards = document.getElementById("bonus-cards");
-    bonusCards.style.display = "block";
-    bonusCards.innerHTML = `
-      <div class="boys-challenge">
-        <h3 class="boys-title">🔥 本日の部員ミッション</h3>
-        <p class="boys-text">練習の最初と最後の挨拶をチームで一番デカい声で出そう！声と雰囲気でチーム全体を引っ張る選手が本番でも強い！</p>
-      </div>
-      <div class="youth-card">
-        <h3 class="youth-title">🌸 今日の青春ワンポイント</h3>
-        <p class="youth-text">ひたむきに汗を流して頑張っている姿は、同性からも異性からも最高にカッコよく見える。今日の1本を全力で駆け抜けよう！</p>
-      </div>
-    `;
+      // 目標別タスク生成
+      function getGoalSpecificTask(goal, condition) {
+        const g = goal.toLowerCase();
+        if (g.includes('全国') || g.includes('インターハイ') || g.includes('優勝')) {
+          return {
+            title: `全国基準の「1ミリの精度・切り替え速度」を意識した反復練習`,
+            detail: `「${goal}」レベルでは基礎のミスが勝敗を分けます。1本ごとのセットアップ・準備動作の速さと正確さに妥協せず取り組もう。`
+          };
+        }
+        if (g.includes('レギュラー') || g.includes('スタメン') || g.includes('ベンチ')) {
+          return {
+            title: `自分の「絶対的な武器」と「弱点カバー」の重点ドリル`,
+            detail: `「${goal}」を勝ち取るため、指導者や仲間に「これだけは負けない」と認められるプレーを1つ徹底的に反復しよう。`
+          };
+        }
+        return {
+          title: `「${goal}」から逆算した今日の課題クリア練習`,
+          detail: condition === 'tired'
+            ? `今日は負荷を上げすぎず、目標達成に欠かせない基本フォームの再現性を高める確認練習に集中しよう。`
+            : `目標達成に向けて、今の自分に一番伸びしろがある技術テーマを1つ選び、回数を決めてやり切ろう。`
+        };
+      }
 
-    document.getElementById("share-section").style.display = "block";
+      // ===================================================================
+      // 4. 生理周期計算ロジック（女子選択時用）
+      // ===================================================================
+      function calculateCycleInfo(startDateStr, cycleLen) {
+        if (!startDateStr) return null;
+        const start = new Date(startDateStr + 'T00:00:00');
+        if (isNaN(start.getTime())) return null;
 
-    latestGeneratedText = `【TRACK & FIELD PRO 本日のメニュー】\n👤 ${name}（${role}）\n🏅 種目：${eventType} / 時間：${timeMin}分\n🎯 目標：${targetAim}\n\n■メイン：${mainMenu.title}\n■補強：${weightMenu.title}\n■休憩：${mainMenu.rest}\n\n今日も自己ベスト更新目指して頑張ろう🔥`;
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const diffMs = today.getTime() - start.getTime();
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    document.getElementById("result-card").scrollIntoView({ behavior: "smooth" });
-  });
+        const len = Math.max(20, Math.min(45, Number(cycleLen) || 28));
+        // 周期の何日目か（1始まり）
+        let cycleDay = diffDays >= 0 ? (diffDays % len) + 1 : 1;
 
-  // LINE共有＆コピーボタン
-  document.getElementById("line-share-btn").addEventListener("click", () => {
-    if (!latestGeneratedText) return;
-    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(latestGeneratedText)}`, "_blank");
-  });
+        // 次回予定日の計算
+        const cyclesPassed = diffDays >= 0 ? Math.floor(diffDays / len) + 1 : 0;
+        const nextDate = new Date(start);
+        nextDate.setDate(start.getDate() + cyclesPassed * len);
 
-  document.getElementById("copy-share-btn").addEventListener("click", () => {
-    if (!latestGeneratedText) return;
-    navigator.clipboard.writeText(latestGeneratedText).then(() => {
-      alert("📋 本日のメニューをクリップボードにコピーしました！");
-    });
-  });
+        const daysUntilNext = Math.ceil((nextDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        const nextDateFormatted = `${nextDate.getMonth() + 1}月${nextDate.getDate()}日`;
 
-  // ==========================================
-  // 9. 青春＆恋愛・メンタル相談室ロジック
-  // ==========================================
-  const youthTopics = {
-    love: {
-      title: "💘 好きな人がいる時の攻略法",
-      text: "部活を頑張っている高校生にとって、一番の魅力は『何かに本気で打ち込んでいる姿』！まずは廊下やグラウンドですれ違ったときの爽やかな挨拶と笑顔から始めよう。大会前やテスト前に「応援してるよ」「お互い頑張ろう！」と短いLINEを送るだけでも距離は一気に縮まるぞ！"
-    },
-    mental: {
-      title: "🔥 試合の緊張・スランプ突破",
-      text: "スタートラインで心臓がバクバクするのは、身体が『最高のパフォーマンスを出す準備OK！』とサインを送っている証拠。緊張を消そうとせず、「よし、戦う準備ができた！」と口に出してみよう。スランプの時は記録ではなく『今日のフォームの1点だけ』に集中すれば必ず抜け出せる！"
-    },
-    boys: {
-      title: "💪 部員の絆＆カッコよさ",
-      text: "キツいインターバルやラスト1本のダッシュで苦しい時こそ、仲間を鼓舞する声を出し合えるチームが県大会・インターハイを勝ち抜く！自分の練習だけでなく、後輩へのアドバイスや道具の片付けを率先してできる部員は顧問からも仲間からも絶対的な信頼を得られる！"
-    },
-    study: {
-      title: "📚 部活と勉強の両立テクニック",
-      text: "練習で疲れて帰宅した後に机に向かうのは誰でもキツい。だからこそ『通学の電車・バス15分で英単語』『練習後のプロテインを飲みながら今日の授業ノートを5分見返す』というスキマ時間作戦が最強！睡眠時間を削らず集中力で勝負しよう！"
-    }
-  };
+        // フェーズ判定
+        let phaseKey = 'follicular';
+        let phaseLabel = '';
+        let badgeClass = '';
+        let advice = '';
 
-  function renderYouthTopic(key) {
-    const data = youthTopics[key];
-    document.getElementById("youth-advice-area").innerHTML = `
-      <div class="youth-card" style="margin-top:0;">
-        <h3 class="youth-title">${data.title}</h3>
-        <p class="youth-text">${data.text}</p>
-      </div>
-    `;
-  }
-  renderYouthTopic("love");
+        if (cycleDay <= 5) {
+          phaseKey = 'menstrual';
+          phaseLabel = '月経期（ケア＆リカバリー期）';
+          badgeClass = 'bg-rose-100 text-rose-800';
+          advice = '体温が下がり貧血や腹痛が起きやすい時期です。無理な追い込みは避け、ストレッチと鉄分・温かい食事で体を労わりましょう。';
+        } else if (cycleDay <= Math.floor(len * 0.46)) {
+          phaseKey = 'follicular';
+          phaseLabel = '卵胞期（好調・パフォーマンスアップ期）';
+          badgeClass = 'bg-teal-100 text-teal-800';
+          advice = '心身ともに安定し、筋力トレーニングや新しい技術の習得に最も適した好調期です！目標に向けて質の高い練習を積みましょう。';
+        } else if (cycleDay <= Math.floor(len * 0.57)) {
+          phaseKey = 'ovulation';
+          phaseLabel = '排卵期前後（移行・バランス期）';
+          badgeClass = 'bg-sky-100 text-sky-800';
+          advice = 'ホルモンバランスが切り替わるタイミングです。靭帯が緩みやすい傾向もあるため、練習前のウォーミングアップと着地・切り返し動作を丁寧に行いましょう。';
+        } else {
+          phaseKey = 'luteal';
+          phaseLabel = '黄体期（ゆらぎ・コンディショニング期）';
+          badgeClass = 'bg-amber-100 text-amber-800';
+          advice = '体温が高くなり、むくみやイライラ・だるさを感じやすい時期です。体重の微増は水分によるものなので気にしすぎず、睡眠と休養を優先しましょう。';
+        }
 
-  document.querySelectorAll(".topic-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".topic-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderYouthTopic(btn.dataset.topic);
-    });
-  });
+        return {
+          cycleDay,
+          nextDateFormatted,
+          daysUntilNext,
+          phaseKey,
+          phaseLabel,
+          badgeClass,
+          advice
+        };
+      }
 
-  // ==========================================
-  // 10. トップ選手メニュー図鑑
-  // ==========================================
-  document.getElementById("pro-library-area").innerHTML = `
-    <div class="menu-item">
-      <div class="menu-name">⚡ 短距離トップ選手の秘密：『接地時間0.08秒の法則』</div>
-      <p class="menu-desc">世界のトップランナーは地面を長く押すのではなく、足が地面に着く前から脚を振り下ろし、<strong>身体の真下で一瞬だけ強く弾く</strong>ことで爆発的な推進力を生み出しています。</p>
-    </div>
-    <div class="menu-item">
-      <div class="menu-name">👟 長距離トップ選手の秘密：『8割ジョグの徹底』</div>
-      <p class="menu-desc">箱根駅伝や五輪選手も、練習全体の約80%は会話ができるペースの有酸素ジョグ。毛細血管を増やし、ポイント練習で追い込める強靭な土台を作っています。</p>
-    </div>
-    <div class="menu-item">
-      <div class="menu-name">🦘☄️ 跳躍・投擲選手の秘密：『ブロック（壁）と鞭（ムチ）の連動』</div>
-      <p class="menu-desc">助走やターンで作ったスピードを、踏み切り足・軸足の強固な『壁』で受け止めることで、上半身や振り上げ脚がムチのようにしなり、圧倒的な跳躍・投擲距離を生みます。</p>
-    </div>
-  `;
+      // ===================================================================
+      // 5. localStorage 読み書き
+      // ===================================================================
+      function loadState() {
+        try {
+          const savedProfile = localStorage.getItem(STORAGE_KEYS.PROFILE);
+          if (savedProfile) {
+            state.profile = JSON.parse(savedProfile);
+          }
 
-  // ==========================================
-  // 11. インスタ風 QRコードモーダル
-  // ==========================================
-  const qrModal = document.getElementById("qr-modal");
-  document.getElementById("open-qr-btn").addEventListener("click", () => {
-    const name = athleteNameInput.value.trim() || "陸上部メンバー";
-    const role = getMyRole();
-    const eventType = document.getElementById("event-type").value;
-    const targetAim = document.getElementById("target-aim").value;
+          const savedCycle = localStorage.getItem(STORAGE_KEYS.CYCLE);
+          if (savedCycle) {
+            state.cycle = { ...state.cycle, ...JSON.parse(savedCycle) };
+          }
 
-    document.getElementById("qr-display-name").textContent = `${name}（${role}）`;
-    document.getElementById("qr-display-info").textContent = `${eventType} ｜ 目標：${targetAim}`;
+          const savedDaily = localStorage.getItem(STORAGE_KEYS.DAILY);
+          const todayKey = getTodayKey();
+          if (savedDaily) {
+            const parsedDaily = JSON.parse(savedDaily);
+            if (parsedDaily.dateKey === todayKey) {
+              state.daily = { ...state.daily, ...parsedDaily };
+            } else {
+              // 日付が変わったら達成チェックをリセットし、体調は標準に戻す
+              state.daily = {
+                dateKey: todayKey,
+                completedIds: [],
+                customTasks: [],
+                condition: 'normal',
+                memo: ''
+              };
+              saveDaily();
+            }
+          }
 
-    const shareUrl = `${window.location.origin}${window.location.pathname}?addFriend=${encodeURIComponent(name)}&role=${encodeURIComponent(role)}`;
-    document.getElementById("qr-image").src = `https://api.qrserver.com/v1/create-qr-code/?size=210x210&data=${encodeURIComponent(shareUrl)}`;
-    qrModal.style.display = "flex";
-  });
+          const savedFavs = localStorage.getItem(STORAGE_KEYS.FAVORITES);
+          if (savedFavs) {
+            state.favorites = JSON.parse(savedFavs);
+          }
+        } catch (e) {
+          console.error('データの読み込みに失敗しました:', e);
+        }
+      }
 
-  document.getElementById("close-qr-btn").addEventListener("click", () => {
-    qrModal.style.display = "none";
-  });
-</script>
+      function saveProfile() {
+        try {
+          localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(state.profile));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      function saveCycle() {
+        try {
+          localStorage.setItem(STORAGE_KEYS.CYCLE, JSON.stringify(state.cycle));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      function saveDaily() {
+        try {
+          localStorage.setItem(STORAGE_KEYS.DAILY, JSON.stringify(state.daily));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      function saveFavorites() {
+        try {
+          localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(state.favorites));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // ===================================================================
+      // 6. UIユーティリティ（トースト通知）
+      // ===================================================================
+      function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        const bgClass = type === 'rose'
+          ? 'bg-rose-600 text-white'
+          : type === 'info'
+            ? 'bg-slate-800 text-white'
+            : 'bg-teal-600 text-white';
+
+        toast.className = `${bgClass} px-4 py-3 rounded-2xl shadow-lg text-xs sm:text-sm font-bold flex items-center gap-2 animate-fade-up pointer-events-auto`;
+        toast.innerHTML = `
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span>${escapeHtml(message)}</span>
+        `;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(6px)';
+          toast.style.transition = 'all 0.25s ease';
+          setTimeout(() => toast.remove(), 260);
+        }, 2600);
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      // ===================================================================
+      // 7. 画面描画（レンダリング関数群）
+      // ===================================================================
+      function renderApp() {
+        const onboardingEl = document.getElementById('onboarding-screen');
+        const mainAppEl = document.getElementById('main-app');
+
+        if (!state.profile) {
+          onboardingEl.classList.remove('hidden');
+          mainAppEl.classList.add('hidden');
+          return;
+        }
+
+        onboardingEl.classList.add('hidden');
+        mainAppEl.classList.remove('hidden');
+
+        renderHeaderProfile();
+        renderGenderSpecificPanels();
+        renderTrainingMenu();
+        renderAdviceSection();
+        renderMemo();
+      }
+
+      // ヘッダー＆プロフィール常時表示更新
+      function renderHeaderProfile() {
+        const p = state.profile;
+        const now = new Date();
+        const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+        const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日（${weekdays[now.getDay()]}）`;
+
+        document.getElementById('header-date').textContent = dateStr;
+        document.getElementById('header-date-mobile').textContent = dateStr;
+
+        document.getElementById('display-name').textContent = `${p.name} さん`;
+        document.getElementById('display-role').textContent = p.role;
+        document.getElementById('display-goal').textContent = p.goal;
+
+        const genderBadge = document.getElementById('display-gender-badge');
+        if (p.gender === 'female') {
+          genderBadge.textContent = '女子';
+          genderBadge.className = 'px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-rose-500/20 text-rose-200 border border-rose-400/30';
+        } else {
+          genderBadge.textContent = '男子';
+          genderBadge.className = 'px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-sky-500/20 text-sky-200 border border-sky-400/30';
+        }
+      }
+
+      // 性別に応じたパネル表示切り替え（男子の場合は生理周期UIを完全に非表示）
+      function renderGenderSpecificPanels() {
+        const femalePanel = document.getElementById('female-cycle-panel');
+
+        if (state.profile.gender !== 'female') {
+          femalePanel.classList.add('hidden');
+          return;
+        }
+
+        femalePanel.classList.remove('hidden');
+
+        // 入力値反映
+        const dateInput = document.getElementById('last-period-date');
+        const lenInput = document.getElementById('cycle-length-input');
+        dateInput.value = state.cycle.lastPeriodStart || '';
+        lenInput.value = state.cycle.cycleLength || 28;
+
+        // トグルスイッチ状態反映
+        const toggleBtn = document.getElementById('period-toggle-btn');
+        const toggleKnob = document.getElementById('period-toggle-knob');
+        const activeBanner = document.getElementById('period-active-banner');
+
+        if (state.cycle.isPeriodNow) {
+          toggleBtn.setAttribute('aria-checked', 'true');
+          toggleBtn.classList.remove('bg-slate-200');
+          toggleBtn.classList.add('bg-rose-500');
+          toggleKnob.classList.remove('translate-x-0');
+          toggleKnob.classList.add('translate-x-6');
+          activeBanner.classList.remove('hidden');
+        } else {
+          toggleBtn.setAttribute('aria-checked', 'false');
+          toggleBtn.classList.remove('bg-rose-500');
+          toggleBtn.classList.add('bg-slate-200');
+          toggleKnob.classList.remove('translate-x-6');
+          toggleKnob.classList.add('translate-x-0');
+          activeBanner.classList.add('hidden');
+        }
+
+        // サイクル情報表示
+        const info = calculateCycleInfo(state.cycle.lastPeriodStart, state.cycle.cycleLength);
+        const phaseBadge = document.getElementById('cycle-phase-badge');
+        const cycleDayText = document.getElementById('cycle-day-text');
+        const nextDateEl = document.getElementById('next-period-date');
+        const nextCountdownEl = document.getElementById('next-period-countdown');
+        const adviceEl = document.getElementById('cycle-phase-advice');
+
+        if (info) {
+          if (state.cycle.isPeriodNow) {
+            phaseBadge.textContent = '現在生理中（ケア優先モード）';
+            phaseBadge.className = 'mt-1 inline-block px-2.5 py-1 rounded-lg text-xs sm:text-sm font-extrabold bg-rose-100 text-rose-800';
+          } else {
+            phaseBadge.textContent = info.phaseLabel;
+            phaseBadge.className = `mt-1 inline-block px-2.5 py-1 rounded-lg text-xs sm:text-sm font-extrabold ${info.badgeClass}`;
+          }
+          cycleDayText.textContent = `前回開始から周期 ${info.cycleDay}日目`;
+          nextDateEl.textContent = info.nextDateFormatted;
+          nextCountdownEl.textContent = info.daysUntilNext === 0
+            ? '本日が予定日目安です'
+            : info.daysUntilNext > 0
+              ? `あと約 ${info.daysUntilNext}日`
+              : `予定日から ${Math.abs(info.daysUntilNext)}日経過`;
+          adviceEl.textContent = state.cycle.isPeriodNow
+            ? '現在は生理中モードがONです。腹痛や貧血予防を最優先に、激しいダッシュや無理な筋トレを控えた専用メニューを表示しています。'
+            : info.advice;
+        } else {
+          if (state.cycle.isPeriodNow) {
+            phaseBadge.textContent = '現在生理中（ケア優先モード）';
+            phaseBadge.className = 'mt-1 inline-block px-2.5 py-1 rounded-lg text-xs sm:text-sm font-extrabold bg-rose-100 text-rose-800';
+            cycleDayText.textContent = '「今日開始」を押すと次回予定日も計算できます';
+          } else {
+            phaseBadge.textContent = '開始日未設定';
+            phaseBadge.className = 'mt-1 inline-block px-2.5 py-1 rounded-lg text-xs sm:text-sm font-extrabold bg-slate-200 text-slate-700';
+            cycleDayText.textContent = '左の欄から前回の開始日を入力してください';
+          }
+          nextDateEl.textContent = '--月--日';
+          nextCountdownEl.textContent = '開始日を入力すると自動計算';
+        }
+      }
+
+      // トレーニング＆行動メニュー描画
+      function renderTrainingMenu() {
+        const isFemale = state.profile.gender === 'female';
+        const isPeriodMode = isFemale && state.cycle.isPeriodNow;
+
+        const headerEl = document.getElementById('training-header');
+        const modeTag = document.getElementById('menu-mode-tag');
+        const mainTitle = document.getElementById('menu-main-title');
+        const subtitle = document.getElementById('menu-subtitle');
+        const progressBar = document.getElementById('menu-progress-bar');
+
+        if (isPeriodMode) {
+          headerEl.className = 'px-5 py-5 sm:px-6 bg-gradient-to-r from-rose-900 via-rose-800 to-slate-900 text-white transition-colors duration-300';
+          modeTag.textContent = '生理中専用コンディショニング';
+          modeTag.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-rose-200 text-rose-950';
+          mainTitle.textContent = '【生理中専用】無理をしないコンディショニングメニュー';
+          subtitle.textContent = '体調を最優先にしながら、ストレッチ・栄養・役割サポートで着実に前進しよう。';
+          progressBar.className = 'h-full bg-rose-300 rounded-full transition-all duration-300';
+        } else {
+          headerEl.className = 'px-5 py-5 sm:px-6 bg-slate-900 text-white transition-colors duration-300';
+          modeTag.textContent = '通常トレーニングモード';
+          modeTag.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-teal-500 text-slate-950';
+          mainTitle.textContent = '今日のトレーニング＆行動メニュー';
+          subtitle.textContent = `「${state.profile.role}」として「${state.profile.goal}」に近づく本日の重点メニュー`;
+          progressBar.className = 'h-full bg-teal-400 rounded-full transition-all duration-300';
+        }
+
+        // 体調ボタンのアクティブ状態更新
+        document.querySelectorAll('.cond-btn').forEach(btn => {
+          const cond = btn.getAttribute('data-condition');
+          if (cond === state.daily.condition) {
+            btn.className = 'cond-btn px-2.5 py-1.5 rounded-lg text-xs font-extrabold bg-white text-slate-900 shadow-xs transition';
+          } else {
+            btn.className = 'cond-btn px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-200 hover:bg-white/10 transition';
+          }
+        });
+
+        // メニュー結合（自動生成メニュー + ユーザー追加タスク）
+        const generatedMenus = generateDailyMenus();
+        const allItems = [...generatedMenus, ...state.daily.customTasks];
+
+        const container = document.getElementById('menu-list-container');
+        container.innerHTML = '';
+
+        let completedCount = 0;
+
+        allItems.forEach(item => {
+          const isDone = state.daily.completedIds.includes(item.id);
+          if (isDone) completedCount++;
+
+          const card = document.createElement('div');
+          card.className = `p-4 rounded-2xl border transition-all cursor-pointer select-none flex items-start gap-3.5 ${
+            isDone
+              ? 'bg-slate-50 border-slate-200 opacity-75'
+              : isPeriodMode
+                ? 'bg-rose-50/30 hover:bg-rose-50/60 border-rose-200/80'
+                : 'bg-white hover:bg-slate-50 border-slate-200 shadow-2xs'
+          }`;
+
+          card.innerHTML = `
+            <div class="pt-0.5 shrink-0">
+              <div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition ${
+                isDone
+                  ? isPeriodMode ? 'bg-rose-500 border-rose-500 text-white' : 'bg-teal-600 border-teal-600 text-white'
+                  : 'border-slate-300 bg-white'
+              }">
+                ${isDone ? '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' : ''}
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-extrabold ${item.tagColor || 'bg-slate-200 text-slate-700'}">
+                  ${escapeHtml(item.tag)}
+                </span>
+                ${item.isCustom ? '<span class="text-[11px] font-bold text-slate-400">マイメニュー</span>' : ''}
+              </div>
+              <h3 class="text-sm sm:text-base font-extrabold text-slate-900 ${isDone ? 'line-through text-slate-500' : ''}">
+                ${escapeHtml(item.title)}
+              </h3>
+              ${item.detail ? `<p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">${escapeHtml(item.detail)}</p>` : ''}
+            </div>
+            ${item.isCustom ? `
+              <button type="button" data-delete-id="${item.id}" class="delete-custom-btn p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition" title="削除">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            ` : ''}
+          `;
+
+          // チェック切り替えイベント
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.delete-custom-btn')) return;
+            toggleMenuCompletion(item.id);
+          });
+
+          container.appendChild(card);
+        });
+
+        // カスタムタスク削除ボタン
+        container.querySelectorAll('.delete-custom-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = btn.getAttribute('data-delete-id');
+            state.daily.customTasks = state.daily.customTasks.filter(t => t.id !== id);
+            state.daily.completedIds = state.daily.completedIds.filter(cid => cid !== id);
+            saveDaily();
+            renderTrainingMenu();
+            showToast('マイメニューを削除しました', 'info');
+          });
+        });
+
+        // 達成率更新
+        const percent = allItems.length > 0 ? Math.round((completedCount / allItems.length) * 100) : 0;
+        document.getElementById('menu-progress-text').textContent = `達成率 ${percent}%（${completedCount}/${allItems.length}）`;
+        progressBar.style.width = `${percent}%`;
+      }
+
+      function toggleMenuCompletion(id) {
+        const idx = state.daily.completedIds.indexOf(id);
+        if (idx >= 0) {
+          state.daily.completedIds.splice(idx, 1);
+        } else {
+          state.daily.completedIds.push(id);
+        }
+        saveDaily();
+        renderTrainingMenu();
+      }
+
+      // ===================================================================
+      // 8. 「人生アドバイス」セクション描画
+      // ===================================================================
+      function getFilteredAdviceList() {
+        if (state.adviceCategory === 'all') {
+          return LIFE_ADVICE_DATA;
+        }
+        if (state.adviceCategory === 'favorites') {
+          return LIFE_ADVICE_DATA.filter(item => state.favorites.includes(item.id));
+        }
+        return LIFE_ADVICE_DATA.filter(item => item.category === state.adviceCategory);
+      }
+
+      function getDailyDefaultAdvice() {
+        const now = new Date();
+        const daySeed = now.getFullYear() * 366 + (now.getMonth() + 1) * 31 + now.getDate();
+        return LIFE_ADVICE_DATA[daySeed % LIFE_ADVICE_DATA.length];
+      }
+
+      function renderAdviceSection(animateCard = false) {
+        // タブのアクティブスタイル更新
+        document.querySelectorAll('.advice-tab').forEach(tab => {
+          const cat = tab.getAttribute('data-cat');
+          if (cat === state.adviceCategory) {
+            tab.className = 'advice-tab px-3.5 py-1.5 rounded-full text-xs font-extrabold whitespace-nowrap bg-slate-900 text-white shadow-xs transition';
+          } else {
+            tab.className = 'advice-tab px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-600 transition';
+          }
+        });
+
+        const list = getFilteredAdviceList();
+        const cardEl = document.getElementById('advice-card');
+
+        if (animateCard) {
+          cardEl.classList.remove('animate-card-pop');
+          void cardEl.offsetWidth; // リフロー強制
+          cardEl.classList.add('animate-card-pop');
+        }
+
+        // お気に入りが空の場合のフォールバック表示
+        if (list.length === 0) {
+          document.getElementById('advice-badge').textContent = 'お気に入り';
+          document.getElementById('advice-pick-label').textContent = '0件保存中';
+          document.getElementById('advice-title').textContent = 'まだお気に入りに保存されたアドバイスがありません';
+          document.getElementById('advice-body').textContent = '他のジャンルを読んで、心に残ったヒントの「☆ お気に入り」ボタンを押すと、ここにいつでも見返せる自分だけの名言リストが作れます。';
+          document.getElementById('advice-action-tip').textContent = '💡 「すべて」タブから気になるアドバイスを探してみよう';
+          document.getElementById('fav-advice-icon').textContent = '☆';
+          document.getElementById('fav-advice-text').textContent = 'お気に入り';
+          document.getElementById('advice-sublist').innerHTML = '';
+          document.getElementById('advice-count-label').textContent = '0件';
+          return;
+        }
+
+        // 現在表示するアドバイスを決定
+        let current = list.find(item => item.id === state.currentAdviceId);
+        if (!current) {
+          if (state.adviceCategory === 'all') {
+            current = getDailyDefaultAdvice();
+          } else {
+            current = list[0];
+          }
+          state.currentAdviceId = current.id;
+        }
+
+        const isDailyPick = current.id === getDailyDefaultAdvice().id;
+        document.getElementById('advice-badge').textContent = current.categoryLabel;
+        document.getElementById('advice-pick-label').textContent = isDailyPick ? '📅 今日のピックアップ' : '💡 人生のヒント';
+        document.getElementById('advice-title').textContent = current.title;
+        document.getElementById('advice-body').textContent = current.body;
+        document.getElementById('advice-action-tip').textContent = `▶ 今日のアクション：${current.action}`;
+
+        // お気に入りボタン状態
+        const isFav = state.favorites.includes(current.id);
+        document.getElementById('fav-advice-icon').textContent = isFav ? '★' : '☆';
+        document.getElementById('fav-advice-text').textContent = isFav ? 'お気に入り済み' : 'お気に入り';
+        const favBtn = document.getElementById('fav-advice-btn');
+        if (isFav) {
+          favBtn.className = 'px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 text-xs font-extrabold text-amber-300 flex items-center gap-1.5 transition';
+        } else {
+          favBtn.className = 'px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-bold text-slate-200 flex items-center gap-1.5 transition';
+        }
+
+        // 同ジャンル内の他ヒント一覧（最大4件表示）
+        const others = list.filter(item => item.id !== current.id);
+        const sublistEl = document.getElementById('advice-sublist');
+        sublistEl.innerHTML = '';
+        document.getElementById('advice-count-label').textContent = `全 ${list.length}件`;
+
+        others.slice(0, 4).forEach(item => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'text-left p-3.5 rounded-2xl bg-slate-50 hover:bg-teal-50/70 border border-slate-200 hover:border-teal-300 transition flex flex-col justify-between gap-1.5';
+          btn.innerHTML = `
+            <span class="text-[11px] font-bold text-teal-700">${escapeHtml(item.categoryLabel)}</span>
+            <span class="text-xs sm:text-sm font-extrabold text-slate-800 line-clamp-2">${escapeHtml(item.title)}</span>
+          `;
+          btn.addEventListener('click', () => {
+            state.currentAdviceId = item.id;
+            renderAdviceSection(true);
+          });
+          sublistEl.appendChild(btn);
+        });
+      }
+
+      function renderMemo() {
+        document.getElementById('daily-memo-input').value = state.daily.memo || '';
+      }
+
+      // ===================================================================
+      // 9. イベントリスナー登録
+      // ===================================================================
+      function setupEventListeners() {
+        // --- 初期設定フォーム：プリセットチップ ---
+        document.querySelectorAll('.preset-chip').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.getElementById('init-role').value = btn.getAttribute('data-value');
+          });
+        });
+
+        document.querySelectorAll('.goal-chip').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.getElementById('init-goal').value = btn.getAttribute('data-value');
+          });
+        });
+
+        // --- 初期設定フォーム送信 ---
+        document.getElementById('onboarding-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('init-name').value.trim();
+          const role = document.getElementById('init-role').value.trim();
+          const goal = document.getElementById('init-goal').value.trim();
+          const genderInput = document.querySelector('input[name="init-gender"]:checked');
+
+          if (!name || !role || !goal || !genderInput) return;
+
+          state.profile = {
+            name,
+            role,
+            goal,
+            gender: genderInput.value
+          };
+          saveProfile();
+          renderApp();
+          showToast(`${name}さんのプロフィールを登録しました！`);
+        });
+
+        // --- プロフィール設定モーダル開閉 ---
+        const modal = document.getElementById('settings-modal');
+        document.getElementById('open-settings-btn').addEventListener('click', () => {
+          if (!state.profile) return;
+          document.getElementById('edit-name').value = state.profile.name;
+          document.getElementById('edit-role').value = state.profile.role;
+          document.getElementById('edit-goal').value = state.profile.goal;
+          const radio = document.querySelector(`input[name="edit-gender"][value="${state.profile.gender}"]`);
+          if (radio) radio.checked = true;
+
+          // リセット確認状態初期化
+          state.resetConfirmPending = false;
+          const resetBtn = document.getElementById('reset-data-btn');
+          resetBtn.textContent = '全データを初期化';
+          resetBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-50 border border-rose-200 transition';
+
+          modal.classList.remove('hidden');
+        });
+
+        document.getElementById('close-settings-btn').addEventListener('click', () => {
+          modal.classList.add('hidden');
+        });
+
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.classList.add('hidden');
+        });
+
+        document.querySelectorAll('.edit-role-chip').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.getElementById('edit-role').value = btn.getAttribute('data-edit-role');
+          });
+        });
+
+        // --- プロフィール編集保存 ---
+        document.getElementById('edit-profile-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('edit-name').value.trim();
+          const role = document.getElementById('edit-role').value.trim();
+          const goal = document.getElementById('edit-goal').value.trim();
+          const genderInput = document.querySelector('input[name="edit-gender"]:checked');
+
+          if (!name || !role || !goal || !genderInput) return;
+
+          state.profile = {
+            name,
+            role,
+            goal,
+            gender: genderInput.value
+          };
+          saveProfile();
+          modal.classList.add('hidden');
+          renderApp();
+          showToast('プロフィール設定を更新しました');
+        });
+
+        // --- データ初期化（2クリック安全確認） ---
+        document.getElementById('reset-data-btn').addEventListener('click', () => {
+          const btn = document.getElementById('reset-data-btn');
+          if (!state.resetConfirmPending) {
+            state.resetConfirmPending = true;
+            btn.textContent = '本当に初期化しますか？（再クリックで実行）';
+            btn.className = 'px-3 py-1.5 rounded-lg text-xs font-extrabold bg-rose-600 text-white shadow-xs transition';
+            return;
+          }
+
+          localStorage.removeItem(STORAGE_KEYS.PROFILE);
+          localStorage.removeItem(STORAGE_KEYS.CYCLE);
+          localStorage.removeItem(STORAGE_KEYS.DAILY);
+          localStorage.removeItem(STORAGE_KEYS.FAVORITES);
+
+          state.profile = null;
+          state.cycle = { lastPeriodStart: '', cycleLength: 28, isPeriodNow: false };
+          state.daily = { dateKey: getTodayKey(), completedIds: [], customTasks: [], condition: 'normal', memo: '' };
+          state.favorites = [];
+          state.resetConfirmPending = false;
+
+          modal.classList.add('hidden');
+          renderApp();
+          showToast('データを初期化しました', 'info');
+        });
+
+        // --- 【女子専用】現在生理中トグル ---
+        document.getElementById('period-toggle-btn').addEventListener('click', () => {
+          state.cycle.isPeriodNow = !state.cycle.isPeriodNow;
+          saveCycle();
+          renderGenderSpecificPanels();
+          renderTrainingMenu();
+          if (state.cycle.isPeriodNow) {
+            showToast('生理中専用メニューに切り替えました。無理せずケアしよう！', 'rose');
+          } else {
+            showToast('通常トレーニングモードに戻しました！');
+          }
+        });
+
+        // --- 【女子専用】前回の開始日・平均周期入力 ---
+        document.getElementById('last-period-date').addEventListener('change', (e) => {
+          state.cycle.lastPeriodStart = e.target.value;
+          saveCycle();
+          renderGenderSpecificPanels();
+          renderTrainingMenu();
+        });
+
+        document.getElementById('set-today-period-btn').addEventListener('click', () => {
+          const today = getTodayKey();
+          state.cycle.lastPeriodStart = today;
+          state.cycle.isPeriodNow = true;
+          saveCycle();
+          renderGenderSpecificPanels();
+          renderTrainingMenu();
+          showToast('今日を開始日に設定し、生理中メニューに切り替えました', 'rose');
+        });
+
+        document.getElementById('cycle-length-input').addEventListener('change', (e) => {
+          const val = Math.max(20, Math.min(45, Number(e.target.value) || 28));
+          e.target.value = val;
+          state.cycle.cycleLength = val;
+          saveCycle();
+          renderGenderSpecificPanels();
+          renderTrainingMenu();
+        });
+
+        // --- 今日の体調ボタン ---
+        document.querySelectorAll('.cond-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.daily.condition = btn.getAttribute('data-condition');
+            saveDaily();
+            renderTrainingMenu();
+          });
+        });
+
+        // --- カスタムメニュー追加 ---
+        document.getElementById('custom-task-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const input = document.getElementById('custom-task-input');
+          const text = input.value.trim();
+          if (!text) return;
+
+          state.daily.customTasks.push({
+            id: 'custom-' + Date.now(),
+            tag: 'マイ目標アクション',
+            tagColor: 'bg-purple-100 text-purple-800',
+            title: text,
+            detail: '',
+            isCustom: true
+          });
+          input.value = '';
+          saveDaily();
+          renderTrainingMenu();
+          showToast('今日のメニューに追加しました');
+        });
+
+        // --- 人生アドバイス：ジャンル切り替え ---
+        document.querySelectorAll('.advice-tab').forEach(tab => {
+          tab.addEventListener('click', () => {
+            state.adviceCategory = tab.getAttribute('data-cat');
+            const list = getFilteredAdviceList();
+            if (list.length > 0 && !list.some(i => i.id === state.currentAdviceId)) {
+              state.currentAdviceId = list[0].id;
+            }
+            renderAdviceSection(true);
+          });
+        });
+
+        // --- 人生アドバイス：別のアドバイスを引く（ガチャ） ---
+        document.getElementById('draw-advice-btn').addEventListener('click', () => {
+          const list = getFilteredAdviceList();
+          if (list.length <= 1) {
+            showToast('このジャンルに表示できる他のアドバイスはありません', 'info');
+            return;
+          }
+          const candidates = list.filter(item => item.id !== state.currentAdviceId);
+          const randomItem = candidates[Math.floor(Math.random() * candidates.length)];
+          state.currentAdviceId = randomItem.id;
+          renderAdviceSection(true);
+        });
+
+        // --- 人生アドバイス：お気に入り登録 ---
+        document.getElementById('fav-advice-btn').addEventListener('click', () => {
+          if (!state.currentAdviceId) return;
+          const idx = state.favorites.indexOf(state.currentAdviceId);
+          if (idx >= 0) {
+            state.favorites.splice(idx, 1);
+            showToast('お気に入りから解除しました', 'info');
+          } else {
+            state.favorites.push(state.currentAdviceId);
+            showToast('お気に入りに保存しました ★');
+          }
+          saveFavorites();
+          renderAdviceSection(false);
+        });
+
+        // --- 人生アドバイス：コピー（document.execCommand使用） ---
+        document.getElementById('copy-advice-btn').addEventListener('click', () => {
+          const title = document.getElementById('advice-title').textContent;
+          const body = document.getElementById('advice-body').textContent;
+          const textToCopy = `【人生アドバイス】${title}\n${body}`;
+
+          const tempArea = document.createElement('textarea');
+          tempArea.value = textToCopy;
+          tempArea.style.position = 'fixed';
+          tempArea.style.opacity = '0';
+          document.body.appendChild(tempArea);
+          tempArea.select();
+          try {
+            document.execCommand('copy');
+            showToast('アドバイスをクリップボードにコピーしました');
+          } catch (err) {
+            showToast('コピーに失敗しました', 'info');
+          }
+          document.body.removeChild(tempArea);
+        });
+
+        // --- 今日の振り返りメモ自動保存 ---
+        let memoTimer = null;
+        document.getElementById('daily-memo-input').addEventListener('input', (e) => {
+          state.daily.memo = e.target.value;
+          saveDaily();
+          const statusEl = document.getElementById('memo-saved-status');
+          statusEl.classList.remove('opacity-0');
+          clearTimeout(memoTimer);
+          memoTimer = setTimeout(() => {
+            statusEl.classList.add('opacity-0');
+          }, 1500);
+        });
+      }
+
+      // ===================================================================
+      // 10. 初期化エントリーポイント
+      // ===================================================================
+      window.addEventListener('DOMContentLoaded', () => {
+        loadState();
+        setupEventListeners();
+        renderApp();
+      });
+    })();
+  </script>
 </body>
 </html>
