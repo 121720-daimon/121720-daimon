@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CLUB COMPASS | 陸上競技部コンディショニング＆チームアプリ</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -54,8 +54,8 @@
     }
 
     @keyframes muscleGlow {
-      0%, 100% { opacity: 0.95; filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.75)); }
-      50% { opacity: 0.55; filter: drop-shadow(0 0 1px rgba(249, 115, 22, 0.25)); }
+      0%, 100% { opacity: 0.96; filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.85)); }
+      50% { opacity: 0.52; filter: drop-shadow(0 0 1px rgba(249, 115, 22, 0.25)); }
     }
 
     .animate-fade-up {
@@ -71,7 +71,7 @@
     }
 
     .muscle-active {
-      animation: muscleGlow 1.7s ease-in-out infinite;
+      animation: muscleGlow 1.6s ease-in-out infinite;
     }
 
     /* 横スクロールバー非表示 */
@@ -99,7 +99,7 @@
       cursor: pointer;
     }
 
-    /* LINE風トーク背景＆吹き出ししっぽ */
+    /* LINE風トーク背景＆吹き出し */
     .line-chat-canvas {
       background-color: #8CABD9;
       background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
@@ -144,7 +144,7 @@
           </div>
           <h1 class="text-2xl font-black tracking-tight">CLUB COMPASS 初期設定</h1>
           <p class="text-slate-300 text-xs mt-1 leading-relaxed">
-            専門種目（複数選択OK）・固定役割・目標を登録して、毎日の練習メニューとチーム連絡を始めよう。
+            専門種目（100m・400m・やり投など複数選択OK）・固定役割・目標を登録して、毎日の練習メニューとチーム連絡を始めよう。
           </p>
         </div>
 
@@ -158,33 +158,52 @@
               class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-[#F97316] focus:ring-2 focus:ring-orange-500/20 outline-none transition text-sm font-bold">
           </div>
 
-          <!-- ② 種目カテゴリー＆専門種目（複数選択OK・階層選択UI） -->
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
+          <!-- ② 種目カテゴリー＆専門種目（複数選択OK・即座に具体種目ピルを表示） -->
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
               <label class="block text-xs font-black text-slate-800">
                 ② 種目カテゴリー＆専門種目（複数選択OK） <span class="text-orange-600">*</span>
               </label>
-              <span class="text-[10px] font-black text-[#F97316] bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200">
-                何種目でも選択可！
-              </span>
+              <button type="button" id="init-expand-all-btn"
+                class="text-[10px] font-black text-cyan-800 bg-cyan-50 hover:bg-cyan-100 px-2.5 py-1 rounded-full border border-cyan-200 transition">
+                全種目リストを開く
+              </button>
             </div>
-            <p class="text-[11px] text-slate-500 mb-2">
-              まずカテゴリーをタップすると、下の枠に具体的な種目（100m・200m・やり投など）が表示されます。
+            <p class="text-[11px] text-slate-600 leading-snug">
+              STEP1：カテゴリーをタップ → STEP2：下に出てくる「100m」「400m」「やり投」などをタップ！
             </p>
-            <!-- カテゴリー選択グリッド（JS描画） -->
+
+            <!-- STEP1：カテゴリー選択グリッド -->
             <div id="init-category-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
 
-            <!-- 選択されたカテゴリーの具体的な種目ピル一覧（JS描画） -->
-            <div id="init-events-drawer" class="hidden mt-3 p-3.5 rounded-2xl bg-slate-50 border-2 border-orange-200 space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-black text-slate-900">🎯 出場・練習している種目をタップ（複数OK）</span>
-                <span id="init-selected-count" class="text-[10px] font-black text-[#F97316]">0種目選択中</span>
+            <!-- STEP2：選択したカテゴリーの具体的な専門種目エリア（常に分かりやすく表示） -->
+            <div id="onboarding-events-area" class="p-3.5 rounded-2xl bg-slate-50 border-2 border-orange-300 space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[11px] font-black text-slate-900">🎯 STEP2：具体的な種目をタップ（複数選択可）</span>
+                <span id="init-selected-count" class="text-[10px] font-black text-white bg-[#F97316] px-2 py-0.5 rounded-full">0種目選択中</span>
               </div>
+
+              <!-- 選択中の具体種目ライブプレビューバー -->
+              <div id="init-selected-preview" class="flex flex-wrap gap-1.5 min-h-[26px] items-center bg-white px-2.5 py-1.5 rounded-xl border border-slate-200">
+                <span class="text-[11px] text-slate-400 font-bold">まだ種目が選ばれていません（下のボタンをタップ）</span>
+              </div>
+
+              <!-- カテゴリー別の具体種目ピルボタン一覧 -->
               <div id="init-subevents-container" class="space-y-2.5"></div>
+
+              <!-- カスタム種目追加 -->
+              <div class="pt-2 border-t border-slate-200/80 flex gap-1.5">
+                <input type="text" id="init-custom-event-input" maxlength="16" placeholder="＋ その他種目を追加（例：60m、1000m）"
+                  class="flex-1 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-bold outline-none focus:border-[#F97316]">
+                <button type="button" id="init-add-custom-event-btn"
+                  class="px-3 py-2 rounded-xl bg-[#0F172A] hover:bg-slate-800 text-white text-[11px] font-black shrink-0 transition">
+                  追加
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- ③ 役割・役職（14日自動変更なし・ずっと固定） -->
+          <!-- ③ 役割・役職（自動変更なし・ずっと固定） -->
           <div>
             <div class="flex flex-wrap items-center justify-between gap-1 mb-1.5">
               <label for="init-role" class="block text-xs font-black text-slate-800">
@@ -211,7 +230,7 @@
             <label for="init-goal" class="block text-xs font-black text-slate-800 mb-1.5">
               ④ 目標大会・ターゲット記録 <span class="text-orange-600">*</span>
             </label>
-            <input type="text" id="init-goal" required maxlength="30" placeholder="例：県大会決勝進出・100m 10秒台、インターハイ出場"
+            <input type="text" id="init-goal" required maxlength="30" placeholder="例：県大会決勝進出・100m 10秒台、やり投 55m突破"
               class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-[#F97316] outline-none transition text-sm font-bold">
             <div class="flex flex-wrap gap-1.5 mt-2">
               <button type="button" data-init-goal="県大会決勝進出・自己ベスト更新" class="init-goal-chip px-2.5 py-1 text-[11px] font-extrabold rounded-lg bg-slate-100 hover:bg-orange-50 hover:text-orange-700 border border-slate-200 text-slate-700 transition">県大会決勝・PB更新</button>
@@ -275,7 +294,7 @@
                 <span id="mode-status-dot" class="w-2 h-2 rounded-full bg-[#06B6D4] shrink-0"></span>
                 <span id="header-user-name" class="font-black text-xs tracking-tight text-white truncate max-w-[68px]"></span>
                 <span id="header-mode-pill" class="px-1.5 py-0.5 rounded-full text-[10px] font-black bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shrink-0">
-                  🌐 表
+                  🌐 表モード
                 </span>
                 <svg id="mode-chevron" class="w-3 h-3 text-slate-400 transition-transform duration-200 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
@@ -298,7 +317,7 @@
                       🌐
                     </div>
                     <div>
-                      <div class="text-sm font-black text-white">表モード（部活・みんなで見る用）</div>
+                      <div class="text-sm font-black text-white">表モード（部活共有）</div>
                       <p class="text-[11px] text-slate-400 leading-snug mt-0.5">
                         部活仲間と画面を共有しても安心。秘密の体調詳細や生理周期パネルを完全に非表示化。
                       </p>
@@ -332,22 +351,18 @@
 
             <!-- 右側：目立つワンタップ「出欠連絡」「QR交換」「設定」ボタン -->
             <div class="flex items-center gap-1.5 shrink-0">
-              <!-- ① 出欠連絡クイックボタン（アンバー/ローズピル） -->
+              <!-- ① 出欠連絡クイックボタン -->
               <button id="top-quick-attendance-btn" type="button"
                 class="px-2.5 py-1.5 rounded-full bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 active:scale-95 text-white text-[11px] font-black shadow-md shadow-rose-500/25 flex items-center gap-1 transition">
-                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                </svg>
+                <span>📋</span>
                 <span>出欠連絡</span>
               </button>
 
-              <!-- ② QR交換クイックボタン（インスタ風グラデーション枠ピル） -->
+              <!-- ② QR交換クイックボタン -->
               <button id="top-quick-qr-btn" type="button"
                 class="p-[1.5px] rounded-full bg-gradient-to-tr from-[#F97316] via-pink-500 to-[#06B6D4] active:scale-95 shadow-md transition">
                 <span class="px-2.5 py-1 rounded-full bg-[#0F172A] hover:bg-slate-800 text-white text-[11px] font-black flex items-center gap-1">
-                  <svg class="w-3.5 h-3.5 text-[#06B6D4] shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
-                  </svg>
+                  <span>📱</span>
                   <span>QR交換</span>
                 </span>
               </button>
@@ -360,12 +375,9 @@
             </div>
           </div>
 
-          <!-- 2段目：複数選択種目タグ・固定役割・目標・日付 -->
+          <!-- 2段目：複数選択された具体種目バッジ（100m / 400m / やり投等）・固定役割・目標・日付 -->
           <div class="mt-2 pt-2 border-t border-slate-800 space-y-1.5">
-            <!-- 複数選択されたカテゴリー＆種目タグ -->
-            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar" id="header-events-strip">
-              <!-- JSで sleek tags を描画 -->
-            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar" id="header-events-strip"></div>
 
             <div class="flex items-center justify-between gap-2 text-[11px]">
               <div class="flex items-center gap-1.5 shrink-0">
@@ -404,7 +416,7 @@
               <div class="min-w-0">
                 <div class="text-sm font-black text-slate-900">現在生理中スイッチ</div>
                 <p class="text-[11px] text-orange-900 mt-0.5 leading-snug">
-                  ONにすると今日の練習が「【生理中専用】骨盤・股関節ケア＆軽負荷バイクメニュー」に即切替されます
+                  ONにすると今日の練習が「【生理中専用】骨盤・股関節ケア＆低負荷エアロバイクメニュー」に即切替されます
                 </p>
               </div>
               <button id="period-toggle-btn" type="button" role="switch" aria-checked="false"
@@ -507,7 +519,7 @@
                 <h2 class="text-base sm:text-lg font-black text-slate-900">今日のコンディション入力</h2>
               </div>
               <span class="text-[10px] font-extrabold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
-                自動メニュー連動
+                種目別メニュー連動
               </span>
             </div>
 
@@ -554,22 +566,22 @@
               </div>
             </div>
 
-            <!-- ③ 練習場所（外練習 / 中練習） -->
+            <!-- ③ 練習場所（屋外 / 屋内） -->
             <div>
               <span class="block text-xs font-black text-slate-700 mb-2">🏟️ 練習場所</span>
               <div class="grid grid-cols-2 gap-2">
                 <button type="button" data-env-val="outdoor" class="env-toggle-btn p-3 rounded-2xl border-2 text-left transition flex items-center gap-2.5">
                   <span class="text-xl shrink-0">☀️</span>
                   <div class="min-w-0">
-                    <div class="text-xs font-black leading-tight">外練習</div>
+                    <div class="text-xs font-black leading-tight">屋外練習</div>
                     <div class="text-[10px] opacity-80 truncate">グラウンド・競技場</div>
                   </div>
                 </button>
                 <button type="button" data-env-val="indoor" class="env-toggle-btn p-3 rounded-2xl border-2 text-left transition flex items-center gap-2.5">
                   <span class="text-xl shrink-0">🏫</span>
                   <div class="min-w-0">
-                    <div class="text-xs font-black leading-tight">中練習</div>
-                    <div class="text-[10px] opacity-80 truncate">体育館・廊下・トレ室</div>
+                    <div class="text-xs font-black leading-tight">屋内練習</div>
+                    <div class="text-[10px] opacity-80 truncate">体育館・階段・ウエイト室</div>
                   </div>
                 </button>
               </div>
@@ -577,13 +589,13 @@
 
             <!-- ④ 今日の練習テーマ（気分） -->
             <div>
-              <span class="block text-xs font-black text-slate-700 mb-2">🎯 今日の練習テーマ（気分）</span>
+              <span class="block text-xs font-black text-slate-700 mb-2">🎯 今日の練習テーマ</span>
               <div class="flex flex-wrap gap-1.5" id="mood-selector-grid">
                 <button type="button" data-mood-val="form" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">⚡ フォーム中心</button>
-                <button type="button" data-mood-val="strength" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">🔥 体幹・補強中心</button>
-                <button type="button" data-mood-val="speed" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">💨 スピード・瞬発系</button>
-                <button type="button" data-mood-val="endurance" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">🚴 持久・バイク心肺系</button>
-                <button type="button" data-mood-val="care" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">🧘 ケア・疲労抜き</button>
+                <button type="button" data-mood-val="strength" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">🔥 体幹・ウエイト中心</button>
+                <button type="button" data-mood-val="speed" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">💨 スピード・スプリント中心</button>
+                <button type="button" data-mood-val="endurance" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">🚴 持久・スタミナ中心</button>
+                <button type="button" data-mood-val="care" class="mood-btn px-3 py-2 rounded-xl border-2 text-xs font-black transition">🧘 疲労抜き・ケア中心</button>
               </div>
             </div>
           </section>
@@ -632,7 +644,7 @@
                 </div>
                 <div>
                   <h2 class="text-base font-black text-slate-900">人生アドバイス</h2>
-                  <p class="text-[11px] text-slate-500">部活の壁・勉強との両立・メンタル・チーム・進路</p>
+                  <p class="text-[11px] text-slate-500">部活の壁・勉強との両立・メンタル・チーム人間関係・進路の視点</p>
                 </div>
               </div>
 
@@ -648,9 +660,9 @@
                 <button type="button" data-adv-cat="all" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">すべて</button>
                 <button type="button" data-adv-cat="club" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">部活の壁</button>
                 <button type="button" data-adv-cat="study" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">勉強との両立</button>
-                <button type="button" data-adv-cat="mental" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">メンタル・本番</button>
-                <button type="button" data-adv-cat="team" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">チームワーク</button>
-                <button type="button" data-adv-cat="future" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">進路・将来</button>
+                <button type="button" data-adv-cat="mental" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">メンタル</button>
+                <button type="button" data-adv-cat="team" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">チーム人間関係</button>
+                <button type="button" data-adv-cat="future" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">進路の視点</button>
                 <button type="button" data-adv-cat="favorites" class="adv-cat-tab px-3 py-1.5 rounded-full text-[11px] font-extrabold whitespace-nowrap transition">★ お気に入り</button>
               </div>
             </div>
@@ -777,7 +789,7 @@
                 </button>
                 <button type="button" data-ai-mode="form"
                   class="ai-mode-chip py-2 px-2 rounded-xl text-[11px] font-black flex items-center justify-center gap-1 transition">
-                  <span>📸 フォーム確認（写真解析）</span>
+                  <span>📸 フォーム確認（写真アップ診断）</span>
                 </button>
               </div>
             </div>
@@ -822,13 +834,13 @@
         </div>
 
         <!-- =================================================================
-             タブ4：💬 連絡・QR（LINE風部員チャット・顧問連絡・QR友達交換）
+             タブ4：💬 部員LINE・連絡（LINE風部員チャット・顧問連絡・QR友達交換）
              ================================================================= -->
         <div id="tab-view-team" class="hidden space-y-3.5 animate-fade-up">
           <!-- サブタブ切替バー -->
           <div class="bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200/90 grid grid-cols-3 gap-1.5">
             <button type="button" data-team-sub="chat" class="team-sub-btn py-2 px-1 rounded-xl text-xs font-black transition">
-              💬 LINE風トーク
+              💬 部員LINEトーク
             </button>
             <button type="button" data-team-sub="advisor" class="team-sub-btn py-2 px-1 rounded-xl text-xs font-black transition">
               📋 出欠・顧問連絡
@@ -839,40 +851,35 @@
           </div>
 
           <!-- ---------------------------------------------------------------
-               サブ画面1：LINE風 陸上部全体グループ＆個人トーク
+               サブ画面1：LINE風 陸上競技部 全体連絡・練習トーク＆個人トーク
                --------------------------------------------------------------- -->
           <section id="team-sub-chat" class="bg-white rounded-3xl shadow-md border border-slate-200/90 overflow-hidden flex flex-col h-[70vh] min-h-[490px]">
-            <!-- LINE風ルームヘッダー＆ルーム切替（全体グループ / 個人トーク） -->
+            <!-- LINE風ルームヘッダー＆ルーム切替 -->
             <div class="bg-[#0F172A] text-white px-3.5 py-2.5 shrink-0 space-y-2 border-b border-slate-800">
               <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2 min-w-0">
                   <span class="w-2.5 h-2.5 rounded-full bg-[#06C755] animate-pulse shrink-0"></span>
-                  <h3 id="line-room-title" class="text-xs sm:text-sm font-black truncate">🏃‍♂️ 陸上部 全体グループ（練習連絡）</h3>
+                  <h3 id="line-room-title" class="text-xs sm:text-sm font-black truncate">🏃‍♂️ 陸上競技部 全体連絡・練習トーク</h3>
                 </div>
                 <span id="line-room-members-badge" class="px-2 py-0.5 rounded-full bg-slate-800 text-[10px] font-black text-emerald-400 shrink-0">
-                  メンバー 17人
+                  メンバー 19人
                 </span>
               </div>
 
               <!-- ルーム切替ピルバー -->
-              <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar" id="friend-room-tabs">
-                <!-- JSで生成 -->
-              </div>
+              <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar" id="friend-room-tabs"></div>
             </div>
 
             <!-- LINE風トークメッセージエリア -->
-            <div id="friend-chat-messages" class="flex-1 overflow-y-auto p-3.5 space-y-3.5 line-chat-canvas">
-              <!-- JSでLINE風グリーン/ホワイト吹き出しを描画 -->
-            </div>
+            <div id="friend-chat-messages" class="flex-1 overflow-y-auto p-3.5 space-y-3.5 line-chat-canvas"></div>
 
             <!-- 練習中ワンタップ・クイックスタンプバー -->
             <div class="px-3 py-2 bg-white border-t border-slate-200 flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0">
               <span class="text-[10px] font-black text-slate-400 shrink-0">スタンプ:</span>
-              <button type="button" data-stamp="了解！👍" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-[11px] font-black text-emerald-900 whitespace-nowrap transition">了解！👍</button>
-              <button type="button" data-stamp="今向かってます！🏃" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-orange-50 hover:bg-orange-100 border border-orange-200 text-[11px] font-black text-orange-900 whitespace-nowrap transition">今向かってます！🏃</button>
-              <button type="button" data-stamp="バイク空きました！🚴" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 text-[11px] font-black text-cyan-900 whitespace-nowrap transition">バイク空きました！🚴</button>
-              <button type="button" data-stamp="計測お願いします⏱️" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-200 text-[11px] font-black text-amber-900 whitespace-nowrap transition">計測お願いします⏱️</button>
-              <button type="button" data-stamp="ナイスラン！🔥" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-[11px] font-black text-rose-900 whitespace-nowrap transition">ナイスラン！🔥</button>
+              <button type="button" data-stamp="今ウエイト室空いてる！" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 text-[11px] font-black text-cyan-900 whitespace-nowrap transition">今ウエイト室空いてる！</button>
+              <button type="button" data-stamp="階段ダッシュ完了🔥" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-orange-50 hover:bg-orange-100 border border-orange-200 text-[11px] font-black text-orange-900 whitespace-nowrap transition">階段ダッシュ完了🔥</button>
+              <button type="button" data-stamp="バトン合わせしよう！" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-[11px] font-black text-emerald-900 whitespace-nowrap transition">バトン合わせしよう！</button>
+              <button type="button" data-stamp="ナイスラン！" class="friend-stamp-btn px-2.5 py-1 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-[11px] font-black text-rose-900 whitespace-nowrap transition">ナイスラン！</button>
             </div>
 
             <!-- LINE風メッセージ送信フォーム -->
@@ -949,7 +956,7 @@
 
                 <div>
                   <label for="report-detail" class="block text-xs font-black text-slate-700 mb-1">④ 補足メッセージ（任意）</label>
-                  <textarea id="report-detail" rows="2" maxlength="160" placeholder="例：右ハムストリングスに張りがあるため、今日はトレ室でエアロバイクと体幹の別メニューを行います。"
+                  <textarea id="report-detail" rows="2" maxlength="160" placeholder="例：右ハムストリングスに張りがあるため、今日はウエイト室でエアロバイクと体幹の別メニューを行います。"
                     class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-[#F97316] text-xs font-medium outline-none resize-none"></textarea>
                 </div>
 
@@ -1045,7 +1052,7 @@
           </button>
           <button type="button" data-nav-tab="team" class="bottom-nav-btn relative py-1.5 rounded-2xl flex flex-col items-center justify-center gap-0.5 transition">
             <span class="text-lg leading-none">💬</span>
-            <span class="text-[10px] font-black">連絡・QR</span>
+            <span class="text-[10px] font-black">部員LINE・連絡</span>
             <span id="team-unread-badge" class="absolute top-1 right-4 px-1.5 py-0.2 rounded-full bg-[#06C755] text-white text-[9px] font-black">3</span>
           </button>
         </div>
@@ -1116,7 +1123,7 @@
 
           <div>
             <label for="modal-report-detail" class="block text-xs font-black text-slate-800 mb-1">④ 補足メッセージ（任意）</label>
-            <textarea id="modal-report-detail" rows="2" maxlength="160" placeholder="例：ふくらはぎに違和感があるため、トレ室でエアロバイクとストレッチを行います。"
+            <textarea id="modal-report-detail" rows="2" maxlength="160" placeholder="例：ふくらはぎに違和感があるため、ウエイト室でエアロバイクとストレッチを行います。"
               class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-rose-500 text-xs font-medium outline-none resize-none"></textarea>
           </div>
 
@@ -1192,14 +1199,38 @@
           </div>
 
           <!-- 複数カテゴリー＆専門種目選択 -->
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-2">
               <label class="block text-xs font-black text-slate-800">種目カテゴリー＆専門種目（複数選択OK）</label>
-              <span id="edit-selected-count" class="text-[10px] font-black text-[#F97316]">0種目選択中</span>
+              <button type="button" id="edit-expand-all-btn"
+                class="text-[10px] font-black text-cyan-800 bg-cyan-50 hover:bg-cyan-100 px-2.5 py-0.5 rounded-full border border-cyan-200 transition">
+                全種目リストを開く
+              </button>
             </div>
+
             <div id="edit-category-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-1.5"></div>
-            <div id="edit-events-drawer" class="mt-2.5 p-3 rounded-2xl bg-slate-50 border border-orange-200 space-y-2">
+
+            <div id="edit-events-area" class="p-3 rounded-2xl bg-slate-50 border-2 border-orange-300 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-black text-slate-900">🎯 具体的な種目をタップ（複数選択可）</span>
+                <span id="edit-selected-count" class="text-[10px] font-black text-white bg-[#F97316] px-2 py-0.5 rounded-full">0種目選択中</span>
+              </div>
+
+              <!-- 選択中の種目ライブプレビュー -->
+              <div id="edit-selected-preview" class="flex flex-wrap gap-1.5 min-h-[26px] items-center bg-white px-2.5 py-1.5 rounded-xl border border-slate-200"></div>
+
+              <!-- カテゴリー別の具体種目ボタン一覧 -->
               <div id="edit-subevents-container" class="space-y-2"></div>
+
+              <!-- カスタム種目追加 -->
+              <div class="pt-2 border-t border-slate-200/80 flex gap-1.5">
+                <input type="text" id="edit-custom-event-input" maxlength="16" placeholder="＋ その他種目を追加（例：60m、1000m）"
+                  class="flex-1 px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold outline-none focus:border-[#F97316]">
+                <button type="button" id="edit-add-custom-event-btn"
+                  class="px-3 py-1.5 rounded-xl bg-[#0F172A] hover:bg-slate-800 text-white text-[11px] font-black shrink-0 transition">
+                  追加
+                </button>
+              </div>
             </div>
           </div>
 
@@ -1251,7 +1282,7 @@
   </div>
 
   <!-- =====================================================================
-       JavaScript ロジック（複数種目エンジン・バイク/室内練習メニュー・SVG図解・LINE風チャット）
+       JavaScript ロジック（複数種目選択UI修正・種目別個別最適化エンジン・SVG図解・LINE風チャット）
        ===================================================================== -->
   <script>
     (function () {
@@ -1264,44 +1295,51 @@
         {
           id: 'sprint',
           label: '短距離',
+          subHint: '100m・200m・400m等',
           icon: '⚡',
           events: ['100m', '200m', '400m', '4×100mR', '4×400mR']
         },
         {
           id: 'hurdle',
           label: 'ハードル',
+          subHint: '110mH・100mH・400mH',
           icon: '🚧',
           events: ['110mH', '100mH', '400mH']
         },
         {
           id: 'distance',
           label: '中・長距離',
+          subHint: '800m〜5000m・競歩',
           icon: '🏃‍♂️',
-          events: ['800m', '1500m', '3000m', '3000mSC', '5000m', '駅伝']
+          events: ['800m', '1500m', '3000m', '5000m', '3000mSC', '競歩']
         },
         {
           id: 'jump',
           label: '跳躍',
+          subHint: '走幅跳・三段跳・高跳',
           icon: '🦘',
           events: ['走幅跳', '三段跳', '走高跳', '棒高跳']
         },
         {
           id: 'throw',
           label: '投擲',
+          subHint: 'やり投・砲丸・円盤等',
           icon: '☄️',
-          events: ['砲丸投', '円盤投', 'やり投', 'ハンマー投']
+          events: ['やり投', '砲丸投', '円盤投', 'ハンマー投']
         },
         {
           id: 'combined',
           label: '混成',
+          subHint: '八種競技・七種競技',
           icon: '🔥',
           events: ['八種競技', '七種競技']
         },
         {
           id: 'manager',
-          label: 'マネージャー',
+          label: 'マネージャー・サポート',
+          subHint: '計測・動画・ケア',
           icon: '📋',
-          events: ['タイム計測・動画', 'ケア・サポート']
+          events: ['タイム計測・動画撮影', 'ケア・給水サポート']
         }
       ];
 
@@ -1309,15 +1347,15 @@
       // 2. ストレージキー＆日付ユーティリティ
       // ===================================================================
       const STORAGE_KEYS = {
-        PROFILE: 'cc_tf_v2_profile',
-        PRIVACY_MODE: 'cc_tf_v2_privacy_mode',
-        CYCLE: 'cc_tf_v2_cycle',
-        DAILY_LOGS: 'cc_tf_v2_daily_logs',
-        FAVORITES: 'cc_tf_v2_favorites',
-        AI_CHAT: 'cc_tf_v2_ai_chat',
-        FRIENDS: 'cc_tf_v2_friends',
-        FRIEND_CHATS: 'cc_tf_v2_friend_chats',
-        ADVISOR_REPORTS: 'cc_tf_v2_advisor_reports'
+        PROFILE: 'cc_tf_v3_profile',
+        PRIVACY_MODE: 'cc_tf_v3_privacy_mode',
+        CYCLE: 'cc_tf_v3_cycle',
+        DAILY_LOGS: 'cc_tf_v3_daily_logs',
+        FAVORITES: 'cc_tf_v3_favorites',
+        AI_CHAT: 'cc_tf_v3_ai_chat',
+        FRIENDS: 'cc_tf_v3_friends',
+        FRIEND_CHATS: 'cc_tf_v3_friend_chats',
+        ADVISOR_REPORTS: 'cc_tf_v3_advisor_reports'
       };
 
       function formatDateKey(d) {
@@ -1348,16 +1386,27 @@
         return list;
       }
 
-      // プロフィールから表示用種目サマリーを生成（例: "短距離・跳躍｜100m / 200m / 走幅跳"）
+      // プロフィールから表示用種目サマリーを生成（例: "100m / 400m / やり投"）
       function getProfileEventSummary(p) {
         if (!p) return '';
+        const evs = p.events || [];
+        if (evs.length > 0) {
+          return evs.join(' / ');
+        }
         const cats = (p.categories || []).map(cid => {
           const found = TRACK_CATEGORIES.find(c => c.id === cid);
           return found ? found.label : cid;
         });
+        return cats.length > 0 ? cats.join('・') : '陸上競技';
+      }
+
+      // LINEトーク用の短い種目バッジ（例: "100m・400m・やり投"）
+      function getLineEventBadge(p) {
+        if (!p) return '陸上';
         const evs = p.events || [];
-        if (cats.length === 0 && evs.length === 0) return '陸上競技';
-        return `${cats.join('・')}｜${evs.join(' / ')}`;
+        if (evs.length > 0) return evs.slice(0, 3).join('・');
+        const cats = (p.categories || []).map(cid => TRACK_CATEGORIES.find(c => c.id === cid)?.label).filter(Boolean);
+        return cats.slice(0, 2).join('・') || '陸上';
       }
 
       // ===================================================================
@@ -1390,7 +1439,7 @@
         modalSelectedReason: '体調不良',
         resetConfirmPending: false,
         // フォーム編集用一時選択状態
-        initDraftCategories: [],
+        initDraftCategories: ['sprint'],
         initDraftEvents: [],
         editDraftCategories: [],
         editDraftEvents: []
@@ -1419,7 +1468,7 @@
           { sleepHours: 7.5, conditionLevel: 4, environment: 'outdoor', records: [{ title: 'ミニハードル腿上げ＆接地ドリル', env: 'outdoor' }, { title: '加速走 60m×4本', env: 'outdoor' }] },
           { sleepHours: 6.5, conditionLevel: 3, environment: 'indoor', records: [{ title: '階段ダッシュ 15段×5本×2セット', env: 'indoor' }, { title: 'フロント＆サイドプランクサーキット', env: 'indoor' }] },
           { sleepHours: 8.0, conditionLevel: 5, environment: 'outdoor', records: [{ title: '専門種目技術ドリル', env: 'outdoor' }, { title: 'スタートダッシュ 30m×5本', env: 'outdoor' }] },
-          { sleepHours: 7.0, conditionLevel: 4, environment: 'indoor', records: [{ title: 'ベンチプレス 8〜10回×3セット', env: 'indoor' }, { title: 'エアロバイク・心肺持久ペダリング 15分', env: 'indoor' }] },
+          { sleepHours: 7.0, conditionLevel: 4, environment: 'indoor', records: [{ title: 'ベンチプレス 8〜10回×3セット', env: 'indoor' }, { title: 'エアロバイク（ワットバイク）心肺ペダリング 15分', env: 'indoor' }] },
           { sleepHours: 7.5, conditionLevel: 4, environment: 'outdoor', records: [{ title: 'テンポ走・ペース感覚養成', env: 'outdoor' }, { title: '体幹スタビリティ補強', env: 'outdoor' }] },
           { sleepHours: 8.5, conditionLevel: 5, environment: 'outdoor', records: [{ title: '競技場タイムトライアル＆技術確認', env: 'outdoor' }, { title: '股関節・ハムストリングスストレッチ', env: 'outdoor' }] }
         ];
@@ -1449,60 +1498,67 @@
       // ===================================================================
       function renderExerciseSvg(visualType) {
         switch (visualType) {
+          case 'javelin_throw':
+            return `
+              <svg viewBox="0 0 280 155" class="w-full h-full">
+                <!-- 助走路ライン -->
+                <line x1="18" y1="140" x2="262" y2="140" stroke="#CBD5E1" stroke-width="3" stroke-linecap="round"/>
+                <!-- ブロック脚（左脚の踏み込み固定） -->
+                <path d="M126 88 L156 112 L166 138" stroke="#06B6D4" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <path d="M126 88 L98 112 L84 138" stroke="#0F172A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <!-- 弓なり胸郭・広背筋・腹斜筋ハイライト -->
+                <circle cx="114" cy="40" r="8.5" fill="#0F172A"/>
+                <path d="M116 49 Q126 68 126 88" stroke="#F97316" stroke-width="11" stroke-linecap="round" fill="none" class="muscle-active"/>
+                <!-- 投擲腕＆やり -->
+                <path d="M118 54 L92 38" stroke="#F97316" stroke-width="7" stroke-linecap="round" class="muscle-active"/>
+                <line x1="46" y1="54" x2="176" y2="14" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+                <polygon points="182,12 171,12 174,19" fill="#F97316"/>
+                <!-- リリースベクトル -->
+                <path d="M186 12 L222 4" stroke="#06B6D4" stroke-width="2.5" stroke-dasharray="4 3"/>
+                <rect x="14" y="96" width="112" height="36" rx="8" fill="#0F172A"/>
+                <text x="22" y="111" fill="#F97316" font-size="8.5" font-weight="900">☄️ ブロック＆肩甲骨</text>
+                <text x="22" y="124" fill="#FFFFFF" font-size="8" font-weight="700">左脚ブロックから胸郭をしならせる</text>
+              </svg>`;
+
           case 'aero_bike':
             return `
               <svg viewBox="0 0 280 155" class="w-full h-full">
-                <!-- 床ライン -->
                 <line x1="20" y1="140" x2="260" y2="140" stroke="#CBD5E1" stroke-width="3" stroke-linecap="round"/>
-                <!-- エアロバイク（ワットバイク）フレーム -->
                 <path d="M62 140 L106 140 M155 140 L215 140" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
                 <path d="M84 140 L94 94 L145 112 L185 68 L178 140" stroke="#334155" stroke-width="5" stroke-linejoin="round" fill="none"/>
-                <!-- フライホイール（前輪負荷部） -->
                 <circle cx="184" cy="112" r="22" fill="#0F172A" stroke="#06B6D4" stroke-width="3"/>
                 <circle cx="184" cy="112" r="8" fill="#F97316"/>
-                <!-- サドル＆ハンドル -->
                 <rect x="80" y="88" width="22" height="6" rx="3" fill="#0F172A"/>
                 <path d="M180 68 L196 60 L192 74" stroke="#0F172A" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-                <!-- アスリート（前傾ペダリング姿勢） -->
                 <circle cx="148" cy="34" r="9" fill="#0F172A"/>
                 <line x1="141" y1="41" x2="98" y2="85" stroke="#0F172A" stroke-width="11" stroke-linecap="round"/>
-                <!-- 腕 -->
                 <path d="M134 48 L164 62 L192 64" stroke="#06B6D4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <!-- 発光ターゲット筋肉（大臀筋・大腿四頭筋・ハムストリングス） -->
                 <circle cx="96" cy="84" r="7" fill="#F97316" class="muscle-active"/>
                 <path d="M98 84 L132 92 L126 124" stroke="#F97316" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="muscle-active"/>
                 <path d="M96 86 L112 114 L104 134" stroke="#06B6D4" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <!-- ペダル回転矢印 -->
                 <path d="M138 118 A 14 14 0 1 1 114 128" stroke="#F97316" stroke-width="2.5" fill="none"/>
                 <polygon points="112,124 112,132 120,129" fill="#F97316"/>
-                <!-- ポイント注釈 -->
-                <rect x="14" y="12" width="118" height="36" rx="8" fill="#0F172A"/>
-                <text x="22" y="27" fill="#06B6D4" font-size="8.5" font-weight="900">🚴 エアロバイク高回転</text>
+                <rect x="14" y="12" width="126" height="36" rx="8" fill="#0F172A"/>
+                <text x="22" y="27" fill="#06B6D4" font-size="8.5" font-weight="900">🚴 ワットバイク高回転</text>
                 <text x="22" y="40" fill="#FFFFFF" font-size="8" font-weight="700">引き足を使い90rpm以上キープ</text>
-                <text x="212" y="96" fill="#F97316" font-size="8" font-weight="900">膝のブレ防止</text>
+                <text x="212" y="96" fill="#F97316" font-size="8" font-weight="900">着地衝撃ゼロ</text>
               </svg>`;
 
           case 'bench_press':
             return `
               <svg viewBox="0 0 280 155" class="w-full h-full">
-                <!-- 床＆ベンチ台 -->
                 <line x1="20" y1="140" x2="260" y2="140" stroke="#CBD5E1" stroke-width="3" stroke-linecap="round"/>
                 <rect x="75" y="100" width="126" height="10" rx="4" fill="#0F172A"/>
                 <rect x="94" y="110" width="8" height="30" fill="#334155"/>
                 <rect x="174" y="110" width="8" height="30" fill="#334155"/>
-                <!-- ラック支柱 -->
                 <rect x="60" y="40" width="7" height="100" rx="2" fill="#64748B"/>
-                <!-- 選手シルエット（ブリッジ姿勢） -->
                 <circle cx="80" cy="90" r="9" fill="#0F172A"/>
                 <path d="M90 94 Q120 87 152 95 L186 96 L202 136" stroke="#0F172A" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <!-- 発光ターゲット筋肉（大胸筋・三角筋・上腕三頭筋） -->
                 <ellipse cx="114" cy="89" rx="12" ry="6" fill="#F97316" class="muscle-active"/>
                 <line x1="112" y1="88" x2="112" y2="48" stroke="#F97316" stroke-width="8" stroke-linecap="round" class="muscle-active"/>
-                <!-- バーベル -->
                 <line x1="78" y1="48" x2="146" y2="48" stroke="#0F172A" stroke-width="4.5" stroke-linecap="round"/>
                 <rect x="73" y="36" width="7" height="24" rx="2" fill="#F97316"/>
                 <rect x="144" y="36" width="7" height="24" rx="2" fill="#F97316"/>
-                <!-- 押し上げベクトル矢印 -->
                 <path d="M130 76 L130 40" stroke="#06B6D4" stroke-width="3" stroke-linecap="round"/>
                 <polygon points="130,33 124,43 136,43" fill="#06B6D4"/>
                 <rect x="156" y="16" width="110" height="38" rx="8" fill="#0F172A"/>
@@ -1513,20 +1569,14 @@
           case 'stair_dash':
             return `
               <svg viewBox="0 0 280 155" class="w-full h-full">
-                <!-- 階段ステップ -->
                 <path d="M24 142 L72 142 L72 119 L120 119 L120 96 L168 96 L168 73 L216 73 L216 50 L256 50"
                   stroke="#0F172A" stroke-width="4" fill="none" stroke-linejoin="round"/>
-                <!-- ランナー前傾フォーム -->
                 <circle cx="144" cy="36" r="8.5" fill="#0F172A"/>
                 <line x1="140" y1="45" x2="122" y2="79" stroke="#0F172A" stroke-width="10" stroke-linecap="round"/>
-                <!-- 発光ターゲット筋肉（腸腰筋・大臀筋・ふくらはぎ） -->
                 <circle cx="122" cy="79" r="6.5" fill="#F97316" class="muscle-active"/>
                 <path d="M124 78 L156 73 L162 94" stroke="#F97316" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="muscle-active"/>
-                <!-- 蹴り出し脚 -->
                 <path d="M122 79 L98 101 L82 117" stroke="#0F172A" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <!-- 腕振り -->
                 <path d="M137 50 L158 58 L168 44" stroke="#06B6D4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <!-- 上昇矢印 -->
                 <path d="M172 82 L192 63" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
                 <polygon points="196,59 185,62 193,70" fill="#F97316"/>
                 <rect x="16" y="14" width="114" height="36" rx="8" fill="#0F172A"/>
@@ -1537,19 +1587,14 @@
           case 'sprint_drive':
             return `
               <svg viewBox="0 0 280 155" class="w-full h-full">
-                <!-- 室内フロア/トラックライン -->
                 <line x1="18" y1="138" x2="262" y2="138" stroke="#F97316" stroke-width="4"/>
-                <!-- 深い前傾加速スプリンター -->
                 <circle cx="170" cy="42" r="8.5" fill="#0F172A"/>
                 <line x1="163" y1="49" x2="124" y2="84" stroke="#0F172A" stroke-width="10" stroke-linecap="round"/>
-                <!-- 発光ターゲット筋肉（大臀筋・ハムストリングス・腸腰筋） -->
                 <circle cx="124" cy="84" r="6.5" fill="#F97316" class="muscle-active"/>
                 <path d="M126 83 L160 84 L166 110" stroke="#F97316" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="muscle-active"/>
                 <path d="M124 84 L90 110 L66 135" stroke="#F97316" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" fill="none" class="muscle-active"/>
-                <!-- ダイナミック腕振り -->
                 <path d="M153 56 L180 50 L188 34" stroke="#06B6D4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                 <path d="M148 58 L122 65 L112 50" stroke="#06B6D4" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <!-- 地面反力ベクトル矢印 -->
                 <path d="M72 130 L114 94" stroke="#06B6D4" stroke-width="3" stroke-dasharray="4 3"/>
                 <polygon points="118,90 107,93 115,101" fill="#06B6D4"/>
                 <rect x="16" y="14" width="122" height="36" rx="8" fill="#0F172A"/>
@@ -1562,14 +1607,10 @@
               <svg viewBox="0 0 280 155" class="w-full h-full">
                 <rect x="24" y="132" width="232" height="8" rx="4" fill="#CBD5E1"/>
                 <circle cx="212" cy="84" r="8.5" fill="#0F172A"/>
-                <!-- 一直線ガイド -->
                 <line x1="48" y1="82" x2="222" y2="82" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4 3"/>
-                <!-- 発光ターゲット筋肉（腹横筋・体幹・大臀筋） -->
                 <line x1="200" y1="90" x2="132" y2="95" stroke="#F97316" stroke-width="11" stroke-linecap="round" class="muscle-active"/>
                 <line x1="132" y1="95" x2="62" y2="128" stroke="#0F172A" stroke-width="8" stroke-linecap="round"/>
-                <!-- 肘支持 -->
                 <path d="M196 92 L196 128 L218 128" stroke="#06B6D4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <!-- 腹圧矢印 -->
                 <path d="M160 116 L160 101" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
                 <polygon points="160,95 155,103 165,103" fill="#F97316"/>
                 <rect x="20" y="16" width="128" height="36" rx="8" fill="#0F172A"/>
@@ -1581,17 +1622,12 @@
             return `
               <svg viewBox="0 0 280 155" class="w-full h-full">
                 <line x1="20" y1="140" x2="260" y2="140" stroke="#CBD5E1" stroke-width="3"/>
-                <!-- パワーポジション投擲フォーム -->
                 <circle cx="122" cy="40" r="8.5" fill="#0F172A"/>
-                <!-- 捻転体幹・広背筋ハイライト -->
                 <line x1="120" y1="49" x2="112" y2="86" stroke="#F97316" stroke-width="11" stroke-linecap="round" class="muscle-active"/>
-                <!-- 踏ん張り下半身 -->
                 <path d="M112 86 L146 108 L154 137" stroke="#0F172A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                 <path d="M112 86 L84 112 L72 137" stroke="#0F172A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <!-- 押し出し腕＆メディシンボール -->
                 <path d="M120 56 L152 42" stroke="#F97316" stroke-width="7" stroke-linecap="round" class="muscle-active"/>
                 <circle cx="164" cy="36" r="10" fill="#06B6D4"/>
-                <!-- 投射軌道矢印 -->
                 <path d="M178 32 L214 18" stroke="#F97316" stroke-width="3" stroke-dasharray="4 3"/>
                 <polygon points="219,16 208,15 212,24" fill="#F97316"/>
                 <rect x="16" y="14" width="88" height="36" rx="8" fill="#0F172A"/>
@@ -1605,7 +1641,6 @@
                 <rect x="24" y="136" width="232" height="7" rx="3.5" fill="#CBD5E1"/>
                 <circle cx="132" cy="50" r="8.5" fill="#0F172A"/>
                 <line x1="130" y1="59" x2="118" y2="96" stroke="#0F172A" stroke-width="10" stroke-linecap="round"/>
-                <!-- 発光ターゲット筋肉（ハムストリングス・腸腰筋） -->
                 <path d="M120 96 L162 114 L202 132" stroke="#F97316" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="muscle-active"/>
                 <path d="M116 96 L86 118 L58 132" stroke="#0F172A" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                 <path d="M128 68 L152 92" stroke="#06B6D4" stroke-width="6" stroke-linecap="round"/>
@@ -1619,13 +1654,10 @@
             return `
               <svg viewBox="0 0 280 155" class="w-full h-full">
                 <line x1="18" y1="138" x2="262" y2="138" stroke="#CBD5E1" stroke-width="3"/>
-                <!-- ミニハードル -->
                 <path d="M174 138 L174 114 L196 114 L196 138" stroke="#F97316" stroke-width="3.5" fill="none"/>
-                <!-- 垂直軸ライン -->
                 <line x1="126" y1="20" x2="126" y2="136" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4 3"/>
                 <circle cx="126" cy="34" r="8.5" fill="#0F172A"/>
                 <line x1="126" y1="43" x2="126" y2="82" stroke="#0F172A" stroke-width="10" stroke-linecap="round"/>
-                <!-- 発光ターゲット筋肉（腸腰筋・大臀筋・体幹） -->
                 <circle cx="126" cy="80" r="6.5" fill="#F97316" class="muscle-active"/>
                 <path d="M126 80 L162 80 L162 106" stroke="#F97316" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" class="muscle-active"/>
                 <line x1="126" y1="82" x2="126" y2="135" stroke="#0F172A" stroke-width="7.5" stroke-linecap="round"/>
@@ -1638,31 +1670,42 @@
       }
 
       // ===================================================================
-      // 5. トップ選手エピソード＆やる気一言（種目＆メニュー連動）
+      // 5. トップ選手エピソード＆やる気一言（具体種目 100m / 400m / やり投 等に完全連動）
       // ===================================================================
       function getProAthleteTip(menuType, profile) {
         const cats = profile?.categories || [];
         const evs = profile?.events || [];
 
+        const hasJavelin = evs.includes('やり投') || cats.includes('throw');
+        const has400 = evs.includes('400m') || evs.includes('400mH') || evs.includes('4×400mR');
+        const has100or200 = evs.includes('100m') || evs.includes('200m') || evs.includes('4×100mR');
+
+        if (menuType === 'javelin_throw') {
+          return '🏅 パリ五輪やり投金メダリストの北口榛花選手は、世界一の飛距離を生むために「左脚のブロック動作の安定」と「肩甲骨・胸郭の柔軟なムチ動作」を毎日徹底して磨いています！';
+        }
+
         if (menuType === 'aero_bike') {
-          if (cats.includes('distance') || evs.includes('400m') || evs.includes('400mH')) {
-            return '🏅 アリソン・フェリックス選手（五輪陸上史上最多メダリスト）も、400m終盤の乳酸に耐える心肺と脚の回転力を養うため、エアロバイクでの高強度インターバルペダリングを愛用していました！';
+          if (has400 || cats.includes('distance')) {
+            return '🏅 400m日本記録保持者（44秒77）の佐藤拳太郎選手や世界王者のマイケル・ノーマン選手も、400mラスト100mの強烈な乳酸に耐える心肺と脚の回転力を養うため、ワットバイクでの高回転ペダリングを活用しています！';
           }
           return '🏅 世界のトップスプリンター・跳躍選手も、着地衝撃ゼロで心肺と大臀筋・ハムストリングスを限界まで追い込める「ワットバイク・スプリントペダリング」を室内トレーニングの定番に取り入れています！';
         }
 
         if (menuType === 'bench_press') {
-          if (cats.includes('throw')) {
-            return '🏅 パリ五輪やり投金メダリストの北口榛花選手も、世界一の爆発的な突き出しと胸郭のパワーを作るため、ベンチプレスと肩甲骨モビリティトレーニングを重視しています！';
+          if (hasJavelin) {
+            return '🏅 パリ五輪やり投金メダリストの北口榛花選手も、世界一の突き出しパワーと胸郭の剛性を作るため、ベンチプレスと肩甲骨モビリティトレーニングを重視しています！';
           }
-          return '🏅 サニブラウン・A・ハキーム選手（100m 9秒96）をはじめ世界のトップスプリンター・ハードラーは、後半の力強い腕振りと接地反力に負けない上半身を作るためベンチプレスを徹底しています！';
+          return '🏅 サニブラウン・A・ハキーム選手（100m 9秒96）をはじめ世界のトップスプリンターは、後半の力強い腕振りと接地反力に負けない上半身を作るためベンチプレスを徹底しています！';
         }
 
         if (menuType === 'stair_dash') {
           if (cats.includes('hurdle')) {
             return '🏅 110mH日本記録保持者・泉谷駿介選手も、ハードル間の爆発的な切り返しと高い膝の引き上げを養うため、階段プライオメトリクスやバウンディングを徹底して行っています！';
           }
-          return '🏅 日本人初の100m 9秒台（9秒98）を達成した桐生祥秀選手も、高校時代から階段ダッシュで「股関節からの素早い引き上げと地面反力」を鍛え上げました！';
+          if (has100or200) {
+            return '🏅 日本人初の100m 9秒台（9秒98）を達成した桐生祥秀選手も、高校時代から階段ダッシュで「股関節からの素早い引き上げと地面反力」を鍛え上げました！';
+          }
+          return '🏅 階段ダッシュは段差によって強制的に膝が高く引き上がるため、腸腰筋と大臀筋の連動が一気に高まる陸上部伝統の最強室内メニューです！';
         }
 
         if (menuType === 'core_plank') {
@@ -1670,14 +1713,17 @@
         }
 
         if (menuType === 'sprint_drive') {
+          if (has400 && !has100or200) {
+            return '🏅 400m日本記録保持者の佐藤拳太郎選手は「前半200mをいかにリラックスしてスピードに乗せるか」を重視し、力みのない大きなストライドでの加速走を徹底しています！';
+          }
           if (cats.includes('jump')) {
             return '🏅 走幅跳8m36の橋岡優輝選手も、跳躍記録の8割を決める「助走の加速と腰高トップスピード」を磨くため、短い距離のマーク走・加速走を最重要視しています！';
           }
-          return '🏅 100m日本記録保持者（9秒95）の山縣亮太選手は、スタートから最初の30mの前傾角度と地面反力ベクトルをミリ単位で極め、ロケットスタートを実現しました！';
+          return '🏅 100m日本記録保持者（9秒95）の山縣亮太選手とサニブラウン・A・ハキーム選手は、スタートから30mの前傾角度と地面反力ベクトルをミリ単位で極め、ロケットスタートを実現しました！';
         }
 
         if (menuType === 'throw_power') {
-          return '🏅 世界のトップ投擲選手は、腕力ではなく「下半身→骨盤→胸郭→指先」のムチのような連動（捻転差）を生むため、メディシンボール投げを毎日反復しています！';
+          return '🏅 パリ五輪やり投金メダリストの北口榛花選手をはじめ世界のトップ投擲選手は、腕力ではなく「下半身→骨盤→胸郭→指先」のムチのような連動（捻転差）を生むため、メディシンボール投げを毎日反復しています！';
         }
 
         if (menuType === 'stretch_care') {
@@ -1687,12 +1733,12 @@
           return '🏅 陸上競技で一番強い選手は「肉離れやシンスプリントで練習を離脱しない選手」。トップアスリートほど練習後の股関節・裏ももストレッチに20分以上かけています！';
         }
 
-        // hurdle_drill / form_drill
         return '🏅 山縣亮太選手（100m 9秒95）は「調子が悪い日ほどミニハードルや腿上げなどの基本ドリルを日本一丁寧に行う」ことで、いつでも再現できる理想のフォームを身につけました！';
       }
 
       // ===================================================================
-      // 6. パーソナル練習メニュー自動生成エンジン（ランニングマシン完全除外・バイク完備）
+      // 6. パーソナル練習メニュー自動生成エンジン
+      //    （100m / 200m / 400m / やり投 などの具体種目＋屋外/屋内＋テーマに完全対応、ランニングマシン完全除外）
       // ===================================================================
       function generatePersonalizedMenus() {
         const p = state.profile;
@@ -1710,7 +1756,7 @@
         const isFemale = p.gender === 'female';
         const isPeriodActive = isFemale && state.cycle.isPeriodNow;
 
-        // 1) 女子・現在生理中ON時の専用メニュー（優しい骨盤ケア＋低負荷エアロバイク）
+        // 1) 女子・現在生理中ON時の専用メニュー
         if (isPeriodActive) {
           return [
             {
@@ -1727,7 +1773,7 @@
               id: 'm-period-2',
               tag: '【生理中専用】低負荷エアロバイク',
               tagColor: 'bg-cyan-100 text-cyan-900',
-              title: '低負荷エアロバイク・リカバリーペダリング（12分・軽めギア）',
+              title: '低負荷エアロバイク（ワットバイク）・リカバリーペダリング（12分・軽めギア）',
               detail: '着地衝撃のないエアロバイクで軽いギアをくるくる回し、下半身の血流を促して冷えとむくみをケアします。',
               visualType: 'aero_bike',
               muscles: ['大腿四頭筋', 'ハムストリングス', '全身血流'],
@@ -1737,7 +1783,7 @@
               id: 'm-period-3',
               tag: '【生理中専用】ウォークフォーム確認',
               tagColor: 'bg-emerald-100 text-emerald-900',
-              title: `腰高姿勢・腕振りスローウォーク確認（${env === 'indoor' ? '体育館・廊下' : 'トラック外周'} 15分）`,
+              title: `腰高姿勢・腕振りスローウォーク確認（${env === 'indoor' ? '体育館・雨天走路' : 'トラック外周'} 15分）`,
               detail: '全力疾走や跳躍は控え、頭頂部からくるぶしまでの軸とコンパクトな腕振り軌道だけを丁寧に確認します。',
               visualType: 'hurdle_drill',
               muscles: ['腹横筋（体幹）', '肩甲帯'],
@@ -1749,208 +1795,239 @@
 
         const isLowEnergy = sleep < 6.0 || cond <= 2;
 
-        // 2) 中練習（indoor）× 気分別メニュー（エアロバイク・室内走・階段ダッシュ・ベンチプレス完備）
+        // 2) 屋内練習（indoor）× 気分別メニュー
         if (env === 'indoor') {
-          if (mood === 'speed') {
-            return [
-              {
-                id: 'm-in-speed-1',
-                tag: '🏫 中練習・階段ダッシュ',
-                tagColor: 'bg-orange-100 text-orange-900',
-                title: isLowEnergy ? '階段ダッシュ（1段飛ばし 15段×3本×2セット）' : '階段ダッシュ（1段飛ばし・腕振り連動 15段×5本×2セット）',
-                detail: '校舎の階段を使い、1段飛ばしで股関節から膝を高く引き上げます。上体が起きすぎないよう前傾を保ち、腕振りと連動させよう。',
-                visualType: 'stair_dash',
-                muscles: ['腸腰筋', '大臀筋', '大腿四頭筋', '下腿三頭筋'],
-                proTip: getProAthleteTip('stair_dash', p)
-              },
-              {
-                id: 'm-in-speed-2',
-                tag: '🏫 中練習・室内ダッシュ',
-                tagColor: 'bg-cyan-100 text-cyan-900',
-                title: '体育館・廊下ショートダッシュ（20m加速走・反応スタート×6本）',
-                detail: '合図への反応から最初の5歩の爆発的な加速に集中！屋内シューズのグリップを活かして地面を後ろへ鋭く弾きます。',
-                visualType: 'sprint_drive',
-                muscles: ['大臀筋', 'ハムストリングス', '下腿三頭筋'],
-                proTip: getProAthleteTip('sprint_drive', p)
-              },
-              {
-                id: 'm-in-speed-3',
-                tag: '🏫 中練習・バイクスプリント',
-                tagColor: 'bg-indigo-100 text-indigo-900',
-                title: 'エアロバイク・スプリントインターバル（20秒全力＋40秒レスト×6本）',
-                detail: '重めのギアで立ち漕ぎ〜シッティングの爆発的ペダリングを20秒全力！神経系の回転速度と無酸素パワーを限界まで刺激します。',
-                visualType: 'aero_bike',
-                muscles: ['大腿四頭筋', '大臀筋', 'ハムストリングス'],
-                proTip: getProAthleteTip('aero_bike', p)
-              },
-              getGoalAndRoleMenu(p, env)
-            ];
-          }
+          return generateIndoorMenus(p, mood, isLowEnergy, eventTagStr);
+        }
 
-          if (mood === 'strength') {
-            return [
-              {
-                id: 'm-in-str-1',
-                tag: '🏫 中練習・ベンチプレス補強',
-                tagColor: 'bg-orange-100 text-orange-900',
-                title: isLowEnergy ? 'ベンチプレス（フォーム重視軽め 10回×2セット）' : 'ベンチプレス（8〜10回×3セット・爆発的挙上）',
-                detail: '肩甲骨をベンチ台にしっかり寄せて胸を張り、バーを胸のトップに下ろしてから力強く押し上げます。必ず補助者をつけて安全に行おう。',
-                visualType: 'bench_press',
-                muscles: ['大胸筋', '三角筋前部', '上腕三頭筋'],
-                proTip: getProAthleteTip('bench_press', p)
-              },
-              {
-                id: 'm-in-str-2',
-                tag: '🏫 中練習・体幹サーキット',
-                tagColor: 'bg-cyan-100 text-cyan-900',
-                title: 'フロント＆サイドプランクサーキット（各45秒×3周）',
-                detail: 'フロントプランク・左右サイドプランク・バードドッグを連続実施。地面反力を上半身へ逃さない強靭な体幹を作ります。',
-                visualType: 'core_plank',
-                muscles: ['腹横筋・腹直筋', '腹斜筋', '中臀筋'],
-                proTip: getProAthleteTip('core_plank', p)
-              },
-              {
-                id: 'm-in-str-3',
-                tag: '🏫 中練習・階段プライオ／投擲補強',
-                tagColor: 'bg-amber-100 text-amber-900',
-                title: cats.includes('throw')
-                  ? 'メディシンボール・チェストパス＆回旋スラム（10回×3セット）'
-                  : '階段両足連続ジャンプ＆片脚ホッピング（10段×4本）',
-                detail: cats.includes('throw')
-                  ? '下半身→骨盤→胸郭の順で捻転を解放し、壁やマットへ全力でボールを叩きつけます。'
-                  : '足首をロックして接地時間を短く保ち、アキレス腱と大臀筋のバネで階段を弾むように駆け上がります。',
-                visualType: cats.includes('throw') ? 'throw_power' : 'stair_dash',
-                muscles: cats.includes('throw') ? ['広背筋', '大胸筋', '腹斜筋'] : ['大臀筋', '下腿三頭筋', '大腿四頭筋'],
-                proTip: getProAthleteTip(cats.includes('throw') ? 'throw_power' : 'stair_dash', p)
-              },
-              getGoalAndRoleMenu(p, env)
-            ];
-          }
+        // 3) 屋外練習（outdoor）× 具体種目（100m / 200m / 400m / やり投 等）× 気分別メニュー
+        return generateOutdoorMenus(p, mood, isLowEnergy, eventTagStr);
+      }
 
-          if (mood === 'endurance') {
-            return [
-              {
-                id: 'm-in-end-1',
-                tag: '🏫 中練習・エアロバイク心肺',
-                tagColor: 'bg-orange-100 text-orange-900',
-                title: isLowEnergy ? 'エアロバイク・リズム有酸素ペダリング（15分・90rpm維持）' : 'エアロバイク・心肺持久ビルドアップ（20分・5分ごとに負荷UP）',
-                detail: 'サドル高を骨盤に合わせて調整し、回転数90〜100rpmをキープ！5分ごとにギアを1段ずつ重くして心肺と乳酸処理能力を鍛えます。',
-                visualType: 'aero_bike',
-                muscles: ['大腿四頭筋', 'ハムストリングス', '心肺機能'],
-                proTip: getProAthleteTip('aero_bike', p)
-              },
-              {
-                id: 'm-in-end-2',
-                tag: '🏫 中練習・バイク乳酸耐性',
-                tagColor: 'bg-cyan-100 text-cyan-900',
-                title: 'エアロバイク・タバタ式インターバル（20秒高強度＋10秒軽め×8セット）',
-                detail: 'わずか4分間で最大酸素摂取量（VO2max）を強烈に刺激する定番メニュー！ラスト2セットでも姿勢を丸めずペダルを回し切ろう。',
-                visualType: 'aero_bike',
-                muscles: ['大臀筋', '大腿四頭筋', '心肺機能'],
-                proTip: getProAthleteTip('aero_bike', p)
-              },
-              {
-                id: 'm-in-end-3',
-                tag: '🏫 中練習・階段＆体幹持久',
-                tagColor: 'bg-emerald-100 text-emerald-900',
-                title: '階段駆け上がり＋踊り場もも上げ20回連続サーキット（3周）',
-                detail: '心拍数が上がった状態でも股関節から脚を前に運び続ける筋持久力を養成します。',
-                visualType: 'stair_dash',
-                muscles: ['腸腰筋', '大腿四頭筋', '下腿三頭筋'],
-                proTip: getProAthleteTip('stair_dash', p)
-              },
-              getGoalAndRoleMenu(p, env)
-            ];
-          }
+      function generateIndoorMenus(p, mood, isLowEnergy, eventTagStr) {
+        const cats = p.categories || [];
+        const evs = p.events || [];
+        const hasJavelin = evs.includes('やり投');
+        const hasThrow = hasJavelin || cats.includes('throw');
+        const has400 = evs.includes('400m') || evs.includes('400mH') || evs.includes('4×400mR');
 
-          if (mood === 'care') {
-            return [
-              {
-                id: 'm-in-care-1',
-                tag: '🏫 中練習・股関節ストレッチ',
-                tagColor: 'bg-cyan-100 text-cyan-900',
-                title: 'ハムストリングス＆股関節重点ストレッチ（15分）',
-                detail: '体育館マットで裏もも・お尻・腸腰筋を1部位25秒ずつ深呼吸しながらじっくり伸ばし、肉離れを予防します。',
-                visualType: 'stretch_care',
-                muscles: ['ハムストリングス', '腸腰筋', '大臀筋'],
-                proTip: getProAthleteTip('stretch_care', p)
-              },
-              {
-                id: 'm-in-care-2',
-                tag: '🏫 中練習・リカバリーバイク',
-                tagColor: 'bg-orange-100 text-orange-900',
-                title: '低負荷エアロバイク・アクティブレスト（12分・軽負荷高回転）',
-                detail: '軽いギアで脚に乳酸を溜めずに血流だけを一気に循環させ、翌日の脚の軽さを取り戻します。',
-                visualType: 'aero_bike',
-                muscles: ['大腿四頭筋', '下腿三頭筋', '全身血流'],
-                proTip: getProAthleteTip('aero_bike', p)
-              },
-              {
-                id: 'm-in-care-3',
-                tag: '🏫 中練習・鏡＆動画フォーム確認',
-                tagColor: 'bg-emerald-100 text-emerald-900',
-                title: '鏡・スマホスロー動画での腕振り＆接地軸チェック（10分）',
-                detail: '肩の力みや左右のブレをスロー映像で確認し、正しい動作イメージを脳にインプットします。',
-                visualType: 'hurdle_drill',
-                muscles: ['腹横筋（体幹）', '肩甲帯'],
-                proTip: getProAthleteTip('hurdle_drill', p)
-              },
-              getGoalAndRoleMenu(p, env)
-            ];
-          }
-
-          // 中練習 × フォーム中心（デフォルト）
+        if (mood === 'speed') {
           return [
             {
-              id: 'm-in-form-1',
-              tag: `🏫 中練習・${eventTagStr}ドリル`,
+              id: 'm-in-speed-1',
+              tag: '🏫 屋内練習・階段ダッシュ',
               tagColor: 'bg-orange-100 text-orange-900',
-              title: '体育館ライン上ミニハードル＆腿上げドリル（20分）',
-              detail: '床のラインをガイドに、左右ブレのない真っ直ぐな脚の軌道と腰高の真下接地を反復習得します。',
-              visualType: 'hurdle_drill',
-              muscles: ['腸腰筋', '腹横筋（体幹）', '大臀筋'],
-              proTip: getProAthleteTip('hurdle_drill', p)
+              title: isLowEnergy ? '階段ダッシュ（1段飛ばし 15段×3本×2セット）' : '階段ダッシュ（1段飛ばし・腕振り連動 15段×5本×2セット）',
+              detail: '校舎や体育館の階段を使い、1段飛ばしで股関節から膝を高く引き上げます。上体が起きすぎないよう前傾を保ち、腕振りと連動させよう。',
+              visualType: 'stair_dash',
+              muscles: ['腸腰筋', '大臀筋', '大腿四頭筋', '下腿三頭筋'],
+              proTip: getProAthleteTip('stair_dash', p)
             },
             {
-              id: 'm-in-form-2',
-              tag: '🏫 中練習・室内マーカー走',
+              id: 'm-in-speed-2',
+              tag: '🏫 屋内練習・室内ダッシュ',
               tagColor: 'bg-cyan-100 text-cyan-900',
-              title: '廊下・体育館 室内マーカー加速走（25m×5本・フォーム意識）',
-              detail: '等間隔に置いたマーカーに合わせてストライドとピッチのリズムを整え、前傾から腰高ポジションへの移行を確認します。',
+              title: '体育館・雨天走路 室内ダッシュ（20m加速走・反応スタート×6本）',
+              detail: '合図への反応から最初の5歩の爆発的な加速に集中！屋内シューズのグリップを活かして地面を後ろへ鋭く弾きます。',
               visualType: 'sprint_drive',
-              muscles: ['大臀筋', 'ハムストリングス', '腸腰筋'],
+              muscles: ['大臀筋', 'ハムストリングス', '下腿三頭筋'],
               proTip: getProAthleteTip('sprint_drive', p)
             },
             {
-              id: 'm-in-form-3',
-              tag: '🏫 中練習・ベンチ＆プランク連動',
+              id: 'm-in-speed-3',
+              tag: '🏫 屋内練習・バイクスプリント',
               tagColor: 'bg-indigo-100 text-indigo-900',
-              title: 'フォーム重視ベンチプレス（10回×3セット）＋体幹プランク30秒',
-              detail: '左右均等にバーを押し上げて腕振りの左右バランスを整えた直後にプランクを行い、上半身と体幹を連動させます。',
-              visualType: 'bench_press',
-              muscles: ['大胸筋', '上腕三頭筋', '腹横筋'],
-              proTip: getProAthleteTip('bench_press', p)
+              title: 'エアロバイク（ワットバイク）・スプリントインターバル（20秒全力＋40秒レスト×6本）',
+              detail: '重めのギアで爆発的ペダリングを20秒全力！神経系の回転速度と無酸素パワーを限界まで刺激します。',
+              visualType: 'aero_bike',
+              muscles: ['大腿四頭筋', '大臀筋', 'ハムストリングス'],
+              proTip: getProAthleteTip('aero_bike', p)
             },
-            getGoalAndRoleMenu(p, env)
+            getGoalAndRoleMenu(p, 'indoor')
           ];
         }
 
-        // 3) 外練習（outdoor）× 複数種目カテゴリー × 気分別メニュー
-        return generateOutdoorMenus(p, mood, isLowEnergy, eventTagStr);
+        if (mood === 'strength') {
+          return [
+            {
+              id: 'm-in-str-1',
+              tag: '🏫 屋内練習・ウエイト室ベンチプレス',
+              tagColor: 'bg-orange-100 text-orange-900',
+              title: isLowEnergy ? 'ベンチプレス（フォーム重視軽め 10回×2セット）' : 'ベンチプレス（8〜10回×3セット・爆発的挙上）',
+              detail: '肩甲骨をベンチ台にしっかり寄せて胸を張り、バーを胸のトップに下ろしてから力強く押し上げます。必ず補助者をつけて安全に行おう。',
+              visualType: 'bench_press',
+              muscles: ['大胸筋', '三角筋前部', '上腕三頭筋'],
+              proTip: getProAthleteTip('bench_press', p)
+            },
+            {
+              id: 'm-in-str-2',
+              tag: '🏫 屋内練習・体幹サーキット',
+              tagColor: 'bg-cyan-100 text-cyan-900',
+              title: 'フロント＆サイドプランクサーキット（各45秒×3周）',
+              detail: 'フロントプランク・左右サイドプランク・バードドッグを連続実施。地面反力を上半身へ逃さない強靭な体幹を作ります。',
+              visualType: 'core_plank',
+              muscles: ['腹横筋・腹直筋', '腹斜筋', '中臀筋'],
+              proTip: getProAthleteTip('core_plank', p)
+            },
+            {
+              id: 'm-in-str-3',
+              tag: hasThrow ? '🏫 屋内練習・投擲メディシン補強' : '🏫 屋内練習・階段プライオ',
+              tagColor: 'bg-amber-100 text-amber-900',
+              title: hasJavelin
+                ? 'メディシンボール・オーバーヘッドスロー＆ブロック動作（10回×3セット）'
+                : hasThrow
+                  ? 'メディシンボール・チェストパス＆回旋スラム（10回×3セット）'
+                  : '階段両足連続ジャンプ＆片脚ホッピング（10段×4本）',
+              detail: hasJavelin
+                ? '左脚でしっかりブロックを作り、胸郭と肩甲骨をしならせて頭上から鋭くボールを振り抜きます。'
+                : hasThrow
+                  ? '下半身→骨盤→胸郭の順で捻転を解放し、壁やマットへ全力でボールを叩きつけます。'
+                  : '足首をロックして接地時間を短く保ち、アキレス腱と大臀筋のバネで階段を弾むように駆け上がります。',
+              visualType: hasJavelin ? 'javelin_throw' : hasThrow ? 'throw_power' : 'stair_dash',
+              muscles: hasThrow ? ['広背筋', '大胸筋', '腹斜筋', '肩甲帯'] : ['大臀筋', '下腿三頭筋', '大腿四頭筋'],
+              proTip: getProAthleteTip(hasJavelin ? 'javelin_throw' : hasThrow ? 'throw_power' : 'stair_dash', p)
+            },
+            getGoalAndRoleMenu(p, 'indoor')
+          ];
+        }
+
+        if (mood === 'endurance') {
+          return [
+            {
+              id: 'm-in-end-1',
+              tag: '🏫 屋内練習・ワットバイク心肺',
+              tagColor: 'bg-orange-100 text-orange-900',
+              title: isLowEnergy
+                ? 'エアロバイク（ワットバイク）・リズム有酸素ペダリング（15分・90rpm維持）'
+                : has400
+                  ? 'ワットバイク・400m乳酸耐性インターバル（45秒高強度＋75秒レスト×5本）'
+                  : 'エアロバイク（ワットバイク）・心肺持久ビルドアップ（20分・5分ごとに負荷UP）',
+              detail: has400
+                ? '400mのレース時間（約45〜55秒）と同じ時間だけ高回転・高出力で漕ぎ続け、ラスト100mの乳酸に耐える脚を作ります。'
+                : 'サドル高を骨盤に合わせて調整し、回転数90〜100rpmをキープ！5分ごとにギアを1段ずつ重くして心肺を鍛えます。',
+              visualType: 'aero_bike',
+              muscles: ['大腿四頭筋', 'ハムストリングス', '心肺機能'],
+              proTip: getProAthleteTip('aero_bike', p)
+            },
+            {
+              id: 'm-in-end-2',
+              tag: '🏫 屋内練習・タバタバイク',
+              tagColor: 'bg-cyan-100 text-cyan-900',
+              title: 'エアロバイク・タバタ式インターバル（20秒高強度＋10秒軽め×8セット）',
+              detail: 'わずか4分間で最大酸素摂取量（VO2max）を強烈に刺激する定番メニュー！ラスト2セットでも姿勢を丸めずペダルを回し切ろう。',
+              visualType: 'aero_bike',
+              muscles: ['大臀筋', '大腿四頭筋', '心肺機能'],
+              proTip: getProAthleteTip('aero_bike', p)
+            },
+            {
+              id: 'm-in-end-3',
+              tag: '🏫 屋内練習・階段＆体幹持久',
+              tagColor: 'bg-emerald-100 text-emerald-900',
+              title: '階段駆け上がり＋踊り場もも上げ20回連続サーキット（3周）',
+              detail: '心拍数が上がった状態でも股関節から脚を前に運び続ける筋持久力を養成します。',
+              visualType: 'stair_dash',
+              muscles: ['腸腰筋', '大腿四頭筋', '下腿三頭筋'],
+              proTip: getProAthleteTip('stair_dash', p)
+            },
+            getGoalAndRoleMenu(p, 'indoor')
+          ];
+        }
+
+        if (mood === 'care') {
+          return [
+            {
+              id: 'm-in-care-1',
+              tag: '🏫 屋内練習・股関節＆肩甲骨ケア',
+              tagColor: 'bg-cyan-100 text-cyan-900',
+              title: hasJavelin
+                ? '肩甲骨モビリティ＆ハムストリングス・股関節重点ストレッチ（15分）'
+                : 'ハムストリングス＆股関節重点ストレッチ（15分）',
+              detail: '体育館マットで裏もも・お尻・腸腰筋・肩甲骨周りを1部位25秒ずつ深呼吸しながらじっくり伸ばし、怪我を予防します。',
+              visualType: 'stretch_care',
+              muscles: ['ハムストリングス', '腸腰筋', '大臀筋', '肩甲帯'],
+              proTip: getProAthleteTip('stretch_care', p)
+            },
+            {
+              id: 'm-in-care-2',
+              tag: '🏫 屋内練習・リカバリーバイク',
+              tagColor: 'bg-orange-100 text-orange-900',
+              title: '低負荷エアロバイク・アクティブレスト（12分・軽負荷高回転）',
+              detail: '軽いギアで脚に乳酸を溜めずに血流だけを一気に循環させ、翌日の脚の軽さを取り戻します。',
+              visualType: 'aero_bike',
+              muscles: ['大腿四頭筋', '下腿三頭筋', '全身血流'],
+              proTip: getProAthleteTip('aero_bike', p)
+            },
+            {
+              id: 'm-in-care-3',
+              tag: '🏫 屋内練習・鏡＆動画フォーム確認',
+              tagColor: 'bg-emerald-100 text-emerald-900',
+              title: '鏡・スマホスロー動画での腕振り＆接地軸チェック（10分）',
+              detail: '肩の力みや左右のブレをスロー映像で確認し、正しい動作イメージを脳にインプットします。',
+              visualType: 'hurdle_drill',
+              muscles: ['腹横筋（体幹）', '肩甲帯'],
+              proTip: getProAthleteTip('hurdle_drill', p)
+            },
+            getGoalAndRoleMenu(p, 'indoor')
+          ];
+        }
+
+        // 屋内練習 × フォーム中心（デフォルト）
+        return [
+          {
+            id: 'm-in-form-1',
+            tag: `🏫 屋内練習・${eventTagStr}ドリル`,
+            tagColor: 'bg-orange-100 text-orange-900',
+            title: hasJavelin
+              ? 'やり投チューブ引き＆左脚ブロック・クロスステップフォーム確認（20分）'
+              : '体育館ライン上ミニハードル＆腿上げドリル（20分）',
+            detail: hasJavelin
+              ? '肘が下がらないトップ位置と、左脚ブロックから胸郭をしならせる連動を室内で反復習得します。'
+              : '床のラインをガイドに、左右ブレのない真っ直ぐな脚の軌道と腰高の真下接地を反復習得します。',
+            visualType: hasJavelin ? 'javelin_throw' : 'hurdle_drill',
+            muscles: hasJavelin ? ['広背筋', '腹斜筋', '肩甲帯'] : ['腸腰筋', '腹横筋（体幹）', '大臀筋'],
+            proTip: getProAthleteTip(hasJavelin ? 'javelin_throw' : 'hurdle_drill', p)
+          },
+          {
+            id: 'm-in-form-2',
+            tag: '🏫 屋内練習・室内ダッシュ',
+            tagColor: 'bg-cyan-100 text-cyan-900',
+            title: '雨天走路・体育館 室内マーカー加速走（25m×5本・フォーム意識）',
+            detail: '等間隔に置いたマーカーに合わせてストライドとピッチのリズムを整え、前傾から腰高ポジションへの移行を確認します。',
+            visualType: 'sprint_drive',
+            muscles: ['大臀筋', 'ハムストリングス', '腸腰筋'],
+            proTip: getProAthleteTip('sprint_drive', p)
+          },
+          {
+            id: 'm-in-form-3',
+            tag: '🏫 屋内練習・ベンチ＆プランク連動',
+            tagColor: 'bg-indigo-100 text-indigo-900',
+            title: 'フォーム重視ベンチプレス（10回×3セット）＋体幹プランク30秒',
+            detail: '左右均等にバーを押し上げて上半身の安定感を作った直後にプランクを行い、体幹と連動させます。',
+            visualType: 'bench_press',
+            muscles: ['大胸筋', '上腕三頭筋', '腹横筋'],
+            proTip: getProAthleteTip('bench_press', p)
+          },
+          getGoalAndRoleMenu(p, 'indoor')
+        ];
       }
 
       function generateOutdoorMenus(p, mood, isLowEnergy, eventTagStr) {
         const cats = p.categories || [];
-        const hasSprintOrHurdle = cats.includes('sprint') || cats.includes('hurdle') || cats.includes('combined');
-        const hasDistance = cats.includes('distance');
+        const evs = p.events || [];
+        const has100 = evs.includes('100m') || evs.includes('4×100mR');
+        const has200 = evs.includes('200m');
+        const has400 = evs.includes('400m') || evs.includes('400mH') || evs.includes('4×400mR');
+        const hasJavelin = evs.includes('やり投');
+        const hasOtherThrow = evs.includes('砲丸投') || evs.includes('円盤投') || evs.includes('ハンマー投') || cats.includes('throw');
+        const hasHurdle = cats.includes('hurdle');
         const hasJump = cats.includes('jump');
-        const hasThrow = cats.includes('throw');
+        const hasDistance = cats.includes('distance');
 
         if (mood === 'care') {
           return [
             {
               id: 'm-out-care-1',
-              tag: '☀️ 外練習・芝生リカバリー',
+              tag: '☀️ 屋外練習・芝生リカバリー',
               tagColor: 'bg-cyan-100 text-cyan-900',
               title: '芝生ジョグ15分＋股関節・ハムストリングス動的ストレッチ',
               detail: 'クッション性の高い芝生の上でリラックスしてジョグを行い、全身の血流を促してから股関節を大きく動かします。',
@@ -1960,9 +2037,9 @@
             },
             {
               id: 'm-out-care-2',
-              tag: '☀️ 外練習・フォーム流し',
+              tag: '☀️ 屋外練習・フォーム流し',
               tagColor: 'bg-orange-100 text-orange-900',
-              title: '80mウインドスプリント（70%出力・フォーム確認×4本）',
+              title: '80mウインドスプリント（70%出力・脱力フォーム確認×4本）',
               detail: 'タイムは測らず、大きなストライドと弾むような接地感覚だけを味わう気持ちの良い流しを行います。',
               visualType: 'hurdle_drill',
               muscles: ['下腿三頭筋', '大臀筋', '体幹'],
@@ -1970,7 +2047,7 @@
             },
             {
               id: 'm-out-care-3',
-              tag: '☀️ 外練習・体幹＆柔軟',
+              tag: '☀️ 屋外練習・体幹＆柔軟',
               tagColor: 'bg-emerald-100 text-emerald-900',
               title: '体幹スタビリティ（プランク3種）＆クールダウン体操',
               detail: '疲労が溜まっている日でもできる低負荷体幹で軸を保ち、最後は入念なストレッチで終えます。',
@@ -1986,31 +2063,35 @@
           return [
             {
               id: 'm-out-str-1',
-              tag: '☀️ 外練習・坂道＆バウンディング',
+              tag: hasJavelin ? '☀️ 屋外練習・やり投パワー連動' : '☀️ 屋外練習・坂道＆バウンディング',
               tagColor: 'bg-orange-100 text-orange-900',
-              title: hasThrow
-                ? 'メディシンボール全力投擲＆スクワットジャンプ（10回×4セット）'
-                : '坂道ダッシュ60m×4本 ＋ バウンディング30m×3本',
-              detail: hasThrow
-                ? '下肢の地面反力を体幹・肩へと一気に伝達し、爆発的なリリース速度を養います。'
-                : '傾斜を使ったダッシュと片脚ずつの大きなバウンディングで、地面を強く押し切る筋力を鍛えます。',
-              visualType: hasThrow ? 'throw_power' : 'sprint_drive',
-              muscles: hasThrow ? ['広背筋', '大胸筋', '腹斜筋', '大臀筋'] : ['大臀筋', 'ハムストリングス', '大腿四頭筋'],
-              proTip: getProAthleteTip(hasThrow ? 'throw_power' : 'sprint_drive', p)
+              title: hasJavelin
+                ? 'メディシンボール全力オーバーヘッド投擲＆助走ブロック連動（10本×3セット）'
+                : hasOtherThrow
+                  ? 'メディシンボール全力回旋投擲＆スクワットジャンプ（10回×4セット）'
+                  : '坂道ダッシュ60m×4本 ＋ バウンディング30m×3本',
+              detail: hasJavelin
+                ? '左脚のブロックを強く踏み込み、下半身→骨盤→胸郭→指先へと爆発的なムチ動作を伝達します。'
+                : hasOtherThrow
+                  ? '下肢の地面反力を体幹・肩へと一気に伝達し、爆発的なリリース速度を養います。'
+                  : '傾斜を使ったダッシュと片脚ずつの大きなバウンディングで、地面を強く押し切る筋力を鍛えます。',
+              visualType: hasJavelin ? 'javelin_throw' : hasOtherThrow ? 'throw_power' : 'sprint_drive',
+              muscles: hasJavelin || hasOtherThrow ? ['広背筋', '大胸筋', '腹斜筋', '大臀筋'] : ['大臀筋', 'ハムストリングス', '大腿四頭筋'],
+              proTip: getProAthleteTip(hasJavelin ? 'javelin_throw' : hasOtherThrow ? 'throw_power' : 'sprint_drive', p)
             },
             {
               id: 'm-out-str-2',
-              tag: '☀️ 外練習後・トレ室ベンチプレス',
+              tag: '☀️ 屋外練習後・ウエイト室ベンチプレス',
               tagColor: 'bg-cyan-100 text-cyan-900',
-              title: 'ベンチプレス（トレ室移動・8〜10回×3セット）＆腕立てジャンプ',
-              detail: '屋外練習の仕上げにトレ室でベンチプレスを実施し、上半身の押し出し筋力と強い腕振りの土台を強化します。',
+              title: 'ベンチプレス（ウエイト室移動・8〜10回×3セット）＆腕立てジャンプ',
+              detail: '屋外練習の仕上げにウエイト室でベンチプレスを実施し、上半身の押し出し筋力と強い腕振りの土台を強化します。',
               visualType: 'bench_press',
               muscles: ['大胸筋', '上腕三頭筋', '三角筋'],
               proTip: getProAthleteTip('bench_press', p)
             },
             {
               id: 'm-out-str-3',
-              tag: '☀️ 外練習・体幹ロック',
+              tag: '☀️ 屋外練習・体幹ロック',
               tagColor: 'bg-indigo-100 text-indigo-900',
               title: 'フロント＆サイドプランク＋V字腹筋サーキット（3セット）',
               detail: '接地衝撃や踏切・投擲時の強烈なGに耐えうる体幹の剛性を高めます。',
@@ -2023,28 +2104,53 @@
         }
 
         if (mood === 'speed') {
+          // 100m / 400m / やり投 それぞれの最高出力メニューを生成
+          let mainSpeedTitle = 'クラウチングスタート加速走（30m×4本・60m×3本）';
+          let mainSpeedDetail = 'スタートから一気にトップスピードへ乗せる加速局面と、最高速度でのリラックスを研ぎ澄まします。';
+          let mainVisual = 'sprint_drive';
+
+          if (hasJavelin && !has100 && !has400) {
+            mainSpeedTitle = 'やり投・助走スピード強化ダッシュ（30m加速×4本）＋全助走タイミング確認（5本）';
+            mainSpeedDetail = '助走スピードを高めつつ、最後のクロスステップで減速せず左脚ブロックへ鋭く繋げるキレを磨きます。';
+            mainVisual = 'javelin_throw';
+          } else if (has400 && !has100) {
+            mainSpeedTitle = '400m専用・前半200mレースペース走＋ラスト150mスピード切替（2セット）';
+            mainSpeedDetail = '最初の200mを力みなくハイスピードで通過し、バックストレートからホームストレートへギアを切り替える感覚を養います。';
+            mainVisual = 'sprint_drive';
+          } else if (has100 && has400) {
+            mainSpeedTitle = '100m加速走（30m×3・60m×2）＋400mスピード持久（150m×2本）';
+            mainSpeedDetail = '100mの爆発的な一次加速と、400m後半でもフォームを崩さない大きなストライドの両方を磨くハイブリッドメニュー！';
+            mainVisual = 'sprint_drive';
+          } else if (has200) {
+            mainSpeedTitle = '200mコーナー加速走（曲走路80m×4本）＋直線120mスプリント×2本';
+            mainSpeedDetail = 'コーナーでは内傾を保ちながら左腕のコンパクトな振りで遠心力に負けず加速し、直線へ一気に解き放ちます。';
+            mainVisual = 'sprint_drive';
+          } else if (hasJump) {
+            mainSpeedTitle = '助走スピード強化・マーク走（全助走の8割距離×5本）';
+            mainSpeedDetail = '踏切板の手前3歩でリズムアップする最高速度の助走を身体に染み込ませます。';
+          } else if (hasDistance) {
+            mainSpeedTitle = 'スピード養成レペティション（200m疾走×5本・完全休息）';
+            mainSpeedDetail = 'ラストスパートの切れ味を高めるため、高いトップスピードと大きなフォームを養います。';
+          }
+
+          if (isLowEnergy) {
+            mainSpeedTitle = `[本数調整] ${mainSpeedTitle}`;
+          }
+
           return [
             {
               id: 'm-out-spd-1',
-              tag: `☀️ 外練習・${eventTagStr}スピード`,
+              tag: `☀️ 屋外練習・${eventTagStr}スピード`,
               tagColor: 'bg-orange-100 text-orange-900',
-              title: hasSprintOrHurdle
-                ? 'クラウチング＆スタンディングスタート加速走（30m×4本・60m×3本）'
-                : hasJump
-                  ? '助走スピード強化・マーク走（全助走の8割距離×5本）'
-                  : hasThrow
-                    ? 'クロスステップ・ターン高速切り返し＆スプリント（30m×5本）'
-                    : 'スピード養成レペティション（150m疾走×4本・完全休息）',
-              detail: isLowEnergy
-                ? '本数を各1本減らし、1本ごとのレストを長めに取って最高出力のキレだけを追求します。'
-                : 'スタートから一気にトップスピードへ乗せる加速局面と、最高速度でのリラックスを研ぎ澄まします。',
-              visualType: 'sprint_drive',
+              title: mainSpeedTitle,
+              detail: mainSpeedDetail,
+              visualType: mainVisual,
               muscles: ['大臀筋', 'ハムストリングス', '腸腰筋', '下腿三頭筋'],
-              proTip: getProAthleteTip('sprint_drive', p)
+              proTip: getProAthleteTip(mainVisual, p)
             },
             {
               id: 'm-out-spd-2',
-              tag: '☀️ 外練習・高速ピッチドリル',
+              tag: '☀️ 屋外練習・高速ピッチドリル',
               tagColor: 'bg-cyan-100 text-cyan-900',
               title: 'ミニハードル高速スプリント（間隔1.5m×5本）',
               detail: '狭い間隔のミニハードルを素早い腿上げと接地で駆け抜け、脚の回転速度（ピッチ）を高めます。',
@@ -2054,10 +2160,12 @@
             },
             {
               id: 'm-out-spd-3',
-              tag: '☀️ 外練習・スピード持久',
+              tag: '☀️ 屋外練習・スピード持久',
               tagColor: 'bg-emerald-100 text-emerald-900',
-              title: '120mテンポスプリント（90%出力×3本・ウォークつなぎ）',
-              detail: '全力の9割の出力で、ゴールラインまでフォームを崩さず駆け抜けるスピード持久力を養います。',
+              title: has400 ? '400m分割走（200m＋レスト45秒＋200m）×2セット' : '120mテンポスプリント（90%出力×3本・ウォークつなぎ）',
+              detail: has400
+                ? '400mのレース前半と後半を分割して走り、後半200mでも腰が落ちないフォームを徹底します。'
+                : '全力の9割の出力で、ゴールラインまでフォームを崩さず駆け抜けるスピード持久力を養います。',
               visualType: 'sprint_drive',
               muscles: ['ハムストリングス', '大臀筋', '肩甲帯'],
               proTip: getProAthleteTip('sprint_drive', p)
@@ -2070,23 +2178,27 @@
           return [
             {
               id: 'm-out-end-1',
-              tag: `☀️ 外練習・${eventTagStr}持久強化`,
+              tag: `☀️ 屋外練習・${eventTagStr}持久強化`,
               tagColor: 'bg-orange-100 text-orange-900',
               title: hasDistance
                 ? 'トラック・ペース走（6000m〜8000m）＋ラスト1000mビルドアップ'
-                : 'トラック・インターバル走（200m＋200mジョグ×8本）',
+                : has400
+                  ? '400m専用・解糖系インターバル（300m＋100m×3セット・レスト完全回復）'
+                  : 'トラック・テンポインターバル走（200m＋200mジョグ×8本）',
               detail: hasDistance
                 ? '設定ラップを正確に刻み、後半にペースを上げることでレース実戦の勝負強さを養います。'
-                : '短距離・跳躍・投擲選手向けの心肺＆乳酸耐性インターバル。練習全体の質と回復力を底上げします。',
+                : has400
+                  ? '300mをレースペースで走り切り、短い休息のあとラスト100mを意地で駆け抜ける400m王道メニュー！'
+                  : '心肺と乳酸耐性を高めるインターバル走。練習全体の質と回復力を底上げします。',
               visualType: 'sprint_drive',
               muscles: ['ハムストリングス', '大臀筋', '下腿三頭筋', '心肺機能'],
               proTip: getProAthleteTip('aero_bike', p)
             },
             {
               id: 'm-out-end-2',
-              tag: '☀️ 外練習後・トレ室バイク補強',
+              tag: '☀️ 屋外練習後・ウエイト室バイク補強',
               tagColor: 'bg-cyan-100 text-cyan-900',
-              title: 'エアロバイク・追い込みペダリング（10分・95rpmキープ）',
+              title: 'エアロバイク（ワットバイク）・追い込みペダリング（10分・95rpmキープ）',
               detail: 'トラック走の直後に着地衝撃のないエアロバイクで心肺だけを追加刺激し、怪我リスクを抑えつつスタミナを底上げします。',
               visualType: 'aero_bike',
               muscles: ['大腿四頭筋', 'ハムストリングス', '心肺機能'],
@@ -2094,7 +2206,7 @@
             },
             {
               id: 'm-out-end-3',
-              tag: '☀️ 外練習・クールダウン',
+              tag: '☀️ 屋外練習・クールダウン',
               tagColor: 'bg-emerald-100 text-emerald-900',
               title: '芝生ダウンジョグ10分＆ふくらはぎ・裏ももストレッチ',
               detail: '心拍数を緩やかに下げながら疲労物質の除去を促します。',
@@ -2106,29 +2218,51 @@
           ];
         }
 
-        // 外練習 × フォーム中心（デフォルト）
+        // 屋外練習 × フォーム中心（デフォルト）
+        let formTitle = 'ハードルまたぎ＆スプリント基礎ドリル（腿上げ・シザース・Aスキップ）';
+        let formDetail = '「なぜこの動きをするのか」を意識しながら、1本ごとに動画チェックや仲間からのフィードバックを取り入れて精密に行います。';
+        let formVisual = 'hurdle_drill';
+        let formMuscles = ['腸腰筋', '大臀筋', '腹横筋（体幹）'];
+
+        if (hasJavelin) {
+          formTitle = 'やり投・立ち投げ＆5歩助走からの左脚ブロック・肩甲骨しなり確認（15本）';
+          formDetail = 'やりの先端がブレない軌道（やり軸の通過）と、左脚ブロックの瞬間に胸郭が弓なりにしなる感覚を精密に確認します。';
+          formVisual = 'javelin_throw';
+          formMuscles = ['広背筋', '腹斜筋', '肩甲帯', '大臀筋'];
+        } else if (hasOtherThrow) {
+          formTitle = '投擲・立ち投げ＆ターン・グライドの体重移動フォーム確認（15本）';
+          formDetail = '下半身先行の捻転差を作り、指先の最後まで力を伝え切るリリースフォームを反復します。';
+          formVisual = 'throw_power';
+          formMuscles = ['広背筋', '腹斜筋', '大臀筋'];
+        } else if (hasHurdle) {
+          formTitle = 'ハードルリード脚＆抜き脚ドリル（3台〜5台インターバルリズム確認）';
+          formDetail = 'ハードル上での前傾姿勢と、着地後すぐに次の一歩へ移る抜き脚の素早さを磨きます。';
+        } else if (hasJump) {
+          formTitle = '踏切リズム＆短助走跳躍フォーム確認（6〜8歩助走×6本）';
+          formDetail = '踏切2歩前の沈み込みから、重心を真上〜前方へ高く引き上げる踏切動作を確認します。';
+        } else if (hasDistance) {
+          formTitle = 'ランニングエコノミー向上・腕振り＆真下接地ドリル（20分）';
+          formDetail = '長距離でもエネルギーロスを最小限に抑える骨盤前傾とコンパクトな腕振りを習得します。';
+        }
+
         return [
           {
             id: 'm-out-form-1',
-            tag: `☀️ 外練習・${eventTagStr}専門技術`,
+            tag: `☀️ 屋外練習・${eventTagStr}専門技術`,
             tagColor: 'bg-orange-100 text-orange-900',
-            title: hasSprintOrHurdle
-              ? 'ハードルまたぎ＆スプリント基礎ドリル（腿上げ・シザース・Aスキップ）'
-              : hasJump
-                ? '踏切リズム＆短助走跳躍フォーム確認（6〜8歩助走×6本）'
-                : hasThrow
-                  ? '立ち投げ＆ターン・グライドの体重移動フォーム確認（15本）'
-                  : 'ランニングエコノミー向上・腕振り＆接地ポジションドリル（20分）',
-            detail: '「なぜこの動きをするのか」を意識しながら、1本ごとに動画チェックや仲間からのフィードバックを取り入れて精密に行います。',
-            visualType: hasThrow ? 'throw_power' : 'hurdle_drill',
-            muscles: hasThrow ? ['広背筋', '腹斜筋', '大臀筋'] : ['腸腰筋', '大臀筋', '腹横筋（体幹）'],
-            proTip: getProAthleteTip(hasThrow ? 'throw_power' : 'hurdle_drill', p)
+            title: formTitle,
+            detail: formDetail,
+            visualType: formVisual,
+            muscles: formMuscles,
+            proTip: getProAthleteTip(formVisual, p)
           },
           {
             id: 'm-out-form-2',
-            tag: '☀️ 外練習・連動スプリント',
+            tag: '☀️ 屋外練習・技術統合ダッシュ',
             tagColor: 'bg-cyan-100 text-cyan-900',
-            title: 'ドリル直後の技術統合ダッシュ（60m×4本・フォーム意識）',
+            title: has400
+              ? 'ドリル直後の400mリズム流し（150m×3本・フォーム意識）'
+              : 'ドリル直後の技術統合ダッシュ（60m×4本・フォーム意識）',
             detail: '技術ドリルで作った良い感覚が消えないうちに、実際のスピードの中でフォームを統合します。',
             visualType: 'sprint_drive',
             muscles: ['ハムストリングス', '大臀筋', '腸腰筋'],
@@ -2136,7 +2270,7 @@
           },
           {
             id: 'm-out-form-3',
-            tag: '☀️ 外練習・体幹軸固定',
+            tag: '☀️ 屋外練習・体幹軸固定',
             tagColor: 'bg-emerald-100 text-emerald-900',
             title: 'フロントプランク＆片脚バランス安定ワーク（3セット）',
             detail: '片脚で地面に接地した瞬間に骨盤が傾かないよう、体幹と中臀筋の連動を強化します。',
@@ -2155,7 +2289,7 @@
           tagColor: 'bg-slate-200 text-slate-900',
           title: `【${p.role}】「${p.goal}」に向けたチーム行動＆タイム・器具ケア`,
           detail: env === 'indoor'
-            ? `中練習でも緊張感を保ち、「${p.role}」として声かけ・バイクやベンチの片付け・タイム共有でチームを牽引しよう。`
+            ? `屋内練習でも緊張感を保ち、「${p.role}」として声かけ・バイクやベンチの片付け・タイム共有でチームを牽引しよう。`
             : `トラックでの準備・挨拶・測定・器具管理を率先し、「${p.goal}」を達成するチームの基準を示そう。`,
           visualType: 'core_plank',
           muscles: ['体幹安定', '姿勢保持筋'],
@@ -2164,7 +2298,7 @@
       }
 
       // ===================================================================
-      // 7. 人生アドバイスデータ（5カテゴリー）
+      // 7. 人生アドバイスデータ（5カテゴリー：部活の壁・勉強との両立・メンタル・チーム人間関係・進路の視点）
       // ===================================================================
       const LIFE_ADVICE_DATA = [
         {
@@ -2172,16 +2306,16 @@
           category: 'club',
           categoryLabel: '部活の壁',
           title: '自己ベストは「調子が良い日」ではなく「基本を丁寧にした日」の先にくる',
-          body: 'タイムや記録が伸び悩むときほど、フォームを大きく変えたくなります。しかしブレークスルーの8割は、普段の腿上げ・腕振り・接地位置といった基礎の精度を1ミリ高めた瞬間に訪れます。',
+          body: 'タイムや記録が伸び悩むときほど、フォームを大きく変えたくなります。しかしブレークスルーの8割は、普段の腿上げ・腕振り・ブロック動作といった基礎の精度を1ミリ高めた瞬間に訪れます。',
           action: '今日の最初のドリル1種目だけを「日本一丁寧に行う」と決めて取り組もう。'
         },
         {
           id: 'adv-2',
           category: 'club',
           categoryLabel: '部活の壁',
-          title: '中練習（階段・バイク・ベンチ）の質が、大会での爆発力を決める',
-          body: 'グラウンドが使えない中練習こそ、階段ダッシュ・エアロバイク・ベンチプレス・体幹で基礎体力とパワーを作る最大のチャンス。環境を言い訳にしない選手だけが本番で輝きます。',
-          action: '今日の中練習メニューから「一番強化したい1種目」を選んで全力でやり切ろう。'
+          title: '屋内練習（階段・ワットバイク・ベンチ）の質が、大会での爆発力を決める',
+          body: 'グラウンドが使えない屋内練習こそ、階段ダッシュ・エアロバイク・ベンチプレス・体幹で基礎体力とパワーを作る最大のチャンス。環境を言い訳にしない選手だけが本番で輝きます。',
+          action: '今日の練習メニューから「一番強化したい1種目」を選んで全力でやり切ろう。'
         },
         {
           id: 'adv-3',
@@ -2202,23 +2336,23 @@
         {
           id: 'adv-5',
           category: 'mental',
-          categoryLabel: 'メンタル・本番',
-          title: 'スタートラインでの緊張は「体が最高出力を出す準備完了のサイン」',
-          body: '招集所やスタートブロックで心臓が速くなるのは、脳が筋肉へ血液と酸素を送り込んでいる証拠です。「緊張してきた＝よっしゃ、戦える状態に入った！」と歓迎しよう。',
-          action: 'スタート前に4秒吸って8秒かけてゆっくり吐き、「自分のリズムで走るだけ」と唱える。'
+          categoryLabel: 'メンタル',
+          title: 'スタートラインやピットでの緊張は「体が最高出力を出す準備完了のサイン」',
+          body: '招集所やピットで心臓が速くなるのは、脳が筋肉へ血液と酸素を送り込んでいる証拠です。「緊張してきた＝よっしゃ、戦える状態に入った！」と歓迎しよう。',
+          action: '試技・スタート前に4秒吸って8秒かけてゆっくり吐き、「自分のリズムで動くだけ」と唱える。'
         },
         {
           id: 'adv-6',
           category: 'mental',
-          categoryLabel: 'メンタル・本番',
-          title: '陸上は「隣のレーン」ではなく「0.01秒前の自分」との戦い',
-          body: '隣の選手の体格や持ちタイムを気にして力むとフォームが崩れます。自分がコントロールできるのは自分のレーンと自分のリズムだけ。集中を自分の体に戻そう。',
-          action: 'レース前は自分のスタート1歩目と腕振りのリズムだけをイメージする。'
+          categoryLabel: 'メンタル',
+          title: '陸上は「隣のレーン」ではなく「0.01秒・1cm前の自分」との戦い',
+          body: '周囲の選手の体格や持ち記録を気にして力むとフォームが崩れます。自分がコントロールできるのは自分のレーン・助走と自分のリズムだけ。集中を自分の体に戻そう。',
+          action: '本番前は自分の1歩目と腕振りのリズムだけをイメージする。'
         },
         {
           id: 'adv-7',
           category: 'team',
-          categoryLabel: 'チームワーク',
+          categoryLabel: 'チーム人間関係',
           title: '個人競技の陸上だからこそ、「応援される選手」は最後の1mで伸びる',
           body: '陸上は個人種目ですが、日々の苦しい練習を乗り越えられるのは仲間の声かけがあるから。タイム計測や器具の片付けを率先する選手には、本番でチーム全員のエネルギーが集まります。',
           action: '今日の練習中、仲間の良い走り・跳躍・投擲に「ナイス！」と声をかけよう。'
@@ -2226,7 +2360,7 @@
         {
           id: 'adv-8',
           category: 'future',
-          categoryLabel: '進路・将来',
+          categoryLabel: '進路の視点',
           title: '「仮説→実践→修正」を毎日回した経験は、一生モノの武器になる',
           body: '体調を記録し、課題に合わせて練習メニューを選び、フォームを修正する——このPDCAサイクルを高校時代から実践している人は、大学でも社会でも圧倒的な成長スピードを発揮します。',
           action: '今週のまとめタブを見て、今週一番頑張れたポイントを1つ自分で褒めよう。'
@@ -2275,16 +2409,16 @@
         const log = getTodayLog();
         const eventSummary = getProfileEventSummary(p);
         const modeInstruction = state.aiMode === 'form'
-          ? '現在は【フォーム確認・技術アドバイスモード】です。回答は必ず「① 重心位置」「② 腕振り・体幹の軸」「③ おすすめ改善ドリル（階段ダッシュ・エアロバイク・ベンチプレス・室内走など）」の3つの見出しに分けてアドバイスしてください。ランニングマシンは絶対に提案しないでください。'
-          : '現在は【何でも相談モード】です。陸上競技の記録の壁、勉強との両立、メンタル、チームワークについて実践的なアドバイスをしてください。ランニングマシンは絶対に提案しないでください。';
+          ? '現在は【フォーム確認・技術アドバイスモード】です。回答は必ず「① 重心位置」「② 腕振り・体幹の軸」「③ おすすめ改善ドリル（階段ダッシュ・エアロバイク・ベンチプレス・室内ダッシュなど）」の3つの見出しに分けてアドバイスしてください。ランニングマシンは絶対に提案しないでください。'
+          : '現在は【何でも相談モード】です。陸上競技の記録の壁、勉強との両立、メンタル、チーム人間関係について実践的なアドバイスをしてください。ランニングマシンは絶対に提案しないでください。';
 
         const systemInstructionText = `あなたは日本の高校陸上競技部を支える経験豊富な「陸上専門AIコーチ」です。
 【部員プロフィール】
 - 名前: ${p.name}
-- 専門カテゴリー＆種目: ${eventSummary}
+- 専門種目: ${eventSummary}
 - 固定の役割: ${p.role}
 - 目標: ${p.goal}
-- 今日の睡眠時間: ${log.sleepHours}h / 体調: ${log.conditionLevel}/5 / 練習場所: ${log.environment === 'indoor' ? '中練習' : '外練習'}
+- 今日の睡眠時間: ${log.sleepHours}h / 体調: ${log.conditionLevel}/5 / 練習場所: ${log.environment === 'indoor' ? '屋内練習' : '屋外練習'}
 ${modeInstruction}`;
 
         const parts = [{ text: userText || 'このフォーム写真を見て重心位置・体幹の軸・改善ドリルを教えてください！' }];
@@ -2323,12 +2457,12 @@ ${modeInstruction}`;
         if (state.aiMode === 'form' || hasImage) {
           return `📸 【${evSummary} フォーム解析レポート（${p.name}さん専用）】\n\n` +
             `① 重心位置：\n` +
-            `接地時に腰がわずかに後ろへ残るとブレーキがかかります。おへその下（丹田）を常に支持脚の真上〜やや前方へ運ぶ意識を持とう！\n\n` +
+            `接地やブロック時に腰がわずかに後ろへ残るとエネルギーが逃げます。おへその下（丹田）を常に支持脚の真上〜やや前方へ運ぶ意識を持とう！\n\n` +
             `② 腕振り・体幹の軸：\n` +
-            `頭頂部から骨盤までの軸が一直線に保てています。さらに出力を上げるには、肩の力を抜いて「肘を後ろへコンパクトに引く」ことで骨盤の回旋と連動させよう。\n\n` +
+            `頭頂部から骨盤までの軸が一直線に保てています。さらに出力を上げるには、肩の力を抜いて「肘と肩甲骨を大きく連動させる」ことで骨盤の回旋を引き出そう。\n\n` +
             `③ おすすめ改善ドリル：\n` +
             `・階段ダッシュ（1段飛ばし 15段×5本）：股関節からの力強い引き上げを強化\n` +
-            `・エアロバイク・高回転ペダリング（90rpm以上）：接地衝撃ゼロで回転力を養成\n` +
+            `・エアロバイク（ワットバイク）高回転ペダリング（90rpm以上）：着地衝撃ゼロで回転力を養成\n` +
             `・ベンチプレス＆プランク連動：上半身と体幹のブレをゼロにする！`;
         }
 
@@ -2339,11 +2473,11 @@ ${modeInstruction}`;
 
         if (userText.includes('緊張') || userText.includes('試合') || userText.includes('大会')) {
           return `🔥 「${p.goal}」を目指す本気の証拠だね！\n` +
-            `スタートラインで心臓がバクバクするのは、体がベストパフォーマンスを出すためにアドレナリンを出している正常な反応だよ。招集所では「4秒吸って8秒吐く」深呼吸を3回して、最初の3歩のリズムだけをイメージしよう！`;
+            `スタートラインやピットで心臓がバクバクするのは、体がベストパフォーマンスを出すためにアドレナリンを出している正常な反応だよ。招集所では「4秒吸って8秒吐く」深呼吸を3回して、最初の3歩のリズムだけをイメージしよう！`;
         }
 
         return `🏃‍♂️ ${p.name}さん（${evSummary} / ${p.role}）、相談ありがとう！\n` +
-          `目標「${p.goal}」に向けて、今日の睡眠（${getTodayLog().sleepHours}h）と練習環境（${getTodayLog().environment === 'indoor' ? '中練習（エアロバイク・階段・室内走・ベンチ）' : '外練習'}）に合わせたメニューを1つずつやり切ることが最短ルートだよ。フォーム写真も左下の「写真」ボタンからいつでも送ってね！`;
+          `目標「${p.goal}」に向けて、今日の睡眠（${getTodayLog().sleepHours}h）と練習環境（${getTodayLog().environment === 'indoor' ? '屋内練習（ワットバイク・階段ダッシュ・室内ダッシュ・ベンチプレス）' : '屋外練習'}）に合わせたメニューを1つずつやり切ることが最短ルートだよ。フォーム写真も左下の「写真」ボタンからいつでも送ってね！`;
       }
 
       // ===================================================================
@@ -2383,10 +2517,10 @@ ${modeInstruction}`;
 
         if (state.friends.length === 0) {
           state.friends = [
-            { id: 'TF-1084', name: '翔太', eventBadge: '100m・200m', role: '短距離パート長', goal: '100m 10秒台', avatarColor: 'from-[#F97316] to-amber-500' },
-            { id: 'TF-2941', name: '美咲', eventBadge: 'やり投・砲丸投', role: '投擲リーダー', goal: 'インターハイ出場', avatarColor: 'from-[#06B6D4] to-blue-600' },
-            { id: 'TF-5520', name: '陽菜', eventBadge: 'マネ・計測', role: 'マネージャー', goal: '県大会総合入賞', avatarColor: 'from-emerald-500 to-teal-600' },
-            { id: 'TF-7712', name: '蓮', eventBadge: '1500m・5000m', role: '中長距離リーダー', goal: '5000m 14分台', avatarColor: 'from-indigo-500 to-purple-600' }
+            { id: 'TF-1084', name: '翔太', eventBadge: '100m・400m', role: '短距離パート長', goal: '100m 10秒台', avatarColor: 'from-[#F97316] to-amber-500' },
+            { id: 'TF-2941', name: '美咲', eventBadge: 'やり投', role: '投擲リーダー', goal: 'やり投 52m・インターハイ', avatarColor: 'from-[#06B6D4] to-blue-600' },
+            { id: 'TF-7712', name: '蓮', eventBadge: '1500m', role: '中長距離リーダー', goal: '1500m 3分55秒切り', avatarColor: 'from-indigo-500 to-purple-600' },
+            { id: 'TF-5520', name: '陽菜', eventBadge: 'マネ', role: 'マネージャー', goal: '県大会総合入賞', avatarColor: 'from-emerald-500 to-teal-600' }
           ];
           saveFriends();
         }
@@ -2396,10 +2530,10 @@ ${modeInstruction}`;
             {
               id: 'm1',
               senderName: '翔太',
-              senderEvent: '100m・200m',
+              senderEvent: '100m・400m',
               avatarBg: 'from-[#F97316] to-amber-500',
               isMe: false,
-              text: '外雨強くなってきたから体育館1Fの階段ダッシュとバイク組に分かれよう！🔥',
+              text: '外雨強くなってきたから体育館1Fの階段ダッシュとワットバイク組に分かれよう！🔥',
               time: '16:12'
             },
             {
@@ -2408,7 +2542,7 @@ ${modeInstruction}`;
               senderEvent: 'やり投',
               avatarBg: 'from-[#06B6D4] to-blue-600',
               isMe: false,
-              text: '了解！トレ室のベンチプレスとメディシンボール準備できたよ💪',
+              text: '了解！ウエイト室のベンチプレスとメディシンボール準備できたよ💪',
               time: '16:15'
             },
             {
@@ -2417,7 +2551,7 @@ ${modeInstruction}`;
               senderEvent: 'マネ',
               avatarBg: 'from-emerald-500 to-teal-600',
               isMe: false,
-              text: 'バイク2台空いたよ🚴 100m組あと5分でスタートダッシュ計測します⏱️',
+              text: '100m・400m組あと5分で室内ダッシュのタイム計測スタートします⏱️',
               time: '16:18'
             }
           ];
@@ -2483,65 +2617,97 @@ ${modeInstruction}`;
       }
 
       // ===================================================================
-      // 12. 階層型・複数種目セレクター描画（初期設定＆プロフィール編集共通）
+      // 12. 階層型・複数種目セレクター描画（バグ完全修正：strictモード対応＆即時可視化）
       // ===================================================================
-      function renderMultiEventSelector(prefix, selectedCats, selectedEvs, onChange) {
+      function renderMultiEventSelector(prefix) {
+        const isInit = prefix === 'init';
+        const selectedCats = isInit ? state.initDraftCategories : state.editDraftCategories;
+        const selectedEvs = isInit ? state.initDraftEvents : state.editDraftEvents;
+
         const catGrid = document.getElementById(`${prefix}-category-grid`);
-        const drawer = document.getElementById(`${prefix}-events-drawer`);
         const subContainer = document.getElementById(`${prefix}-subevents-container`);
         const countEl = document.getElementById(`${prefix}-selected-count`);
+        const previewEl = document.getElementById(`${prefix}-selected-preview`);
 
+        if (!catGrid || !subContainer) return;
+
+        // 1) カテゴリーボタン群を描画（代表種目ヒント付き）
         catGrid.innerHTML = '';
         TRACK_CATEGORIES.forEach(cat => {
           const isCatOn = selectedCats.includes(cat.id);
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = `px-3 py-2.5 rounded-xl border-2 text-left text-xs font-black flex items-center justify-between transition ${
+          btn.className = `px-2.5 py-2 rounded-xl border-2 text-left transition flex flex-col justify-between ${
             isCatOn
               ? 'border-[#F97316] bg-orange-50 text-slate-950 shadow-2xs'
               : 'border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700'
           }`;
           btn.innerHTML = `
-            <span class="truncate">${cat.icon} ${escapeHtml(cat.label)}</span>
-            <span class="text-[11px] font-black ${isCatOn ? 'text-[#F97316]' : 'text-slate-300'}">${isCatOn ? '✓' : '＋'}</span>
+            <div class="flex items-center justify-between w-full gap-1">
+              <span class="text-xs font-black truncate">${cat.icon} ${escapeHtml(cat.label)}</span>
+              <span class="text-[11px] font-black shrink-0 ${isCatOn ? 'text-[#F97316]' : 'text-slate-400'}">${isCatOn ? '✓' : '＋'}</span>
+            </div>
+            <span class="text-[9px] font-bold mt-0.5 truncate ${isCatOn ? 'text-orange-800' : 'text-slate-400'}">
+              ${escapeHtml(cat.subHint)}
+            </span>
           `;
           btn.addEventListener('click', () => {
             const idx = selectedCats.indexOf(cat.id);
             if (idx >= 0) {
               selectedCats.splice(idx, 1);
-              // そのカテゴリーに属する種目も解除
-              cat.events.forEach(ev => {
-                const eIdx = selectedEvs.indexOf(ev);
-                if (eIdx >= 0) selectedEvs.splice(eIdx, 1);
-              });
             } else {
               selectedCats.push(cat.id);
             }
-            onChange();
+            renderMultiEventSelector(prefix);
           });
           catGrid.appendChild(btn);
         });
 
-        if (selectedCats.length === 0) {
-          if (drawer) drawer.classList.add('hidden');
-          if (countEl) countEl.textContent = '0種目選択中';
-          return;
+        // 2) 選択中の具体種目プレビューバーを描画
+        if (countEl) {
+          countEl.textContent = `${selectedEvs.length}種目選択中`;
+        }
+        if (previewEl) {
+          if (selectedEvs.length === 0) {
+            previewEl.innerHTML = '<span class="text-[11px] text-slate-400 font-bold">まだ種目が選ばれていません（下の種目ボタンをタップ）</span>';
+          } else {
+            previewEl.innerHTML = selectedEvs.map(ev => `
+              <button type="button" data-remove-ev="${escapeHtml(ev)}"
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#F97316] text-white text-[11px] font-black shadow-2xs hover:bg-orange-600 transition">
+                <span>${escapeHtml(ev)}</span>
+                <span class="text-[10px] opacity-90">✕</span>
+              </button>
+            `).join('');
+
+            previewEl.querySelectorAll('[data-remove-ev]').forEach(rmBtn => {
+              rmBtn.addEventListener('click', () => {
+                const targetEv = rmBtn.getAttribute('data-remove-ev');
+                const eIdx = selectedEvs.indexOf(targetEv);
+                if (eIdx >= 0) {
+                  selectedEvs.splice(eIdx, 1);
+                  renderMultiEventSelector(prefix);
+                }
+              });
+            });
+          }
         }
 
-        if (drawer) drawer.classList.remove('hidden');
-        if (countEl) countEl.textContent = `${selectedEvs.length}種目選択中`;
+        // 3) 選択されたカテゴリー（未選択時は短距離＆投擲をデフォルト表示）の具体種目ピルを描画
+        const catsToShow = selectedCats.length > 0
+          ? TRACK_CATEGORIES.filter(c => selectedCats.includes(c.id))
+          : TRACK_CATEGORIES.filter(c => c.id === 'sprint' || c.id === 'throw');
 
         subContainer.innerHTML = '';
-        selectedCats.forEach(catId => {
-          const cat = TRACK_CATEGORIES.find(c => c.id === catId);
-          if (!cat) return;
-
+        catsToShow.forEach(cat => {
           const groupDiv = document.createElement('div');
-          groupDiv.className = 'bg-white p-2.5 rounded-xl border border-slate-200/90 space-y-1.5';
+          groupDiv.className = 'bg-white p-2.5 rounded-xl border border-slate-200 space-y-2';
           groupDiv.innerHTML = `
-            <div class="text-[11px] font-black text-slate-700 flex items-center gap-1">
-              <span>${cat.icon}</span>
-              <span>${escapeHtml(cat.label)}の専門種目（複数タップ可）：</span>
+            <div class="flex items-center justify-between">
+              <div class="text-[11px] font-black text-slate-800 flex items-center gap-1">
+                <span>${cat.icon}</span>
+                <span>${escapeHtml(cat.label)}の専門種目（複数タップ可）：</span>
+              </div>
+              <span class="text-[10px] font-bold text-[#F97316]">タップで選択</span>
             </div>
             <div class="flex flex-wrap gap-1.5 sub-pills-wrap"></div>
           `;
@@ -2551,17 +2717,24 @@ ${modeInstruction}`;
             const isEvOn = selectedEvs.includes(ev);
             const pill = document.createElement('button');
             pill.type = 'button';
-            pill.className = `px-2.5 py-1.5 rounded-lg border text-[11px] font-black transition ${
+            pill.className = `px-3 py-1.5 rounded-xl border-2 text-xs font-black transition cursor-pointer ${
               isEvOn
-                ? 'bg-[#0F172A] border-[#0F172A] text-white shadow-2xs'
-                : 'bg-slate-50 border-slate-300 text-slate-700 hover:border-[#F97316]'
+                ? 'bg-[#0F172A] border-[#0F172A] text-white shadow-xs scale-[1.02]'
+                : 'bg-slate-50 border-slate-300 text-slate-800 hover:border-[#F97316] hover:bg-orange-50'
             }`;
             pill.textContent = `${isEvOn ? '✓ ' : ''}${ev}`;
             pill.addEventListener('click', () => {
+              // 該当カテゴリーが未選択なら自動でONにする
+              if (!selectedCats.includes(cat.id)) {
+                selectedCats.push(cat.id);
+              }
               const eIdx = selectedEvs.indexOf(ev);
-              if (eIdx >= 0) selectedEvs.splice(eIdx, 1);
-              else selectedEvs.push(ev);
-              onChange();
+              if (eIdx >= 0) {
+                selectedEvs.splice(eIdx, 1);
+              } else {
+                selectedEvs.push(ev);
+              }
+              renderMultiEventSelector(prefix);
             });
             pillsWrap.appendChild(pill);
           });
@@ -2580,9 +2753,7 @@ ${modeInstruction}`;
         if (!state.profile) {
           onboarding.classList.remove('hidden');
           mainApp.classList.add('hidden');
-          renderMultiEventSelector('init', state.initDraftCategories, state.initDraftEvents, () => {
-            renderMultiEventSelector('init', state.initDraftCategories, state.initDraftEvents, arguments.callee);
-          });
+          renderMultiEventSelector('init');
           return;
         }
 
@@ -2611,7 +2782,7 @@ ${modeInstruction}`;
         document.getElementById('header-date-text').textContent = `${now.getMonth() + 1}/${now.getDate()}(${w})`;
         document.getElementById('header-goal-text').textContent = p.goal;
 
-        // 複数選択されたカテゴリー＆種目タグをスタイリッシュに表示
+        // 複数選択されたカテゴリー＆具体種目タグ（100m / 400m / やり投 等）をスタイリッシュに表示
         const strip = document.getElementById('header-events-strip');
         const cats = (p.categories || []).map(cid => TRACK_CATEGORIES.find(c => c.id === cid)?.label).filter(Boolean);
         const evs = p.events || [];
@@ -2731,7 +2902,7 @@ ${modeInstruction}`;
 
         const desc = document.getElementById('male-sleep-debt-desc');
         if (sleep < 6.0) {
-          desc.textContent = `⚠️ 睡眠負債アラート（${sleep}h）：スプリント・跳躍の神経伝達速度が低下しやすい状態です。今夜は23時台就寝でCNS（中枢神経）を回復させよう。`;
+          desc.textContent = `⚠️ 睡眠負債アラート（${sleep}h）：スプリント・跳躍・投擲の神経伝達速度が低下しやすい状態です。今夜は23時台就寝でCNS（中枢神経）を回復させよう。`;
         } else {
           desc.textContent = `✨ 睡眠${sleep}h確保：中枢神経の回復度は良好です。高強度ダッシュやベンチプレスの出力が最大化しやすいコンディション！`;
         }
@@ -2758,12 +2929,11 @@ ${modeInstruction}`;
       }
 
       // -------------------------------------------------------------------
-      // タブ1：🔥 今日の練習（各メニューカードに筋肉バッジ・SVGイラスト・トップ選手エピソード搭載）
+      // タブ1：🔥 今日の練習
       // -------------------------------------------------------------------
       function renderTodayTab() {
         const log = getTodayLog();
 
-        // 睡眠スライダー＆ボタン
         document.getElementById('sleep-hours-slider').value = log.sleepHours;
         document.getElementById('sleep-hours-display').textContent = `${Number(log.sleepHours).toFixed(1)} 時間`;
 
@@ -2776,7 +2946,6 @@ ${modeInstruction}`;
           }
         });
 
-        // 5段階体調
         document.querySelectorAll('.cond-level-btn').forEach(btn => {
           const lvl = Number(btn.getAttribute('data-cond-level'));
           if (lvl === Number(log.conditionLevel)) {
@@ -2786,7 +2955,6 @@ ${modeInstruction}`;
           }
         });
 
-        // 外練習 / 中練習トグル
         document.querySelectorAll('.env-toggle-btn').forEach(btn => {
           const env = btn.getAttribute('data-env-val');
           if (env === log.environment) {
@@ -2798,7 +2966,6 @@ ${modeInstruction}`;
           }
         });
 
-        // 今日の練習テーマ（気分）ボタン
         document.querySelectorAll('.mood-btn').forEach(btn => {
           const m = btn.getAttribute('data-mood-val');
           if (m === log.mood) {
@@ -2808,7 +2975,6 @@ ${modeInstruction}`;
           }
         });
 
-        // パーソナルメニュー生成
         const isFemale = state.profile.gender === 'female';
         const isPeriodActive = isFemale && state.cycle.isPeriodNow;
         const menus = generatePersonalizedMenus();
@@ -2819,7 +2985,7 @@ ${modeInstruction}`;
         const titleEl = document.getElementById('training-card-title');
         const subEl = document.getElementById('training-card-subtitle');
 
-        const envLabel = log.environment === 'indoor' ? '🏫 中練習' : '☀️ 外練習';
+        const envLabel = log.environment === 'indoor' ? '🏫 屋内練習' : '☀️ 屋外練習';
         const eventShort = (state.profile.events || []).slice(0, 3).join('・') || '陸上';
 
         if (isPeriodActive) {
@@ -2863,7 +3029,6 @@ ${modeInstruction}`;
           }`;
 
           card.innerHTML = `
-            <!-- 上部：完了チェック ＋ タイトル ＋ 解説 -->
             <div class="p-3.5 sm:p-4 flex items-start gap-3">
               <button type="button" data-check-id="${item.id}" class="menu-check-btn pt-0.5 shrink-0 focus:outline-none">
                 <div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition ${
@@ -2887,20 +3052,16 @@ ${modeInstruction}`;
               </div>
             </div>
 
-            <!-- 下部：効く部位（ターゲット筋肉）＋ 分かりやすいSVGイラスト ＋ トップ選手エピソード -->
             <div class="px-3.5 pb-3.5 sm:px-4 sm:pb-4 space-y-2.5 border-t border-slate-100 pt-2.5 bg-slate-50/70">
-              <!-- ① 効く部位ピルバッジ -->
               <div class="flex flex-wrap items-center gap-1">
                 <span class="text-[10px] font-black text-slate-500 mr-0.5">効く部位:</span>
                 ${musclesHtml}
               </div>
 
-              <!-- ② 分かりやすいフォーム＆発光筋肉SVGイラスト -->
               <div class="w-full h-36 bg-white rounded-xl border border-slate-200/90 p-1.5 flex items-center justify-center overflow-hidden">
                 ${renderExerciseSvg(item.visualType || 'hurdle_drill')}
               </div>
 
-              <!-- ③ トップ選手のエピソード＆やる気一言ボックス -->
               <div class="p-2.5 rounded-xl bg-gradient-to-r from-[#0F172A] to-slate-800 text-white border-l-4 border-[#F97316]">
                 <div class="text-[10px] font-black text-[#F97316] tracking-wide mb-0.5">
                   🏅 トップ選手のエピソード＆やる気一言
@@ -3063,7 +3224,7 @@ ${modeInstruction}`;
                     ${recs.map(r => `
                       <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-100 text-slate-800 text-[11px] font-bold">
                         <span class="px-1.5 py-0.2 rounded text-[9px] font-black ${r.env === 'indoor' ? 'bg-cyan-100 text-cyan-900' : 'bg-orange-100 text-orange-900'}">
-                          ${r.env === 'indoor' ? '🏫中練' : '☀️外練'}
+                          ${r.env === 'indoor' ? '🏫屋内' : '☀️屋外'}
                         </span>
                         <span>${escapeHtml(r.title)}</span>
                       </span>
@@ -3090,7 +3251,7 @@ ${modeInstruction}`;
         document.getElementById('weekly-feedback-title').textContent =
           `${eventShort}・週間レポート：ここまで${totalCompleted}メニュー達成！`;
         document.getElementById('weekly-feedback-body').textContent =
-          `週間平均睡眠${avgSleep}時間を確保しながら、外練習と中練習（エアロバイク・階段ダッシュ・ベンチプレス）を柔軟に使い分けて積み上げられています。「${state.profile.goal}」に向けて、週末は股関節ストレッチと十分な睡眠で超回復を完了させよう！`;
+          `週間平均睡眠${avgSleep}時間を確保しながら、屋外練習と屋内練習（ワットバイク・階段ダッシュ・ベンチプレス）を柔軟に使い分けて積み上げられています。「${state.profile.goal}」に向けて、週末は股関節ストレッチと十分な睡眠で超回復を完了させよう！`;
       }
 
       // -------------------------------------------------------------------
@@ -3112,8 +3273,8 @@ ${modeInstruction}`;
         const quickEl = document.getElementById('ai-quick-prompts');
         const prompts = [
           { label: `⚡ ${eventShort}の記録を伸ばすコツ`, text: `${getProfileEventSummary(state.profile)}で「${state.profile.goal}」を達成するための最重要練習ポイントを教えて！` },
-          { label: '📸 スタート・走りの軸チェック', text: 'フォームの重心位置と体幹の軸を安定させるドリルを教えて！' },
-          { label: '🚴 バイク＆階段ダッシュ追い込み法', text: '雨の日の中練習でエアロバイクや階段ダッシュを使ってライバルに差をつけるメニューを教えて！' },
+          { label: '📸 スタート・ブロックの軸チェック', text: 'フォームの重心位置と体幹の軸を安定させるドリルを教えて！' },
+          { label: '🚴 バイク＆階段ダッシュ追い込み法', text: '雨の日の屋内練習でワットバイクや階段ダッシュを使ってライバルに差をつけるメニューを教えて！' },
           { label: '📚 テスト勉強と部活の両立', text: 'テスト週間でも走力を落とさず勉強時間を確保するスケジュールを教えて！' }
         ];
         quickEl.innerHTML = prompts.map(pr => `
@@ -3187,7 +3348,7 @@ ${modeInstruction}`;
       }
 
       // -------------------------------------------------------------------
-      // タブ4：💬 連絡・QR（LINE風トーク・出欠連絡・QR友達交換）レンダリング
+      // タブ4：💬 部員LINE・連絡（LINE風トーク・出欠連絡・QR友達交換）レンダリング
       // -------------------------------------------------------------------
       function renderTeamTab() {
         ['chat', 'advisor', 'qr'].forEach(sub => {
@@ -3212,8 +3373,9 @@ ${modeInstruction}`;
 
       // LINE風グループ＆個人トーク描画
       function renderFriendChatRoom() {
+        const myEventBadge = getLineEventBadge(state.profile);
         const rooms = [
-          { id: 'room-team', label: '🏃‍♂️ 陸上部 全体グループ（練習連絡）', members: 'メンバー 17人' },
+          { id: 'room-team', label: '🏃‍♂️ 陸上競技部 全体連絡・練習トーク', members: 'メンバー 19人' },
           ...state.friends.map(f => ({
             id: `room-${f.id}`,
             label: `👤 ${f.name}（${f.eventBadge}）`,
@@ -3266,19 +3428,20 @@ ${modeInstruction}`;
         list.forEach(m => {
           const row = document.createElement('div');
           if (m.isMe) {
-            // 自分の送信メッセージ（LINEグリーン吹き出し＋既読16＋時刻）
             row.className = 'flex items-end justify-end gap-1.5';
             row.innerHTML = `
               <div class="flex flex-col items-end text-[9px] font-extrabold text-slate-800/80 leading-tight shrink-0">
-                <span>${isGroupRoom ? '既読 16' : '既読'}</span>
+                <span>${isGroupRoom ? '既読 18' : '既読'}</span>
                 <span>${escapeHtml(m.time)}</span>
               </div>
-              <div class="line-bubble-right max-w-[74%] px-3.5 py-2.5 text-xs font-extrabold shadow-xs leading-relaxed">
-                ${escapeHtml(m.text)}
+              <div class="flex flex-col items-end max-w-[76%]">
+                <span class="text-[9px] font-black text-slate-900/80 mb-0.5 mr-1">[${escapeHtml(myEventBadge)}] ${escapeHtml(state.profile.name)}</span>
+                <div class="line-bubble-right px-3.5 py-2.5 text-xs font-extrabold shadow-xs leading-relaxed">
+                  ${escapeHtml(m.text)}
+                </div>
               </div>
             `;
           } else {
-            // 相手の受信メッセージ（アバター＋[種目タグ] 名前＋白吹き出し＋時刻）
             const initial = (m.senderName || '部').slice(0, 1);
             row.className = 'flex items-start gap-2';
             row.innerHTML = `
@@ -3419,10 +3582,31 @@ ${modeInstruction}`;
       }
 
       // ===================================================================
-      // 14. イベントバインディング（上部クイックモーダル・LINE返信・複数種目対応）
+      // 14. イベントバインディング
       // ===================================================================
       function setupEvents() {
-        // --- 初期設定フォーム ---
+        // --- 初期設定画面：全種目展開＆カスタム種目追加 ---
+        document.getElementById('init-expand-all-btn').addEventListener('click', () => {
+          state.initDraftCategories = TRACK_CATEGORIES.map(c => c.id);
+          renderMultiEventSelector('init');
+          showToast('全カテゴリーの種目リストを開きました', 'cyan');
+        });
+
+        document.getElementById('init-add-custom-event-btn').addEventListener('click', () => {
+          const input = document.getElementById('init-custom-event-input');
+          const val = input.value.trim();
+          if (!val) return;
+          if (!state.initDraftEvents.includes(val)) {
+            state.initDraftEvents.push(val);
+          }
+          if (state.initDraftCategories.length === 0) {
+            state.initDraftCategories.push('sprint');
+          }
+          input.value = '';
+          renderMultiEventSelector('init');
+          showToast(`「${val}」を追加しました`);
+        });
+
         document.querySelectorAll('.init-role-chip').forEach(btn => {
           btn.addEventListener('click', () => {
             document.getElementById('init-role').value = btn.getAttribute('data-init-role');
@@ -3442,8 +3626,8 @@ ${modeInstruction}`;
           const goal = document.getElementById('init-goal').value.trim();
           const genderEl = document.querySelector('input[name="init-gender"]:checked');
 
-          if (state.initDraftCategories.length === 0 || state.initDraftEvents.length === 0) {
-            showToast('種目カテゴリーと具体的な専門種目を1つ以上選択してください', 'orange');
+          if (state.initDraftEvents.length === 0) {
+            showToast('「100m」「400m」「やり投」などの具体的な種目を1つ以上タップして選択してください', 'orange');
             return;
           }
           if (!name || !role || !goal || !genderEl) return;
@@ -3451,7 +3635,7 @@ ${modeInstruction}`;
           state.profile = {
             userId: `TF-${Math.floor(1000 + Math.random() * 9000)}`,
             name,
-            categories: [...state.initDraftCategories],
+            categories: state.initDraftCategories.length > 0 ? [...state.initDraftCategories] : ['sprint'],
             events: [...state.initDraftEvents],
             role,
             goal,
@@ -3573,7 +3757,7 @@ ${modeInstruction}`;
             renderHeaderAndPrivacyMode();
             renderTodayTab();
             showToast(
-              mode === 'private' ? '🔒 プライベートモードに切り替えました' : '🌐 表モード（みんなで見る用）に切り替えました',
+              mode === 'private' ? '🔒 プライベートモードに切り替えました' : '🌐 表モード（部活共有）に切り替えました',
               mode === 'private' ? 'orange' : 'cyan'
             );
           });
@@ -3682,7 +3866,7 @@ ${modeInstruction}`;
             log.isSample = false;
             saveDailyLogs();
             renderTodayTab();
-            showToast(log.environment === 'indoor' ? '🏫 中練習（バイク・階段・室内走・ベンチ）に切替ました' : '☀️ 外練習メニューに切り替えました', log.environment === 'indoor' ? 'cyan' : 'orange');
+            showToast(log.environment === 'indoor' ? '🏫 屋内練習（バイク・階段・室内走・ベンチ）に切替ました' : '☀️ 屋外練習メニューに切り替えました', log.environment === 'indoor' ? 'cyan' : 'orange');
           });
         });
 
@@ -3706,6 +3890,7 @@ ${modeInstruction}`;
           const vType = text.includes('バイク') ? 'aero_bike'
             : text.includes('ベンチ') ? 'bench_press'
             : text.includes('階段') ? 'stair_dash'
+            : text.includes('やり') ? 'javelin_throw'
             : text.includes('プランク') || text.includes('体幹') ? 'core_plank'
             : 'hurdle_drill';
 
@@ -3865,9 +4050,9 @@ ${modeInstruction}`;
               || state.friends[Math.floor(Math.random() * state.friends.length)];
 
             let replyText = '了解！👍 そのメニュー終わったら合流しよう🔥';
-            if (text.includes('バイク')) replyText = 'ナイス共有！🚴 次のセット空いたらすぐ入ります！';
-            else if (text.includes('計測')) replyText = '了解⏱️ ストップウォッチと動画撮影スタンバイOKだよ！';
-            else if (text.includes('向かって')) replyText = 'オッケー！気をつけて来てね🏃‍♂️💨';
+            if (text.includes('ウエイト')) replyText = 'ナイス共有！🏋️ ベンチプレスと体幹セット終わったらすぐ交代するよ！';
+            else if (text.includes('階段')) replyText = 'ナイスラン＆階段ダッシュ！🔥 俺も今からあと3本追い込む！';
+            else if (text.includes('バトン')) replyText = '了解！マーク位置確認してバトンゾーンの受け渡し合わせよう！🏃‍♂️💨';
             else if (text.includes('ナイス')) replyText = 'ありがとう！！お互い自己ベスト更新しよう🔥';
 
             state.friendChats[roomId].push({
@@ -3941,7 +4126,7 @@ ${modeInstruction}`;
           showToast(`顧問の先生へ「${type}」連絡を送信しました`);
         });
 
-        // QR友達交換（タブ内＆共通ヘルパー）
+        // QR友達交換
         function copyToClipboard(text) {
           const ta = document.createElement('textarea');
           ta.value = text;
@@ -3958,7 +4143,7 @@ ${modeInstruction}`;
           const candidates = [
             { id: 'TF-8831', name: '健介', eventBadge: '110mH・400mH', role: '副部長', goal: '110mH 14秒台', avatarColor: 'from-orange-500 to-rose-500' },
             { id: 'TF-4412', name: '美羽', eventBadge: '800m・1500m', role: '器具管理', goal: '800m 2分15秒切り', avatarColor: 'from-cyan-500 to-indigo-500' },
-            { id: 'TF-9105', name: '大地', eventBadge: '砲丸投・円盤投', role: '一般部員', goal: '砲丸投 14m突破', avatarColor: 'from-amber-500 to-orange-600' }
+            { id: 'TF-9105', name: '大地', eventBadge: 'やり投・砲丸投', role: '一般部員', goal: 'やり投 55m突破', avatarColor: 'from-amber-500 to-orange-600' }
           ];
           const next = candidates.find(c => !state.friends.some(f => f.id === c.id)) || {
             id: `TF-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -3998,17 +4183,35 @@ ${modeInstruction}`;
           const radio = document.querySelector(`input[name="edit-gender"][value="${state.profile.gender}"]`);
           if (radio) radio.checked = true;
 
-          state.editDraftCategories = [...(state.profile.categories || [])];
+          state.editDraftCategories = [...(state.profile.categories || ['sprint'])];
           state.editDraftEvents = [...(state.profile.events || [])];
 
-          const refreshEditSelector = () => {
-            renderMultiEventSelector('edit', state.editDraftCategories, state.editDraftEvents, refreshEditSelector);
-          };
-          refreshEditSelector();
+          renderMultiEventSelector('edit');
 
           state.resetConfirmPending = false;
           document.getElementById('reset-data-btn').textContent = 'データ初期化';
           modal.classList.remove('hidden');
+        });
+
+        document.getElementById('edit-expand-all-btn').addEventListener('click', () => {
+          state.editDraftCategories = TRACK_CATEGORIES.map(c => c.id);
+          renderMultiEventSelector('edit');
+          showToast('全カテゴリーの種目リストを開きました', 'cyan');
+        });
+
+        document.getElementById('edit-add-custom-event-btn').addEventListener('click', () => {
+          const input = document.getElementById('edit-custom-event-input');
+          const val = input.value.trim();
+          if (!val) return;
+          if (!state.editDraftEvents.includes(val)) {
+            state.editDraftEvents.push(val);
+          }
+          if (state.editDraftCategories.length === 0) {
+            state.editDraftCategories.push('sprint');
+          }
+          input.value = '';
+          renderMultiEventSelector('edit');
+          showToast(`「${val}」を追加しました`);
         });
 
         document.getElementById('close-settings-btn').addEventListener('click', () => modal.classList.add('hidden'));
@@ -4020,8 +4223,8 @@ ${modeInstruction}`;
           const goal = document.getElementById('edit-goal').value.trim();
           const gender = document.querySelector('input[name="edit-gender"]:checked')?.value;
 
-          if (state.editDraftCategories.length === 0 || state.editDraftEvents.length === 0) {
-            showToast('種目カテゴリーと専門種目を1つ以上選択してください', 'orange');
+          if (state.editDraftEvents.length === 0) {
+            showToast('「100m」「400m」「やり投」などの具体的な種目を1つ以上選択してください', 'orange');
             return;
           }
           if (!name || !role || !goal || !gender) return;
@@ -4029,7 +4232,7 @@ ${modeInstruction}`;
           state.profile = {
             ...state.profile,
             name,
-            categories: [...state.editDraftCategories],
+            categories: state.editDraftCategories.length > 0 ? [...state.editDraftCategories] : ['sprint'],
             events: [...state.editDraftEvents],
             role,
             goal,
@@ -4050,7 +4253,7 @@ ${modeInstruction}`;
           }
           Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
           state.profile = null;
-          state.initDraftCategories = [];
+          state.initDraftCategories = ['sprint'];
           state.initDraftEvents = [];
           state.dailyLogs = {};
           state.aiMessages = [];
